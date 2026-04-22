@@ -1,0 +1,2614 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>大小屏互动方案 - 产品说明文档 v2</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --text: #1f2937; --sub: #4b5563;
+      --line: #dbe3f1; --primary: #2563eb; --soft: #eaf1ff;
+      --shadow: 0 10px 24px rgba(25,45,95,.1); --radius: 14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(180deg,#f8fbff,#f4f7fb 50%,#f8fbff);color:var(--text);line-height:1.6}
+    .container{width:min(1440px,98vw);margin:24px auto 44px}
+    .header h1{font-size:30px;margin-bottom:6px}
+    .header p{color:var(--sub);margin-bottom:14px}
+    .tabs{position:sticky;top:0;z-index:1000;display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.88);backdrop-filter:blur(10px);box-shadow:var(--shadow);margin-bottom:18px}
+    .tab-btn{border:1px solid transparent;background:transparent;color:#334155;font-size:14px;border-radius:10px;padding:9px 14px;cursor:pointer}
+    .tab-btn:hover{background:#f2f6ff;border-color:#d6e2ff}
+    .tab-btn.active{background:var(--soft);border-color:#bcd2ff;color:var(--primary);font-weight:700}
+    .tab-panel{display:none;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);padding:18px}
+    .tab-panel.active{display:block}
+    .section-title{font-size:22px;margin-bottom:4px}
+    .section-sub{color:var(--sub);margin-bottom:14px}
+    .doc-block{border:1px solid var(--line);border-radius:12px;background:#fcfdff;padding:12px;margin-bottom:12px}
+    .doc-block h3{font-size:17px;margin-bottom:6px}
+    .doc-block p{color:var(--sub);margin-bottom:8px;font-size:14px}
+    .doc-block img{width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+    .intro-list{margin:8px 0 0 18px;color:var(--sub);font-size:14px;line-height:1.8}
+    .intro-list li{margin-bottom:6px}
+    .intro-highlight{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;background:#eef4ff;color:#1d4ed8;font-weight:700;font-size:13px}
+    .flow-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .flow-column{border-radius:12px;padding:12px}
+    .flow-column.existing{border:1px solid #d5dbe8;background:#f8fafc}
+    .flow-column.future{border:1px solid #b9ceff;background:#eef4ff}
+    .flow-column h3{font-size:16px;margin-bottom:8px}
+    .flow-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .flow-step{border:1px solid #d6e2fb;border-radius:10px;padding:8px 10px;background:#fff;font-size:14px}
+    .flow-column.existing .flow-step{border-color:#d5dbe8}
+    .flow-step.changed{color:#b91c1c;border-color:#fda4af;background:#fee2e2;font-weight:700}
+    .flow-step.deleted{color:#6b7280;border-color:#d1d5db;background:#f3f4f6;text-decoration:line-through}
+    .flow-arrow{text-align:center;color:#7a8db8}
+    .flow-legend{margin-top:10px;color:var(--sub);font-size:14px}
+    .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+    .dot.red{background:#ef4444}.dot.gray{background:#9ca3af;margin-left:12px}
+    .module-block{margin-top:18px;border-top:1px dashed #d9e2f1;padding-top:14px}
+    .module-title{font-size:18px;margin-bottom:8px}
+    .prototype-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+    .prototype-card{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:10px}
+    .prototype-label{display:inline-block;font-size:13px;color:#1d4ed8;border:1px solid #c8d9ff;background:#e8f0ff;border-radius:999px;padding:4px 10px;margin-bottom:8px;font-weight:700}
+    .prototype-desc{margin-top:8px;color:var(--sub);font-size:14px}
+    .image-stage{position:relative}
+    .image-stage img{width:100%;border:1px solid var(--line);border-radius:10px;display:block}
+    .placeholder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}
+    .placeholder-card{border:1px dashed #c7d2e8;border-radius:12px;padding:16px;background:#f9fbff}
+    .placeholder-card h4{font-size:15px;margin-bottom:8px;color:#1e3a8a}
+    .placeholder-card p{color:var(--sub);font-size:14px}
+    .req-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.7}
+    .req-table th{background:#f8fafc;padding:12px 14px;text-align:left;font-size:13px;font-weight:700;color:#334155;border-bottom:2px solid #e2e8f0}
+    .req-table td{padding:14px;border-bottom:1px solid #eef1f6;vertical-align:top;color:#475569}
+    .req-table tr:hover{background:#f8fbff}
+    .req-table td:first-child{text-align:center;color:#94a3b8;font-weight:600;width:50px}
+    .req-table td:nth-child(2){font-weight:500;color:#1e293b;min-width:160px}
+    .req-table td:nth-child(3){color:#475569;line-height:1.8}
+    .req-table td:last-child{text-align:center;width:70px}
+    .pri-tag{display:inline-block;padding:3px 12px;border-radius:6px;font-size:12px;font-weight:700}
+    .pri-tag.p0{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+    .pri-tag.p1{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
+    .pri-tag.p2{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0}
+
+    /* ===== 产品演示 ===== */
+    .demo-shell{background:transparent;padding:0}
+    .demo-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+    .demo-bar-title{font-size:16px;font-weight:700;color:#1e3a8a}
+    .demo-bar-sub{font-size:13px;color:#475569}
+    .demo-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .dbtn{border:1px solid #c8d7fb;border-radius:8px;padding:6px 10px;background:#fff;color:#1d4ed8;cursor:pointer;font-size:13px}
+    .dbtn.primary{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+    .dbtn:disabled{opacity:.4;cursor:not-allowed}
+    .stepper{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .step-dot{font-size:12px;border:1px solid #cfdbf8;border-radius:999px;padding:4px 10px;background:#fff;color:#334155;cursor:pointer}
+    .step-dot.active{background:#eaf1ff;border-color:#94b8ff;color:#1d4ed8;font-weight:700}
+    .demo-split{display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;min-height:600px}
+    .demo-label{font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:6px}
+    .event-log{margin-top:10px;border:1px dashed #cddaf8;border-radius:10px;padding:8px 10px;background:#f9fbff;color:#334155;font-size:13px}
+    .demo-desc{display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;margin-top:12px}
+    .demo-desc-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px}
+    .demo-desc-label{font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:4px}
+    .demo-desc-text{font-size:13px;color:#475569;line-height:1.7}
+    .demo-extra{margin-top:14px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;padding:14px 16px;display:none}
+    .demo-extra.show{display:block}
+    .demo-extra-title{font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .demo-extra-title::before{content:"";width:4px;height:14px;background:#2563eb;border-radius:2px;display:inline-block}
+    .demo-extra-sub{font-size:12px;color:#64748b;margin-bottom:10px}
+    .bind-matrix{width:100%;border-collapse:collapse;font-size:12.5px;color:#334155;background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;table-layout:fixed}
+    .bind-matrix thead th{background:#eef4ff;color:#1e3a8a;padding:8px 10px;font-weight:700;text-align:left;border-bottom:1px solid #dbeafe;font-size:12.5px}
+    .bind-matrix tbody td{padding:10px;border-bottom:1px solid #f1f5f9;vertical-align:top;line-height:1.6}
+    .bind-matrix tbody tr:last-child td{border-bottom:none}
+    .bind-matrix tbody tr:nth-child(even) td{background:#f8fafc}
+    .bind-matrix tbody td:first-child{font-weight:700;color:#0f172a;white-space:nowrap;width:120px}
+    .bind-matrix .col-complex{width:90px;text-align:center}
+    .cx-pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:700}
+    .cx-pill.low{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+    .cx-pill.mid{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+    .cx-pill.high{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+    .bind-matrix strong{color:#1e3a8a}
+    @media (max-width:900px){
+      .bind-matrix{font-size:11.5px}
+      .bind-matrix tbody td:first-child{width:auto}
+    }
+    #demo.tab-panel{border:none;box-shadow:none;background:transparent;padding:18px 0}
+
+    /* 教师端：课堂列表页 */
+    .ci-app{border:1px solid #d5dbe8;border-radius:10px;overflow:hidden;background:#fff;display:flex;height:100%}
+    .ci-sidebar{width:140px;flex:0 0 140px;background:#fafbfd;border-right:1px solid #e5e9f0;padding:10px 0;font-size:12px;color:#475569;overflow:hidden}
+    .ci-sidebar .ci-logo{display:flex;align-items:center;gap:6px;padding:6px 10px;margin-bottom:6px}
+    .ci-logo-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:grid;place-items:center;color:#fff;font-size:14px;font-weight:900}
+    .ci-logo-text{font-size:11px;color:#334155;font-weight:600;line-height:1.2}
+    .ci-menu{list-style:none}
+    .ci-menu li{padding:6px 12px;cursor:pointer;border-radius:0}
+    .ci-menu li:hover{background:#eef3fb}
+    .ci-menu li.active{background:#e8f0ff;color:#1d4ed8;font-weight:700}
+    .ci-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .ci-banner{height:70px;background:linear-gradient(135deg,#3a7d44,#6db33f,#8bc34a);border-radius:0}
+    .ci-content{flex:1;padding:10px;overflow-y:auto}
+    .ci-title{font-size:16px;font-weight:700;margin-bottom:6px}
+    .ci-filters{display:flex;gap:6px;margin-bottom:8px}
+    .ci-filter{font-size:11px;padding:3px 8px;border:1px solid #d5dbe8;border-radius:999px;background:#fff;color:#475569;cursor:pointer}
+    .ci-filter.active{background:#e8f0ff;border-color:#bcd2ff;color:#1d4ed8}
+    .ci-lessons{display:flex;flex-direction:column;gap:6px}
+    .ci-lesson{border:1px solid #e5e9f0;border-radius:8px;padding:8px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#475569}
+    .ci-lesson-info{flex:1;min-width:0}
+    .ci-lesson-name{font-size:12px;color:#1f2937;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ci-lesson-meta{font-size:10px;color:#6b7280;margin-top:2px}
+    .ci-start-btn{flex:0 0 auto;border:1px solid #22c55e;background:#22c55e;color:#fff;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer}
+    .ci-start-btn:hover{background:#16a34a}
+
+    /* 教师端：模式选择弹窗遮罩 */
+    .ci-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center;z-index:10;border-radius:10px}
+    .ci-modal{background:#fff;border-radius:12px;padding:14px;width:min(90%,320px);box-shadow:0 14px 30px rgba(28,58,122,.24)}
+    .ci-modal h4{font-size:14px;color:#1e3a8a;margin-bottom:8px}
+    .ci-modal-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+    .ci-modal-opt{border:1px solid #d8e4fb;border-radius:8px;padding:8px;font-size:12px;background:#f8fbff;color:#334155;cursor:pointer;text-align:center}
+    .ci-modal-opt.selected{border-color:#3b82f6;background:#eaf2ff;color:#1d4ed8;font-weight:700}
+    .ci-modal-opt strong{display:block;font-size:13px;margin-bottom:2px}
+    .ci-modal-footer{text-align:right}
+    .ci-confirm{border:none;background:#3b82f6;color:#fff;border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600}
+    .ci-confirm:hover{background:#2563eb}
+
+    /* 教师端：教室页面 */
+    .ci-room{display:flex;flex-direction:column;height:100%;background:#1a1a1a;border-radius:10px;overflow:hidden;color:#e5e7eb}
+    .ci-room-top{display:flex;align-items:center;justify-content:flex-end;padding:6px 10px;background:rgba(50,50,50,.92);font-size:11px;border-bottom:1px solid #333;position:relative;z-index:5;gap:0}
+    .ci-room-title{color:#9ca3af;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;left:10px}
+    .ci-room-controls{display:flex;align-items:center;gap:0}
+    .ci-room-ctrl-btn{width:28px;height:28px;display:grid;place-items:center;cursor:pointer;color:#ccc;background:none;border:none;padding:0;position:relative}
+    .ci-room-ctrl-btn:hover{color:#fff}
+    .ci-room-ctrl-btn svg{width:18px;height:18px}
+    .ci-room-ctrl-btn .dropdown-arrow{position:absolute;right:-2px;bottom:2px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid #999}
+    .ci-room-sep{width:1px;height:18px;background:#555;margin:0 6px;flex-shrink:0}
+    .ci-room-close:hover{color:#ff5f57}
+    .ci-room-body{flex:1;position:relative;background:#222}
+    .ci-room-toolbar{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:36px;background:rgba(60,60,60,.88);backdrop-filter:blur(6px);border-radius:18px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;z-index:4;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+    .ci-room-toolbar .tb-btn{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;cursor:pointer;color:#999;background:none;border:none;padding:0;transition:all .15s}
+    .ci-room-toolbar .tb-btn:hover{background:rgba(255,255,255,.1);color:#ddd}
+    .ci-room-toolbar .tb-btn svg{width:16px;height:16px}
+    .ci-room-toolbar .tb-sep{width:20px;height:1px;background:#555;margin:3px 0}
+    .ci-room-sign{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(320px,calc(100% - 52px));max-height:calc(100% - 20px);background:linear-gradient(155deg,#0a3e43,#0d5965 52%,#0d4046);border-radius:14px;border:1px solid rgba(117,198,227,.3);box-shadow:0 12px 30px rgba(0,0,0,.5);padding:10px;overflow-y:auto;display:flex;flex-direction:column;color:#e6f8ff}
+    .ci-room-sign h4{font-size:13px;color:#e6f8ff;margin-bottom:4px;font-weight:700}
+    .ci-sign-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid rgba(117,198,227,.25)}
+    .ci-sign-metric{font-size:10px;color:#dcfce7;background:rgba(6,78,59,.6);border:1px solid rgba(74,222,128,.45);border-radius:999px;padding:2px 7px;font-weight:700}
+    .ci-sign-list{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;overflow-y:auto}
+    .ci-sign-item{display:flex;flex-direction:column;align-items:center;background:rgba(3,37,44,.32);border:1px solid rgba(117,198,227,.25);border-radius:10px;padding:6px 4px;font-size:11px;text-align:center}
+    .ci-sign-item.done{border-color:rgba(74,222,128,.6);background:rgba(22,101,52,.35)}
+    .ci-sign-avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#94a3b8,#64748b);border:2px solid rgba(255,255,255,.2);flex:0 0 24px;margin-bottom:3px}
+    .ci-sign-item.done .ci-sign-avatar{border-color:rgba(74,222,128,.6)}
+    .ci-sign-name{color:#e6f8ff;font-weight:600;font-size:11px;margin-bottom:1px}
+    .ci-sign-tag{border-radius:999px;padding:1px 6px;font-size:9px;border:1px solid;font-weight:600}
+    .ci-sign-tag.done{color:#86efac;border-color:rgba(74,222,128,.4);background:transparent}
+    .ci-sign-tag.pending{color:#a8dbe8;border-color:rgba(117,198,227,.3);background:transparent}
+    .ci-finish-btn{margin-top:8px;width:100%;border:none;background:#22c55e;color:#fff;border-radius:8px;padding:7px 0;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px}
+    .ci-finish-btn:hover{background:#16a34a}
+    .ci-room-empty{position:absolute;inset:0;right:52px;display:grid;place-items:center;color:#444;font-size:13px}
+
+    /* 教师端：工具箱弹窗 */
+    .toolbox-overlay{position:absolute;inset:0;right:52px;background:rgba(0,0,0,.5);display:grid;place-items:center;z-index:20;border-radius:0}
+    .toolbox{background:#2e2e2e;border-radius:12px;width:min(380px,92%);max-height:90%;overflow-y:auto;padding:0;box-shadow:0 16px 40px rgba(0,0,0,.6)}
+    .toolbox-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #444}
+    .toolbox-head span{color:#ccc;font-size:14px;font-weight:700}
+    .toolbox-close{background:none;border:none;color:#888;font-size:16px;cursor:pointer}
+    .toolbox-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px}
+    .tb-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:10px;background:#393939;cursor:pointer;border:1px solid transparent}
+    .tb-item:hover{background:#444;border-color:#555}
+    .tb-item.highlight{border-color:#22c55e;background:#2a3e30}
+    .tb-icon{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-size:16px}
+    .tb-name{font-size:10px;color:#bbb;text-align:center}
+
+    /* 教师端：答题器弹窗（设置答案 / 数据统计） */
+    .ans-overlay{position:absolute;inset:0;right:52px;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:25;border-radius:0}
+    .ans-panel{background:#2a2a2a;border-radius:10px;width:min(420px,95%);max-height:92%;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.6)}
+    .ans-top{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#1e1e1e;border-bottom:1px solid #3a3a3a}
+    .ans-top-title{color:#ddd;font-size:12px}
+    .ans-top-title strong{color:#fff;margin-right:6px}
+    .ans-top-title .ans-timer{color:#aaa;margin-left:6px;font-variant-numeric:tabular-nums}
+    .ans-top-controls{display:flex;gap:6px}
+    .ans-top-controls span{color:#777;cursor:pointer;font-size:11px}
+    .ans-body{padding:16px 14px;display:flex;flex-direction:column;gap:14px;color:#ddd}
+    .ans-head-tip{color:#bbb;font-size:12px;line-height:1.6}
+    .ans-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px;border:1px dashed #4a4a4a;border-radius:10px;background:#242424}
+    .ans-opt{position:relative;width:52px;height:52px;margin:0 auto;display:grid;place-items:center;border:2px solid #555;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:#2a2a2a;color:#9aa;font-size:20px;font-weight:700;cursor:pointer;transition:all .15s}
+    .ans-opt:hover{border-color:#86efac;color:#d1fae5}
+    .ans-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.18);color:#dcfce7;box-shadow:0 0 0 2px rgba(34,197,94,.3)}
+    .ans-opt.picked{border-color:#16a34a;background:rgba(22,163,74,.25);color:#fff}
+    .ans-hint{font-size:12px;color:#888;text-align:center}
+    .ans-hint strong{color:#86efac}
+    .ans-actions{display:flex;justify-content:flex-end;gap:10px}
+    .ans-btn{border:1px solid #22c55e;background:transparent;color:#86efac;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;cursor:pointer}
+    .ans-btn:hover{background:rgba(34,197,94,.12)}
+    .ans-btn.primary{background:#22c55e;color:#fff}
+    .ans-btn.primary:hover{background:#16a34a}
+    .ans-btn.danger{border-color:#ef4444;color:#fff;background:#ef4444}
+    .ans-btn.danger:hover{background:#dc2626}
+    .ans-btn:disabled{opacity:.45;cursor:not-allowed}
+
+    /* 教师端：数据统计条形图 */
+    .ans-stats{padding:10px 12px;background:#232323;border:1px solid #3a3a3a;border-radius:10px;display:flex;flex-direction:column;gap:10px}
+    .ans-stats-count{display:flex;justify-content:space-between;align-items:center;color:#ddd;font-size:12px}
+    .ans-stats-count strong{font-size:18px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums}
+    .ans-stats-bar{height:6px;border-radius:999px;background:#333;overflow:hidden}
+    .ans-stats-bar>span{display:block;height:100%;background:#22c55e;border-radius:999px;transition:width .25s}
+    .ans-chart{height:150px;display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:14px;padding:6px 4px;border-bottom:1px solid #444;position:relative}
+    .ans-chart::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed #3a3a3a}
+    .ans-chart::after{content:"";position:absolute;left:0;right:0;top:0;border-top:1px dashed #3a3a3a}
+    .ans-chart-col{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;position:relative}
+    .ans-chart-bar{width:22px;background:#6b7280;border-radius:3px 3px 0 0;min-height:2px;transition:height .25s}
+    .ans-chart-bar.correct{background:#22c55e}
+    .ans-chart-val{position:absolute;top:-18px;color:#ccc;font-size:11px;font-weight:700}
+    .ans-chart-label{color:#999;font-size:11px;margin-top:2px}
+    .ans-summary{display:flex;flex-direction:column;gap:2px;color:#aaa;font-size:12px;text-align:center}
+    .ans-summary span{color:#fff;font-weight:700;margin-left:4px}
+
+    /* 教师端：小黑板弹窗 */
+    .bb-overlay{position:absolute;inset:0;right:52px;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:25;border-radius:0}
+    .bb-panel{background:#2a2a2a;border-radius:10px;width:min(420px,95%);height:80%;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.6)}
+    .bb-top{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:#1e1e1e;border-bottom:1px solid #3a3a3a}
+    .bb-top-title{color:#ccc;font-size:12px}
+    .bb-top-title strong{color:#fff;margin-right:6px}
+    .bb-top-controls{display:flex;gap:6px}
+    .bb-top-controls span{color:#777;cursor:pointer;font-size:11px}
+    .bb-canvas-area{flex:1;background:#3a3a3a;position:relative}
+    .bb-bottom{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#1e1e1e;border-top:1px solid #3a3a3a}
+    .bb-tools{display:flex;gap:6px}
+    .bb-tools span{width:22px;height:22px;border-radius:4px;background:#333;display:grid;place-items:center;font-size:12px;color:#aaa;cursor:pointer}
+    .bb-distribute{border:none;background:#22c55e;color:#fff;border-radius:16px;padding:5px 16px;font-size:12px;font-weight:700;cursor:pointer}
+    .bb-distribute:hover{background:#16a34a}
+
+    /* 教师端：小黑板监控视图 */
+    .bb-monitor{display:flex;flex-direction:column;height:100%;background:#1a1a1a;border-radius:10px;overflow:hidden;color:#e5e7eb}
+    .bb-mon-top{display:flex;align-items:center;padding:6px 10px;background:#2a2a2a;border-bottom:1px solid #444;font-size:12px;gap:0}
+    .bb-mon-title{color:#f0f0f0;font-weight:700;margin-right:8px;white-space:nowrap}
+    .bb-mon-phase{color:#ccc;margin-right:8px;white-space:nowrap}
+    .bb-mon-timer{color:#bbb;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .bb-mon-spacer{flex:1}
+    .bb-mon-layouts{display:flex;align-items:center;gap:2px}
+    .bb-mon-layout-btn{width:26px;height:26px;display:grid;place-items:center;background:none;border:1px solid transparent;border-radius:4px;cursor:pointer;color:#888;padding:0}
+    .bb-mon-layout-btn:hover{color:#ccc;background:#3a3a3a}
+    .bb-mon-layout-btn.active{color:#fff;border-color:#666;background:#444}
+    .bb-mon-layout-btn svg{width:16px;height:16px}
+    .bb-mon-sep{width:1px;height:18px;background:#555;margin:0 8px;flex-shrink:0}
+    .bb-mon-student{display:flex;align-items:center;gap:6px;color:#ddd;font-size:12px;white-space:nowrap}
+    .bb-mon-avatar{width:22px;height:22px;border-radius:50%;background:#e8a000;display:grid;place-items:center}
+    .bb-mon-avatar svg{width:14px;height:14px;color:#fff}
+    .bb-mon-dropdown{color:#e8a000;font-size:10px;cursor:pointer}
+    .bb-mon-ctrl{width:26px;height:26px;display:grid;place-items:center;cursor:pointer;color:#bbb;background:none;border:none;padding:0}
+    .bb-mon-ctrl:hover{color:#fff}
+    .bb-mon-ctrl svg{width:16px;height:16px}
+    .bb-mon-ctrl.close-btn:hover{color:#ff5f57}
+    .bb-mon-body{flex:1;padding:6px;overflow-y:auto;background:#1a1a1a}
+    .bb-mon-grid{display:grid;gap:2px;height:100%}
+    .bb-mon-grid.cols-2{grid-template-columns:1fr 1fr}
+    .bb-mon-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .bb-mon-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    .bb-mon-cell{background:#3a3a3a;border:1px solid #444;border-radius:4px;position:relative;overflow:hidden;min-height:100px}
+    .bb-mon-cell.active{border-color:#888}
+    .bb-mon-cell canvas{position:absolute;inset:0;width:100%;height:100%}
+    .bb-mon-cell-name{position:absolute;left:6px;bottom:6px;font-size:11px;color:#ccc;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+    .bb-mon-float{position:absolute;right:10px;bottom:50px;display:flex;gap:4px;background:#3a3a3a;border:1px solid #555;border-radius:8px;padding:4px 8px;z-index:5}
+    .bb-mon-float-btn{width:26px;height:26px;display:grid;place-items:center;background:none;border:none;cursor:pointer;color:#ccc;padding:0}
+    .bb-mon-float-btn:hover{color:#fff}
+    .bb-mon-float-btn svg{width:18px;height:18px}
+    .bb-mon-bottom{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#2a2a2a;border-top:1px solid #444}
+    .bb-mon-pager{display:flex;align-items:center;gap:6px;color:#bbb;font-size:12px}
+    .bb-mon-pager button{width:24px;height:24px;display:grid;place-items:center;background:none;border:1px solid #555;border-radius:4px;color:#bbb;cursor:pointer;padding:0}
+    .bb-mon-pager button:hover{background:#3a3a3a;color:#fff}
+    .bb-mon-recall{border:none;background:#e8a000;color:#fff;border-radius:6px;padding:6px 24px;font-size:13px;font-weight:700;cursor:pointer}
+    .bb-mon-recall:hover{background:#d49200}
+
+    /* 教师端：教室内窗口叠加层 */
+    .ci-room-window{position:absolute;inset:0;right:52px;z-index:30;display:flex;align-items:stretch;padding:0;background:rgba(0,0,0,.15)}
+    .ci-room-window>div{flex:1;border-radius:0;overflow:hidden}
+
+    /* 教师端：LMS课程管理页 */
+    .lms-page{display:flex;height:100%;background:#fff;border-radius:10px;overflow:hidden;font-size:13px}
+    .lms-side{width:200px;flex:0 0 200px;background:#fafbfd;border-right:1px solid #eee;padding:12px 0;overflow-y:auto}
+    .lms-side-header{display:flex;align-items:center;gap:8px;padding:8px 14px;margin-bottom:6px}
+    .lms-side-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center;color:#fff;font-size:14px;font-weight:700}
+    .lms-side-info{line-height:1.2}
+    .lms-side-name{font-size:13px;font-weight:700;color:#111}
+    .lms-side-org{font-size:10px;color:#999}
+    .lms-side-section{font-size:11px;color:#999;padding:8px 14px 4px;display:flex;align-items:center;justify-content:space-between}
+    .lms-side-section-icons{display:flex;gap:4px;color:#bbb}
+    .lms-side-item{padding:7px 14px 7px 20px;color:#555;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12px}
+    .lms-side-item:hover{background:#f0f4ff}
+    .lms-side-item.active{background:#e8f0ff;color:#1d4ed8;font-weight:600}
+    .lms-side-item .icon{width:16px;text-align:center;flex-shrink:0}
+    .lms-side-indent{padding-left:34px}
+    .lms-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .lms-banner{height:80px;background:linear-gradient(135deg,#0ea5e9,#38bdf8);background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 80"><rect fill="%230ea5e9" width="600" height="80"/><path d="M0 60 Q150 20 300 50 T600 40 V80 H0Z" fill="%2338bdf8" opacity=".5"/></svg>');background-size:cover;border-radius:0;flex-shrink:0}
+    .lms-content{flex:1;padding:14px 18px;overflow-y:auto}
+    .lms-content-title{font-size:18px;font-weight:700;margin-bottom:8px}
+    .lms-content-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .lms-tabs{display:flex;gap:4px}
+    .lms-tab{padding:4px 12px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;color:#555;cursor:pointer;background:#fff}
+    .lms-tab.active{background:#111;color:#fff;border-color:#111}
+    .lms-new-btn{background:#111;color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer}
+    .lms-new-btn:hover{background:#333}
+    .lms-module{margin-bottom:14px}
+    .lms-module-head{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#333;margin-bottom:4px;cursor:pointer}
+    .lms-module-desc{font-size:11px;color:#888;line-height:1.5;margin-bottom:8px}
+    .lms-lesson{display:flex;align-items:center;padding:10px 12px;border:1px solid #eee;border-radius:8px;margin-bottom:6px;gap:10px}
+    .lms-lesson-icon{width:28px;height:28px;border-radius:6px;background:#f3f4f6;display:grid;place-items:center;font-size:14px;flex-shrink:0}
+    .lms-lesson-info{flex:1;min-width:0}
+    .lms-lesson-name{font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .lms-lesson-meta{font-size:10px;color:#999;display:flex;gap:8px;margin-top:2px}
+    .lms-lesson-meta .tag{padding:1px 6px;border-radius:3px;font-size:9px;font-weight:600}
+    .lms-lesson-meta .tag-green{background:#dcfce7;color:#16a34a}
+    .lms-lesson-meta .tag-orange{background:#fef3c7;color:#d97706}
+    .lms-lesson-meta .tag-gray{background:#f3f4f6;color:#6b7280}
+    .lms-publish-btn{border:1px solid #e5e7eb;border-radius:6px;padding:4px 14px;background:#fff;color:#333;font-size:12px;cursor:pointer;flex-shrink:0}
+    .lms-publish-btn:hover{background:#f9fafb;border-color:#d1d5db}
+    .lms-top-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid #eee;flex-shrink:0}
+    .lms-top-left{display:flex;align-items:center;gap:8px;font-size:12px;color:#666}
+    .lms-top-right{display:flex;align-items:center;gap:10px}
+    .lms-badge{background:#111;color:#fff;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
+
+    /* 发布活动弹窗 */
+    .new-act-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center;z-index:30;border-radius:10px}
+    .new-act-modal{background:#fff;border-radius:14px;width:min(560px,95%);max-height:90%;overflow-y:auto;padding:20px 24px;box-shadow:0 16px 40px rgba(0,0,0,.2)}
+    .new-act-title{text-align:center;font-size:16px;font-weight:700;margin-bottom:16px}
+    .new-act-section{font-size:12px;color:#999;margin-bottom:8px}
+    .new-act-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+    .new-act-grid.wide{grid-template-columns:repeat(2,1fr)}
+    .new-act-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 8px;border:1px solid #eee;border-radius:10px;cursor:pointer;font-size:11px;color:#555;background:#fafafa;position:relative}
+    .new-act-item:hover{border-color:#d1d5db;background:#f5f7ff}
+    .new-act-item.big{flex-direction:row;padding:14px 16px;gap:12px;align-items:flex-start}
+    .new-act-item .act-icon{width:36px;height:36px;border-radius:8px;background:#f0f0f0;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+    .new-act-item .act-name{font-weight:600;color:#333}
+    .new-act-item .act-desc{font-size:10px;color:#999;line-height:1.3}
+    .new-act-item .new-badge{position:absolute;top:4px;right:4px;background:#ef4444;color:#fff;font-size:8px;padding:1px 5px;border-radius:3px;font-weight:700}
+
+    /* 测验编辑页 */
+    .quiz-edit{display:flex;height:100%;background:#fff;border-radius:10px;overflow:hidden;font-size:13px}
+    .quiz-edit-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid #eee;background:#f9fafb;flex-shrink:0}
+    .quiz-edit-top-title{font-size:14px;font-weight:600;color:#111}
+    .quiz-edit-top-btns{display:flex;gap:6px}
+    .quiz-edit-top-btns button{border:none;background:none;font-size:16px;color:#999;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:4px}
+    .quiz-edit-top-btns button:hover{background:#eee}
+    .quiz-edit-body{display:flex;flex:1;overflow:hidden}
+    .quiz-edit-left{width:120px;flex:0 0 120px;border-right:1px solid #eee;padding:10px 0;overflow-y:auto;background:#fafbfd}
+    .quiz-edit-left-item{padding:6px 12px;font-size:12px;color:#555;cursor:pointer}
+    .quiz-edit-left-item:hover{background:#f0f4ff}
+    .quiz-edit-left-item.active{color:#16a34a;font-weight:600;background:#f0fdf4}
+    .quiz-edit-left-sep{height:1px;background:#eee;margin:6px 12px}
+    .quiz-edit-center{flex:1;padding:14px;overflow-y:auto}
+    .quiz-edit-paper{border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:12px;background:#f9fafb;position:relative}
+    .quiz-edit-paper-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:14px;color:#999;cursor:pointer}
+    .quiz-edit-paper-title{font-size:13px;font-weight:700;color:#111;margin-bottom:6px}
+    .quiz-edit-paper-body{font-size:12px;color:#666;line-height:1.6;max-height:120px;overflow:hidden}
+    .quiz-edit-paper-count{font-size:11px;color:#888;margin:6px 0;display:flex;gap:12px}
+    .quiz-edit-q{border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+    .quiz-edit-q-tags{display:flex;gap:4px;margin-bottom:6px}
+    .quiz-edit-q-tag{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}
+    .quiz-edit-q-tag.type{background:#fef3c7;color:#92400e}
+    .quiz-edit-q-tag.diff{background:#fee2e2;color:#991b1b}
+    .quiz-edit-q-tag.diff-easy{background:#dcfce7;color:#166534}
+    .quiz-edit-q-body{font-size:13px;color:#333;line-height:1.6;margin-bottom:8px}
+    .quiz-edit-q-footer{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#999}
+    .quiz-edit-q-actions{display:flex;gap:8px}
+    .quiz-edit-q-actions span{cursor:pointer}
+    .quiz-edit-q-actions span:hover{color:#333}
+    .quiz-edit-right{width:200px;flex:0 0 200px;border-left:1px solid #eee;padding:12px;overflow-y:auto;background:#fafbfd}
+    .quiz-edit-right label{display:block;font-size:11px;color:#888;margin-bottom:4px;margin-top:10px}
+    .quiz-edit-right label:first-child{margin-top:0}
+    .quiz-edit-right select,.quiz-edit-right input[type="text"]{width:100%;padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;background:#fff;color:#333}
+    .quiz-edit-bottom{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-top:1px solid #eee;background:#f9fafb;flex-shrink:0}
+    .quiz-edit-bottom button{padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;border:1px solid #e5e7eb;background:#fff;color:#333}
+    .quiz-edit-bottom button:hover{background:#f3f4f6}
+    .quiz-edit-publish{background:#16a34a !important;color:#fff !important;border-color:#16a34a !important;font-weight:700}
+    .quiz-edit-publish:hover{background:#15803d !important}
+
+    /* 学生端：测验作答页（同步 classroom-quiz-demo.html 样式）*/
+    .stu-quiz{flex:1;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(circle at 30% 20%,#eef3ff 0%,#e8ecf6 45%,#e2e7f2 100%)}
+    .stu-quiz-header{padding:10px 16px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fff}
+    .stu-quiz-header .sq-status{font-size:14px;color:#333}
+    .stu-quiz-header .sq-timer{font-size:13px;color:#ef4444;font-weight:600;font-variant-numeric:tabular-nums;margin-left:auto;margin-right:10px}
+    .stu-quiz-header .sq-close{width:32px;height:32px;border:none;background:transparent;font-size:20px;color:#666;cursor:pointer;border-radius:6px}
+    .stu-quiz-header .sq-close:hover{background:#f5f5f5}
+    .stu-quiz-body{flex:1;display:flex;overflow:hidden;min-height:0;position:relative}
+    .stu-quiz-main{flex:1;padding:16px;overflow-y:auto;padding-bottom:80px}
+    .sq-question{border:1px solid #eee;border-radius:12px;padding:16px;background:#fafafa}
+    .sq-question .q-tag{font-size:12px;color:#1890ff;margin-bottom:10px}
+    .sq-question .q-content{font-size:14px;line-height:1.7;color:#333;margin-bottom:14px}
+    .sq-question .q-options{font-size:13px;color:#555}
+    .sq-question .q-options .opt{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;padding:8px 10px;border-radius:6px}
+    .sq-question .q-options .opt:hover{background:#f0f4ff}
+    .sq-question .q-options .opt.selected{background:#e8f0ff;color:#1d4ed8;font-weight:500}
+    .sq-question .q-options .opt input{cursor:pointer;accent-color:#1890ff}
+    .sq-question .q-blanks input,.sq-blank{border:none;border-bottom:1px solid #999;padding:4px 8px;margin:0 4px;min-width:80px;font-size:14px;background:transparent}
+    .sq-question .q-blanks input:focus,.sq-blank:focus{outline:none;border-color:#1890ff}
+    .sq-scratch{margin-top:14px;border:1px solid #e6eaf0;border-radius:12px;background:#f8fafc;overflow:hidden}
+    .sq-scratch-head{padding:8px 14px;font-size:13px;color:#6b7280;font-weight:500}
+    .sq-scratch-toolbar{display:flex;align-items:center;gap:8px;padding:6px 14px 10px;flex-wrap:wrap;opacity:.92}
+    .sq-scratch-toolbar .sq-tool-btn{min-width:32px;height:30px;border:1px solid #d1d5db;background:#fff;color:#374151;border-radius:6px;padding:0 8px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+    .sq-scratch-toolbar .sq-tool-btn.active{background:#e0ecff;border-color:#93c5fd;color:#1d4ed8}
+    .sq-scratch-toolbar .sq-color-btn{width:22px;height:22px;border-radius:50%;border:2px solid #f3f4f6;box-shadow:0 0 0 1px #cbd5e1;cursor:pointer}
+    .sq-scratch-toolbar .sq-color-btn.active{box-shadow:0 0 0 2px #94a3b8}
+    .sq-scratch-toolbar .sq-color-btn[data-c="black"]{background:#333}
+    .sq-scratch-toolbar .sq-color-btn[data-c="red"]{background:#f5222d}
+    .sq-scratch-toolbar .sq-color-btn[data-c="blue"]{background:#1890ff}
+    .sq-scratch-toolbar .sq-stroke-btn{width:24px;height:24px;border:1px solid #d1d5db;border-radius:999px;background:#fff;cursor:pointer;position:relative}
+    .sq-scratch-toolbar .sq-stroke-btn::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:999px;background:#475569}
+    .sq-scratch-toolbar .sq-stroke-btn[data-s="2"]::after{width:6px;height:2px}
+    .sq-scratch-toolbar .sq-stroke-btn[data-s="4"]::after{width:10px;height:4px}
+    .sq-scratch-toolbar .sq-stroke-btn[data-s="7"]::after{width:14px;height:7px}
+    .sq-scratch-toolbar .sq-stroke-btn.active{background:#ecfeff;border-color:#67e8f9}
+    .sq-scratch-wrap{padding:6px 14px 12px}
+    .sq-scratch-wrap canvas{width:100%;height:160px;border-radius:10px;display:block;background:#fff;border:1px solid #e5e7eb;cursor:crosshair;touch-action:none}
+    .sq-progress-sticky{position:absolute;left:0;right:0;bottom:0;z-index:12;padding:10px 16px;background:#f8fafc;border-top:1px solid #eee;box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+    .sq-progress-row{display:flex;align-items:center;gap:12px}
+    .sq-progress-row .sq-nav-btn{padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;border:1px solid #e5e7eb;background:#fff;color:#333;font-weight:500}
+    .sq-progress-row .sq-nav-btn:hover{background:#f3f4f6}
+    .sq-progress-row .sq-nav-btn.primary{background:#1890ff;color:#fff;border-color:#1890ff}
+    .sq-progress-row .sq-nav-btn.primary:hover{background:#1677cc}
+    .sq-progress-label{font-size:13px;color:#4b5563;white-space:nowrap}
+    .sq-progress-track{flex:1;min-width:80px;height:8px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+    .sq-progress-fill{height:100%;border-radius:999px;background:#10b981;width:0%;transition:width .28s}
+    .sq-progress-pct{font-size:13px;font-weight:600;color:#10b981;margin-left:auto;white-space:nowrap}
+    .sq-toggle-card{border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;color:#374151;padding:0}
+    .sq-toggle-card:hover{color:#111;text-decoration:underline}
+    .sq-side{position:absolute;right:0;top:0;bottom:60px;width:180px;border-left:1px solid #eee;background:#fff;padding:12px;display:flex;flex-direction:column;z-index:14;transform:translateX(100%);transition:transform .25s;box-shadow:-8px 0 24px rgba(15,23,42,.08)}
+    .sq-side.expanded{transform:translateX(0)}
+    .sq-side-title{font-size:13px;font-weight:600;margin-bottom:10px}
+    .sq-side-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:10px}
+    .sq-side-grid .sq-num{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:6px;font-size:11px;cursor:pointer;border:1px solid transparent}
+    .sq-side-grid .sq-num:hover{background:#e6f7ff;color:#1890ff}
+    .sq-side-grid .sq-num.answered{background:#dbeafe;color:#1d4ed8;font-weight:600}
+    .sq-side-grid .sq-num.current{border-color:#1890ff;background:#e6f7ff}
+    .sq-side-legend{font-size:10px;color:#999;margin-bottom:10px}
+    .sq-side-timer{font-size:12px;color:#666;margin-bottom:10px;font-variant-numeric:tabular-nums}
+    .sq-side-submit{width:100%;padding:8px;background:#1890ff;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+    .sq-side-submit:hover{background:#1677cc}
+
+    /* 教师端：测验监控面板（同步 classroom-quiz-demo.html 样式）*/
+    .qr-page{display:flex;flex-direction:column;height:100%;background:#f5f5f5;border-radius:10px;overflow:hidden;font-size:13px}
+    .qr-header{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .qr-header-left{display:flex;align-items:center;gap:12px}
+    .qr-logo{width:36px;height:36px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+    .qr-title{font-size:14px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qr-win-ctrls{display:flex;align-items:center;gap:6px;color:#6b7280;font-size:13px}
+    .qr-win-ctrls span{cursor:pointer;padding:3px;border-radius:4px}
+    .qr-win-ctrls span:hover{background:#f3f4f6}
+    .qr-body{flex:1;overflow-y:auto;background:#f9fafb;padding:16px}
+    .qr-section-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .qr-section-title{font-size:15px;font-weight:600;color:#111;display:flex;align-items:center;gap:6px}
+    .qr-section-action{font-size:12px;color:#6b7280;cursor:pointer}
+    .qr-stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+    .qr-stat-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .qr-stat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+    .qr-stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+    .qr-stat-icon.indigo{background:#e0e7ff;color:#4f46e5}
+    .qr-stat-icon.emerald{background:#d1fae5;color:#059669}
+    .qr-stat-icon.amber{background:#fef3c7;color:#d97706}
+    .qr-stat-icon.blue{background:#dbeafe;color:#2563eb}
+    .qr-stat-icon.rose{background:#ffe4e6;color:#e11d48}
+    .qr-stat-trend{font-size:12px;color:#059669;font-weight:500}
+    .qr-stat-label{font-size:12px;color:#6b7280;margin-bottom:2px}
+    .qr-stat-value{font-size:22px;font-weight:700;color:#111}
+    .qr-stat-sub{font-size:14px;color:#9ca3af;margin-left:2px}
+    .qr-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+    .qr-search{width:200px;padding:7px 10px 7px 30px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;background:#fff}
+    .qr-search-wrap{position:relative}
+    .qr-search-wrap::before{content:"Q";position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:12px}
+    .qr-filter-group{display:flex;gap:4px;background:#fff;padding:3px;border-radius:6px;border:1px solid #e5e7eb}
+    .qr-filter-group button{padding:5px 10px;font-size:11px;border:none;border-radius:4px;background:transparent;color:#6b7280;cursor:pointer}
+    .qr-filter-group button.active{background:#4f46e5;color:#fff}
+    .qr-students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .qr-stu-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.05);cursor:pointer;transition:transform .2s,box-shadow .2s}
+    .qr-stu-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    .qr-card-head{padding:12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f3f4f6}
+    .qr-card-left{display:flex;align-items:center;gap:8px}
+    .qr-card-avatar-wrap{position:relative}
+    .qr-card-avatar{width:36px;height:36px;border-radius:50%;background:#e5e7eb}
+    .qr-card-dot{position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-radius:50%;border:2px solid #fff}
+    .qr-card-dot.done{background:#10b981}
+    .qr-card-dot.ing{background:#fb923c}
+    .qr-card-dot.warn{background:#ef4444}
+    .qr-card-name{font-weight:600;color:#111;font-size:13px}
+    .qr-card-status{font-size:11px;margin-top:1px}
+    .qr-card-status.done{color:#059669}
+    .qr-card-status.ing{color:#ea580c}
+    .qr-card-status.warn{color:#dc2626}
+    .qr-card-right{display:flex;align-items:center;gap:6px}
+    .qr-card-bell{position:relative;font-size:14px;color:#6b7280}
+    .qr-card-bell-badge{position:absolute;top:-4px;right:-6px;min-width:14px;height:14px;background:#ef4444;color:#fff;font-size:9px;font-weight:600;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+    .qr-card-award{display:flex;align-items:center;gap:2px;background:#fef9c3;color:#a16207;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px}
+    .qr-card-preview{aspect-ratio:16/10;background:#fff;overflow:hidden;border-bottom:1px solid #f3f4f6;position:relative}
+    .qr-card-preview-inner{padding:8px 10px;font-size:10px;color:#374151;line-height:1.35;overflow:hidden;height:100%}
+    .qr-card-preview-inner .thumb-q{font-weight:600;color:#111;margin-bottom:4px;font-size:10px}
+    .qr-card-preview-inner .thumb-opts{display:flex;flex-wrap:wrap;gap:3px}
+    .qr-card-preview-inner .thumb-opt{padding:2px 6px;border-radius:3px;background:#f3f4f6;color:#6b7280;font-size:9px}
+    .qr-card-preview-inner .thumb-opt.selected{background:#dbeafe;color:#1d4ed8;font-weight:500}
+    .qr-card-preview-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+    .qr-card-preview-overlay button{padding:8px 16px;background:#fff;color:#111;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+    .qr-card-progress{padding:10px 12px}
+    .qr-card-progress .row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+    .qr-card-progress .pct{font-weight:600}
+    .qr-card-progress .pct.done{color:#059669}
+    .qr-card-progress .pct.ing{color:#ea580c}
+    .qr-card-progress .pct.warn{color:#dc2626}
+    .qr-card-pbar{height:6px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+    .qr-card-pfill{height:100%;border-radius:999px;transition:width .3s}
+    .qr-card-pfill.done{background:#10b981}
+    .qr-card-pfill.ing{background:#fb923c}
+    .qr-card-pfill.warn{background:#ef4444}
+    .qr-bottom{display:flex;align-items:center;justify-content:flex-end;padding:8px 16px;background:#fff;border-top:1px solid #eee;flex-shrink:0;gap:10px}
+    .qr-bottom .qr-time{font-size:12px;color:#666;font-variant-numeric:tabular-nums}
+    .qr-bottom .qr-end-btn{padding:8px 22px;background:#dc2626;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(220,38,38,.3)}
+    .qr-bottom .qr-end-btn:hover{background:#b91c1c}
+
+    /* 教师端：学生作答详情二级页 */
+    .qr-detail{display:flex;flex-direction:column;height:100%;background:#f5f5f5;border-radius:10px;overflow:hidden;font-size:13px}
+    .qr-detail-header{background:#fff;padding:10px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .qr-detail-back{cursor:pointer;color:#4f46e5;font-size:13px;font-weight:500;background:none;border:none;padding:0}
+    .qr-detail-back:hover{text-decoration:underline}
+    .qr-detail-htitle{font-size:14px;font-weight:600;color:#111;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .qr-detail-hctrls{display:flex;gap:6px;color:#6b7280;font-size:13px}
+    .qr-detail-hctrls span{cursor:pointer;padding:3px;border-radius:4px}
+    .qr-detail-hctrls span:hover{background:#f3f4f6}
+    .qr-detail-body{flex:1;overflow-y:auto;background:#f9fafb;padding:20px 16px}
+    .qr-detail-info{background:#fff;border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;border:1px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .qr-detail-info-left{display:flex;align-items:center;gap:12px}
+    .qr-detail-info-avatar{width:48px;height:48px;border-radius:50%;background:#e5e7eb;position:relative}
+    .qr-detail-info-avatar .dot{position:absolute;bottom:0;right:0;width:14px;height:14px;border-radius:50%;border:2px solid #fff;background:#10b981}
+    .qr-detail-info-name{font-size:16px;font-weight:700;color:#111}
+    .qr-detail-info-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px}
+    .qr-detail-info-badge.done{background:#dcfce7;color:#16a34a}
+    .qr-detail-info-badge.ing{background:#fef3c7;color:#d97706}
+    .qr-detail-info-sub{font-size:12px;color:#6b7280;margin-top:2px}
+    .qr-detail-info-stats{display:flex;align-items:center;gap:20px}
+    .qr-detail-info-stat{text-align:center}
+    .qr-detail-info-stat .num{font-size:24px;font-weight:700;color:#111}
+    .qr-detail-info-stat .lbl{font-size:11px;color:#6b7280}
+    .qr-detail-info-sep{width:1px;height:40px;background:#e5e7eb}
+    .qr-detail-info-award{display:flex;align-items:center;gap:4px;font-size:20px}
+    .qr-detail-info-award .num{color:#ca8a04;font-size:24px;font-weight:700}
+    .qr-detail-grid{display:grid;grid-template-columns:200px 1fr;gap:16px}
+    .qr-detail-sidebar{background:#fff;border-radius:14px;padding:14px;border:1px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .qr-detail-sidebar h3{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:4px}
+    .qr-detail-q-item{padding:10px 12px;border-radius:8px;margin-bottom:4px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border:1px solid transparent;font-size:12px}
+    .qr-detail-q-item:hover{background:#f9fafb;border-color:#e5e7eb}
+    .qr-detail-q-item.active{background:#fff7ed;border-color:#fdba74}
+    .qr-detail-q-item .q-label{font-weight:600;color:#111}
+    .qr-detail-q-item .q-time{font-size:10px;color:#9ca3af;margin-top:2px}
+    .qr-detail-q-item .q-check{color:#10b981;font-size:14px}
+    .qr-detail-main{background:#fff;border-radius:14px;padding:20px;border:1px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .qr-detail-q-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+    .qr-detail-q-title{font-size:15px;font-weight:600;color:#111}
+    .qr-detail-q-subtitle{font-size:12px;margin-top:4px}
+    .qr-detail-q-subtitle .correct{color:#16a34a;font-weight:600}
+    .qr-detail-q-subtitle .wrong{color:#dc2626;font-weight:600}
+    .qr-detail-grade-btn{padding:6px 14px;background:#ea580c;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+    .qr-detail-grade-btn:hover{background:#c2410c}
+    .qr-detail-q-meta{font-size:11px;color:#6b7280;margin-bottom:14px}
+    .qr-detail-q-content{font-size:14px;line-height:1.7;color:#333;margin-bottom:16px}
+    .qr-detail-q-answer{border:1px solid #e5e7eb;border-radius:10px;padding:14px;background:#fafafa;margin-bottom:16px;font-size:13px;line-height:1.6;color:#444}
+    .qr-detail-q-answer .line{padding:3px 0;border-left:3px solid #6366f1;padding-left:10px;margin-bottom:4px}
+    .qr-detail-q-note{font-size:11px;color:#9ca3af;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+    .qr-detail-scratch-area{border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;background:#f8fafc;margin-bottom:14px}
+    .qr-detail-scratch-label{padding:8px 14px;font-size:12px;color:#6b7280;font-weight:500;border-bottom:1px solid #eee;display:flex;align-items:center;gap:6px}
+    .qr-detail-scratch-canvas{width:100%;height:140px;display:block;background:#fff;cursor:default}
+    .qr-detail-nav{display:flex;align-items:center;justify-content:center;gap:10px;padding-top:16px;border-top:1px solid #f3f4f6}
+    .qr-detail-nav button{padding:7px 16px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#333;font-size:12px;cursor:pointer}
+    .qr-detail-nav button:hover{background:#f3f4f6}
+    .qr-detail-nav button.primary{background:#4f46e5;color:#fff;border-color:#4f46e5}
+    .qr-detail-nav button.primary:hover{background:#4338ca}
+
+    /* 学生端：小黑板画板 */
+    .stu-bb{flex:1;background:#2a2a2a;display:flex;flex-direction:column;overflow:hidden}
+    .stu-bb-top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#1e1e1e;border-bottom:1px solid #3a3a3a}
+    .stu-bb-top span{color:#ccc;font-size:12px}
+    .stu-bb-top strong{color:#fff;margin-right:6px}
+    .stu-bb-canvas{flex:1;position:relative;background:#3a3a3a;cursor:crosshair}
+    .stu-bb-canvas canvas{position:absolute;inset:0;width:100%;height:100%}
+    .stu-bb-bottom{display:flex;gap:6px;padding:6px 10px;background:#1e1e1e;border-top:1px solid #3a3a3a}
+    .stu-bb-bottom span{width:22px;height:22px;border-radius:4px;background:#333;display:grid;place-items:center;font-size:12px;color:#aaa;cursor:pointer}
+
+    /* 学生端：Pad 外壳 */
+    .pad-outer{border-radius:24px;border:2px solid #334155;background:linear-gradient(180deg,#1e293b,#111827);padding:12px;box-shadow:0 16px 32px rgba(15,23,42,.3);height:100%;display:flex;flex-direction:column}
+    .pad-inner{border-radius:14px;flex:1;overflow:hidden;display:flex;flex-direction:column}
+
+    /* 学生端：锁屏 */
+    .stu-lock{flex:1;background:linear-gradient(155deg,#0a3e43,#0d5965 52%,#0d4046);display:grid;place-items:center;text-align:center;color:#d1f4ff;position:relative;overflow:hidden}
+    .stu-lock-icon{font-size:36px;margin-bottom:6px;color:#4adeab;filter:drop-shadow(0 0 8px rgba(74,222,171,.35))}
+    .stu-lock h3{font-size:20px;color:#e6f8ff;margin-bottom:8px;letter-spacing:1px}
+    .stu-lock-btn{border:1px solid rgba(74,222,171,.5);border-radius:8px;padding:6px 18px;background:transparent;color:#a7f3d0;font-size:13px}
+    .stu-lock-note{margin-top:10px;font-size:12px;color:#6ee7b7}
+    .stu-lock-note::before{content:"●";margin-right:4px;font-size:8px}
+    .stu-lock-shape{position:absolute;border-radius:50%;opacity:.18;background:#22c55e}
+    .stu-lock-sq{position:absolute;border-radius:8px;opacity:.15;background:#22c55e}
+
+    /* 学生端：教室视图（已解除管控、等待互动） */
+    .stu-room{flex:1;background:#2a2a2a;display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .stu-room-top{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:11px;color:#888}
+    .stu-room-top .signal{display:flex;align-items:center;gap:4px}
+    .stu-room-top .signal::before{content:"";display:inline-block;width:4px;height:8px;background:#4ade80;border-radius:1px;box-shadow:4px 0 0 #4ade80,8px 0 0 #4ade80,12px 0 0 #666}
+    .stu-room-top .signal span{margin-left:16px}
+    .stu-room-body{flex:1;background:#333;margin:0 6px;border-radius:4px}
+    .stu-room-hand{position:absolute;right:16px;bottom:56px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;font-size:20px;cursor:pointer}
+    .stu-room-bottom{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:8px 12px}
+    .stu-room-bottom-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;color:#aaa;font-size:14px;cursor:pointer}
+
+    /* 学生端：答题器（答题卡） */
+    .stu-ans{flex:1;background:#2a2a2a;display:flex;flex-direction:column;padding:16px;gap:16px}
+    .stu-ans-top{color:#ddd;font-size:13px;display:flex;align-items:center;gap:10px}
+    .stu-ans-top strong{color:#fff;font-size:14px}
+    .stu-ans-top .stu-ans-timer{color:#9ca3af;font-variant-numeric:tabular-nums}
+    .stu-ans-card{flex:1;background:#2f2f2f;border:1px dashed #4b5563;border-radius:12px;display:grid;place-items:center;padding:20px}
+    .stu-ans-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .stu-ans-opt{width:60px;height:60px;display:grid;place-items:center;color:#9ca3af;font-size:22px;font-weight:800;border:2px solid #6b7280;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:#2a2a2a;cursor:pointer;transition:all .15s;user-select:none}
+    .stu-ans-opt:hover{border-color:#86efac;color:#d1fae5}
+    .stu-ans-opt.picked{border-color:#22c55e;color:#fff;background:rgba(34,197,94,.22);box-shadow:0 0 0 3px rgba(34,197,94,.25)}
+    .stu-ans-submit{border:none;background:#22c55e;color:#fff;border-radius:10px;padding:12px 0;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:4px}
+    .stu-ans-submit:hover{background:#16a34a}
+    .stu-ans-submit:disabled{background:#374151;color:#9ca3af;cursor:not-allowed}
+    .stu-ans-done{flex:1;display:grid;place-items:center;color:#86efac;font-size:14px}
+
+    /* 学生端：签到页 */
+    .stu-sign{flex:1;background:linear-gradient(155deg,#0a3e43,#0d5965 52%,#0d4046);color:#e6f8ff;padding:10px;display:flex;flex-direction:column;overflow:hidden}
+    .stu-sign-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+    .stu-sign h3{font-size:16px;font-weight:700}
+    .stu-sign-sub{font-size:11px;color:#a8dbe8;margin-bottom:8px}
+    .stu-sign-badge{background:rgba(6,78,59,.6);border:1px solid rgba(74,222,128,.45);border-radius:8px;padding:4px 8px;text-align:center;font-size:11px;color:#dcfce7;line-height:1.2}
+    .stu-sign-badge strong{display:block;font-size:18px;font-weight:800}
+    .stu-sign-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;overflow-y:auto}
+    .stu-card{border:1px solid rgba(117,198,227,.25);border-radius:10px;background:rgba(3,37,44,.32);padding:6px 4px;text-align:center;cursor:pointer;transition:all .15s}
+    .stu-card:hover{border-color:rgba(74,222,128,.5)}
+    .stu-card-avatar{width:32px;height:32px;border-radius:50%;margin:0 auto 4px;background:linear-gradient(180deg,#94a3b8,#64748b);border:2px solid rgba(255,255,255,.2);overflow:hidden}
+    .stu-card-name{font-size:11px;font-weight:600;margin-bottom:2px}
+    .stu-card-status{font-size:10px;color:#a8dbe8}
+    .stu-card.signed{border-color:rgba(74,222,128,.6);background:rgba(22,101,52,.35)}
+    .stu-card.signed .stu-card-status{color:#86efac}
+    .stu-card.signed .stu-card-avatar{border-color:rgba(74,222,128,.6)}
+    .stu-card-check{display:none;position:absolute;right:-2px;top:-2px;width:14px;height:14px;border-radius:50%;background:#22c55e;color:#fff;font-size:9px;line-height:14px;text-align:center}
+    .stu-card.signed .stu-card-check{display:block}
+    .stu-card{position:relative}
+
+    /* ===== 课堂报告 ===== */
+    .rpt{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#1e293b;line-height:1.6}
+    .rpt-hero{position:relative;overflow:hidden;background:#0f172a;padding:40px 24px 80px;border-radius:14px 14px 0 0}
+    .rpt-hero-bg{position:absolute;inset:0;opacity:.2;background:radial-gradient(circle at 50% 120%,#4f46e5,transparent)}
+    .rpt-hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px}
+    .rpt-hero-left{flex:1;min-width:280px}
+    .rpt-badge-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:rgba(79,70,229,.2);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+    .rpt-hero-title{font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:4px}
+    .rpt-hero-title span{color:#818cf8;font-weight:300}
+    .rpt-hero-sub{color:#94a3b8;font-size:14px}
+    .rpt-hero-stats{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px 28px;display:flex;align-items:center;gap:24px}
+    .rpt-hero-stat .label{color:#94a3b8;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+    .rpt-hero-stat .value{font-size:32px;font-weight:900}
+    .rpt-hero-stat .value.green{color:#34d399}
+    .rpt-hero-stat .value.indigo{color:#818cf8}
+    .rpt-hero-sep{width:1px;height:48px;background:rgba(255,255,255,.1)}
+    .rpt-body{max-width:1100px;margin:-40px auto 0;position:relative;z-index:2;padding:0 24px 40px;display:flex;flex-direction:column;gap:20px}
+    .rpt-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .rpt-metric-icon.bg-yellow{background:#ca8a04}
+    .rpt-metric{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#f8fafc;border:1px solid #f1f5f9}
+    .rpt-metric-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0}
+    .rpt-metric-icon.bg-indigo{background:#6366f1}
+    .rpt-metric-icon.bg-green{background:#10b981}
+    .rpt-metric-icon.bg-amber{background:#f59e0b}
+    .rpt-metric-icon.bg-rose{background:#f43f5e}
+    .rpt-metric-label{font-size:11px;font-weight:500;color:#64748b;text-transform:uppercase;letter-spacing:1px}
+    .rpt-metric-val{font-size:20px;font-weight:700;color:#0f172a}
+    .rpt-metric-val span{font-size:11px;color:#94a3b8;font-weight:400;margin-left:6px}
+    .rpt-charts{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .rpt-card{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border:1px solid #e2e8f0;border-radius:20px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+    .rpt-card-head{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+    .rpt-card-head span{font-size:16px}
+    .rpt-card-head h3{font-size:16px;font-weight:700;color:#1e293b;letter-spacing:-.3px}
+    .rpt-bar-chart{display:flex;gap:20px;justify-content:space-around;height:180px;align-items:flex-end;padding:0 20px}
+    .rpt-bar-group{display:flex;flex-direction:column;align-items:center;flex:1}
+    .rpt-bar-label{font-size:11px;color:#64748b;margin-top:8px;order:2}
+    .rpt-bars{display:flex;gap:6px;height:150px;align-items:flex-end;order:1}
+    .rpt-bar{width:32px;border-radius:6px 6px 0 0;transition:height .5s}
+    .rpt-bar-vals{display:flex;gap:6px;font-size:10px;font-weight:600;order:3;margin-top:2px}
+    .rpt-legend{display:flex;align-items:center;gap:4px;font-size:11px;color:#64748b;margin-top:12px;justify-content:center}
+    .rpt-legend-dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .rpt-note{font-size:11px;color:#94a3b8;font-style:italic;margin-top:8px}
+    .rpt-radar-wrap{display:flex;justify-content:center}
+    .rpt-radar-svg{width:100%;max-width:300px;height:auto}
+    .rpt-radar-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .rpt-tag{font-size:11px;font-weight:500;padding:6px 10px;border-radius:8px}
+    .rpt-tag.green{background:#ecfdf5;color:#059669}
+    .rpt-tag.amber{background:#fffbeb;color:#d97706}
+    .rpt-table{width:100%;text-align:left;border-collapse:collapse;font-size:13px}
+    .rpt-table th{padding:10px 12px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #f1f5f9}
+    .rpt-table td{padding:12px;border-bottom:1px solid #f8fafc}
+    .rpt-table td.bold{font-weight:700;color:#334155}
+    .rpt-table td.note{font-size:11px;color:#64748b}
+    .rpt-table tr:hover{background:#f8fafc}
+    .rpt-status{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700}
+    .rpt-status.green{background:#ecfdf5;color:#059669}
+    .rpt-status.amber{background:#fffbeb;color:#d97706}
+    .rpt-status.red{background:#fef2f2;color:#dc2626}
+    .rpt-analysis{display:flex;gap:20px}
+    .rpt-profile{background:#f8fafc;border-radius:16px;padding:16px;border:1px solid #f1f5f9;margin-bottom:14px}
+    .rpt-profile h4{font-size:13px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+    .rpt-profile p{font-size:13px;color:#475569;line-height:1.7}
+    .rpt-diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .rpt-diag-item{padding:14px;border:1px solid #f1f5f9;border-radius:16px}
+    .rpt-diag-item h5{font-size:13px;font-weight:700;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .rpt-diag-item h5 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .rpt-diag-item h5 .dot.red{background:#f43f5e}
+    .rpt-diag-item h5 .dot.amber{background:#f59e0b}
+    .rpt-diag-item p{font-size:12px;color:#64748b}
+    .rpt-focus{background:#4f46e5;border-color:transparent;flex:1}
+    .rpt-focus-item{background:rgba(255,255,255,.1);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.1);margin-bottom:10px}
+    .rpt-focus-item h5{font-weight:700;color:#fff;margin-bottom:4px;font-size:13px}
+    .rpt-focus-item p{font-size:11px;color:#c7d2fe;opacity:.8}
+    .rpt-advice{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .rpt-advice h4{font-size:13px;font-weight:700;margin-bottom:10px}
+    .rpt-advice ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .rpt-advice li{font-size:12px;color:#475569;display:flex;gap:6px;line-height:1.5}
+    .rpt-advice li::before{content:"›";color:#818cf8;font-weight:700;flex-shrink:0}
+    .rpt-footer{text-align:center;padding:32px 0 0}
+    .rpt-footer-pill{display:inline-block;padding:2px;border-radius:999px;background:linear-gradient(to right,#6366f1,#10b981,#f59e0b);margin-bottom:12px}
+    .rpt-footer-pill p{background:#fff;padding:10px 28px;border-radius:999px;font-weight:700;color:#1e293b;font-size:14px}
+    .rpt-footer-copy{font-size:10px;color:#94a3b8;letter-spacing:2px;text-transform:uppercase}
+    @media(max-width:1000px){.rpt-metrics{grid-template-columns:repeat(2,1fr)}.rpt-charts{grid-template-columns:1fr}.rpt-analysis{flex-direction:column}.rpt-advice{grid-template-columns:1fr}.rpt-diag-grid{grid-template-columns:1fr}}
+
+    @media(max-width:900px){
+      .flow-compare,.prototype-steps{grid-template-columns:1fr}
+      .demo-split{grid-template-columns:1fr}
+      .tabs{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>大小屏互动方案 · 产品说明文档</h1>
+      <p>课堂互动流程、需求优先级与角色功能全景展示</p>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="product">1. 产品说明</button>
+      <button class="tab-btn" data-tab="teacher">2. 教师端</button>
+      <button class="tab-btn" data-tab="student">3. 学生端</button>
+      <button class="tab-btn" data-tab="demo">4. 产品演示</button>
+      <button class="tab-btn" data-tab="report">5. 课堂报告</button>
+    </nav>
+
+    <section id="product" class="tab-panel active">
+      <h2 class="section-title">产品说明</h2>
+      <p class="section-sub">本页包含核心需求列表与产品使用地图。</p>
+      <article class="doc-block">
+        <h3>项目简介</h3>
+        <p><strong>项目名称：</strong>大小屏联动教学解决方案</p>
+        <p><strong>1. 项目定位与目标</strong></p>
+        <p>本项目基于前期试点机构的调研结果，旨在解决传统课堂“教学过程黑盒化”与“设备管理失控”的痛点。</p>
+        <p><span class="intro-highlight">Demo 1.0 目标</span> 快速验证“强管控下的高频互动”这一核心闭环在实际教学场景中的可行性。</p>
+        <p><strong>Demo 核心逻辑：</strong></p>
+        <ul class="intro-list">
+          <li><strong>联动模式：</strong>老师大屏发起互动 → 学生 Pad 瞬间解锁 → 提交数据 → 自动锁定。</li>
+          <li><strong>数据采集：</strong>实现“人-题-轨迹”的数据采集。</li>
+        </ul>
+      </article>
+      <article class="doc-block">
+        <h3>产品需求（优先级与场景）</h3>
+        <table class="req-table">
+          <thead><tr><th>序号</th><th>需求</th><th>场景</th><th>优先级</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>学生账号登录问题</td><td>考虑到学生记忆手机号及密码较为繁琐，且 Pad 为学校公用设备，每节课需供不同学生轮换使用，特提供便捷绑定方案，简化登录操作。 </td><td><span class="pri-tag p0">P0</span></td></tr>
+            <tr><td>2</td><td><strong>学生不进入在线教室可参与互动（先解决教室外的小黑板）</strong></td><td>对于同一物理空间，学生不需要进入教室，实时打开摄像头和麦克风，举手等一系列操作，只有在需要互动时PAD才有作用，（小黑板、答题器、LMS活动）<br>要考虑物理空间的带宽问题</td><td><span class="pri-tag p0">P0</span></td></tr>
+            <<tr><td>3</td><td><strong>设备管控</strong></td><td>对于学生端只有互动时允许操作,非互动时不可操作。做到教师对课堂的节奏控制权，教室控场，控制节奏，防止学生走神儿。</td><td><span class="pri-tag p0">P0</span></td></tr> -->
+            <tr><td>4</td><td><strong>全流程学习轨迹数据采集（核心：打破数据孤岛）</strong></td><td><strong>课前：</strong>自动采集预习数据；<strong>课中：</strong>"小黑板"书写过程、随堂测答题轨迹、课堂发言自动关联学生账号。<strong>课后：</strong>自动沉淀至LMS，形成完整的学生画像。</td><td><span class="pri-tag p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="doc-block">
+        <h3>产品使用地图（流程对比）</h3>
+        <p>课前准备、上课、课件讲授、发起互动、实时交互、下课各环节。</p>
+        <img src="images/image-8c5556d6-fd4e-4085-b29b-e34ff02df748.png" alt="产品使用地图流程图">
+      </article>
+    </section>
+
+    <section id="teacher" class="tab-panel">
+      <h2 class="section-title">教师端</h2>
+      <p class="section-sub">操作流程对比：现有流程 vs 改造后流程。</p>
+      <div class="flow-compare">
+        <div class="flow-column existing"><h3>现有流程</h3><ul class="flow-list">
+          <li class="flow-step">登录账号</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">上课</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">课件讲授</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">发起互动（小黑板、答题器）</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">查看互动结果</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">下课</li>
+        </ul></div>
+        <div class="flow-column future"><h3>改造后流程</h3><ul class="flow-list">
+          <li class="flow-step">登录账号</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">上课-选择上课模式（在线教室、Pad班）</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">自动发起签到</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">课件讲授</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">发起互动（小黑板、答题器）</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">查看互动结果</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">下课</li>
+        </ul></div>
+      </div>
+      <p class="flow-legend"><span class="dot red"></span>红色为新增或变更步骤。</p>
+      <div class="module-block">
+        <h3 class="module-title">第二模块：产品原型说明</h3>
+        <div class="prototype-steps">
+          <article class="prototype-card"><span class="prototype-label">第一步：点击上课</span><div class="image-stage"><img src="images/image-1fc6dc20-1a19-4043-a589-323e0f13c51f.png" alt="教师端步骤1"></div><p class="prototype-desc">老师点击上课，进入模式选择前置流程。</p></article>
+          <article class="prototype-card"><span class="prototype-label">第二步：选择模式</span><div class="image-stage"><img src="images/image-07a4b34c-3121-4bf2-8363-42a524cfd9a7.png" alt="选择上课模式弹窗-Pad班"></div><p class="prototype-desc">ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。</p></article>
+          <article class="prototype-card"><span class="prototype-label">第三步：自动签到</span><div class="image-stage"><img src="images/image-d534a684-c139-4131-b0ae-de54dd03922b.png" alt="黑板上弹出课堂签到窗口"></div><p class="prototype-desc">进入教室后自动发起签到，黑板区域弹出「课堂签到」窗口，可查看进度。
+            <div class=""></div><br>></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="student" class="tab-panel">
+      <h2 class="section-title">学生端</h2>
+      <p class="section-sub">操作流程对比：现有流程 vs 改造后流程。</p>
+      <div class="flow-compare">
+        <div class="flow-column existing"><h3>现有流程</h3><ul class="flow-list">
+          <li class="flow-step deleted">登录账号</li><li class="flow-arrow">↓</li>
+          <li class="flow-step deleted">点击上课进入教室</li><li class="flow-arrow">↓</li>
+          <li class="flow-step deleted">Pad同步观看教师画面</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">参与教师发起的互动</li><li class="flow-arrow">↓</li>
+          <li class="flow-step deleted">下课</li>
+        </ul></div>
+        <div class="flow-column future"><h3>改造后流程</h3><ul class="flow-list">
+          <li class="flow-step changed">签到</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">参与教师发起的互动</li>
+        </ul></div>
+      </div>
+      <p class="flow-legend"><span class="dot red"></span>红色为新增或变更。<span class="dot gray"></span>灰色为删除步骤。</p>
+      <div class="module-block">
+        <h3 class="module-title">第二模块：产品原型说明</h3>
+        <div class="prototype-steps">
+          <article class="prototype-card"><span class="prototype-label">第一步</span><div class="image-stage"><img src="images/image-759face5-6ee8-4593-acfb-1b03beb8e0ec.png" alt="学生端步骤1"></div><p class="prototype-desc">默认不可操作，只有老师发起互动后才可操作。
+            <br>1. 该 Demo 版本，基于安卓 Pad 开发一个单独的 App，且 App 中只有教室上课页面。
+            <br>2. 学生端 APP 名称为「ClassIn Focus」。
+            <br>3. 学生端的安卓 Pad 与教师端大屏通过某种方式建立关联关系，当教师进入教室后发起签到，学生的 Pad 端自动弹出签到页面。
+            <br>4. 大屏没有进入课堂时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。
+          </p></article>
+          <article class="prototype-card"><span class="prototype-label">第二步</span><div class="image-stage"><img src="images/image-efebcb50-eeee-4392-b74b-11b7f757e681.png" alt="学生端步骤2"></div><p class="prototype-desc">老师进入教室后学生端显示名单，点击完成签到并绑定设备账号。老师关闭签到后回到静默状态。<br>学生签到状态要记录到每个学生账号下，</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="tab-panel">
+      <h2 class="section-title">产品演示</h2>
+      <p class="section-sub">左侧教师端界面 · 右侧学生 Pad 端 · 教师动作驱动学生端自动联动。</p>
+      <div class="demo-shell">
+        <div class="demo-split">
+          <div>
+            <div class="demo-label">教师端</div>
+            <div id="teacherUI" style="position:relative;height:calc(100% - 24px)"></div>
+          </div>
+          <div>
+            <div class="demo-label">学生 Pad 端</div>
+            <div id="studentUI" style="height:calc(100% - 24px)"></div>
+          </div>
+        </div>
+        <div class="event-log" id="dLog"></div>
+        <div class="demo-desc">
+          <div class="demo-desc-item"><div class="demo-desc-label">教师端</div><div class="demo-desc-text" id="dDescTeacher"></div></div>
+          <div class="demo-desc-item"><div class="demo-desc-label">学生端</div><div class="demo-desc-text" id="dDescStudent"></div></div>
+        </div>
+        <div class="demo-extra" id="dExtraSign">
+          <div class="demo-extra-title">产品逻辑说明：学生设备绑定方案对比矩阵</div>
+          <div class="demo-extra-sub">结合当前 Demo 1.0 的"强管控 + 高频互动"目标，从交互、风控、执行成本三维度评估签到 / 设备绑定方案的取舍。</div>
+          <table class="bind-matrix">
+            <thead>
+              <tr>
+                <th style="width:120px">方案</th>
+                <th>交互逻辑</th>
+                <th>核心优点</th>
+                <th>风险与行为边界</th>
+                <th class="col-complex">实际执行复杂度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. 列表签到</td>
+                <td>老师下发名单，学生在 Pad 列表点击头像认领。</td>
+                <td><strong>操作零门槛</strong>：极速开课，无需记忆，适合低幼学生。（当前xes用的模式）</td>
+                <td><strong>数据污染风险</strong>：极易发生误点或代签。需处理"身份抢占"逻辑（如 A 占了 B 的位置）。</td>
+                <td class="col-complex"><span class="cx-pill low">低</span></td>
+              </tr>
+              <tr>
+                <td>2. 账密登录</td>
+                <td>学生手动输入完整手机号与密码。</td>
+                <td><strong>确权最严谨</strong>：符合标准互联网安全逻辑，身份唯一。</td>
+                <td><strong>流程断裂</strong>：学生（尤其是低年级）记不住账号。Demo 1.0 阶段会极大增加现场维护成本。</td>
+                <td class="col-complex"><span class="cx-pill mid">中</span></td>
+              </tr>
+              <tr>
+                <td>3. 尾号验证</td>
+                <td>点击头像 + 输入家长手机号后 4 位。</td>
+                <td><strong>平衡性最佳</strong>：通过双重复核防止误点，隐私压力小，利用现有数据库即可。</td>
+                <td><strong>操作冲突处理</strong>：需设定为"先选人，后验号"，以规避不同家长手机尾号相同的物理碰撞。但要考虑学生能否记住家长后四位号码。</td>
+                <td class="col-complex"><span class="cx-pill low">中</span></td>
+              </tr>
+              <tr>
+                <td>4. 人脸识别</td>
+                <td>摄像头自动扫脸，匹配云端底片绑定。</td>
+                <td><strong>极致 AI 体验</strong>：100% 真实数据，防代签，符合"智慧教育"高端定位。</td>
+                <td><strong>法律合规风险</strong>：未成年肖像权极其敏感；需提前采集底片；受光线等物理环境影响大。</td>
+                <td class="col-complex"><span class="cx-pill high">高</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="report" class="tab-panel" style="padding:0;border:none;background:transparent;box-shadow:none">
+      <div class="rpt-card" style="margin:0 0 16px;background:#f8fafc;border:1px dashed #cbd5e1">
+        <div class="rpt-card-head"><span>💡</span><h3>数据说明</h3></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:13px;color:#475569;line-height:1.8">
+          <li style="display:flex;gap:8px"><span style="color:#6366f1;font-weight:700;flex-shrink:0">●</span>系统需记录每位学生的小黑板内容，课后支持通过 API 接口调取对应数据，由智能体基于该内容输出课后报告。</li>
+          <li style="display:flex;gap:8px"><span style="color:#6366f1;font-weight:700;flex-shrink:0">●</span>同步记录学生答题器使用次数，以及答题正确、错误次数。</li>
+        </ul>
+      </div>
+      <div class="rpt">
+        <header class="rpt-hero">
+          <div class="rpt-hero-bg"></div>
+          <div class="rpt-hero-inner">
+            <div class="rpt-hero-left">
+              <span class="rpt-badge-pill">📊 2026-Q1 阶段性诊断</span>
+              <h1 class="rpt-hero-title">张凌轩 <span>数学学习报告</span></h1>
+              <p class="rpt-hero-sub">未来素养2026-01季度-五年级-A+班级表现深度分析</p>
+            </div>
+            <div class="rpt-hero-stats">
+              <div class="rpt-hero-stat"><p class="label">综合正确率</p><p class="value green">91.2%</p></div>
+              <div class="rpt-hero-sep"></div>
+              <div class="rpt-hero-stat"><p class="label">学习等级</p><p class="value indigo">A+</p></div>
+            </div>
+          </div>
+        </header>
+        <div class="rpt-body">
+          <div class="rpt-metrics">
+            <div class="rpt-metric"><div class="rpt-metric-icon bg-indigo">🎯</div><div><p class="rpt-metric-label">总互动题量</p><div class="rpt-metric-val">34 <span>覆盖7课时</span></div></div></div>
+            <div class="rpt-metric"><div class="rpt-metric-icon bg-green">✓</div><div><p class="rpt-metric-label">答对题数</p><div class="rpt-metric-val">31 <span>步骤完整</span></div></div></div>
+            <div class="rpt-metric"><div class="rpt-metric-icon bg-amber">⚠</div><div><p class="rpt-metric-label">答错题数</p><div class="rpt-metric-val">3 <span>集中于综合题</span></div></div></div>
+            <div class="rpt-metric"><div class="rpt-metric-icon bg-rose">📈</div><div><p class="rpt-metric-label">参与率</p><div class="rpt-metric-val">100% <span>全勤互动</span></div></div></div>
+            <div class="rpt-metric"><div class="rpt-metric-icon bg-yellow">🏆</div><div><p class="rpt-metric-label">获得奖杯数</p><div class="rpt-metric-val">12 <span>课堂表彰</span></div></div></div>
+          </div>
+          <div class="rpt-charts">
+            <div class="rpt-card">
+              <div class="rpt-card-head"><span>📊</span><h3>题目难度分层分析</h3></div>
+              <div class="rpt-bar-chart">
+                <div class="rpt-bar-group"><div class="rpt-bar-label">简单题</div><div class="rpt-bars"><div class="rpt-bar" style="height:100%;background:#6366f1" title="个人100%"></div><div class="rpt-bar" style="height:95%;background:#cbd5e1" title="平均95%"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">100%</span><span style="color:#94a3b8">95%</span></div></div>
+                <div class="rpt-bar-group"><div class="rpt-bar-label">中等题</div><div class="rpt-bars"><div class="rpt-bar" style="height:92.8%;background:#6366f1"></div><div class="rpt-bar" style="height:82%;background:#cbd5e1"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">92.8%</span><span style="color:#94a3b8">82%</span></div></div>
+                <div class="rpt-bar-group"><div class="rpt-bar-label">难题</div><div class="rpt-bars"><div class="rpt-bar" style="height:60%;background:#6366f1"></div><div class="rpt-bar" style="height:45%;background:#cbd5e1"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">60%</span><span style="color:#94a3b8">45%</span></div></div>
+              </div>
+              <div class="rpt-legend"><span class="rpt-legend-dot" style="background:#6366f1"></span>个人正确率 <span class="rpt-legend-dot" style="background:#cbd5e1;margin-left:12px"></span>同级平均</div>
+              <p class="rpt-note">* 在简单与中等难度题目中表现极其稳定，难题正确率60%高于平均水平，具备极高潜力。</p>
+            </div>
+            <div class="rpt-card">
+              <div class="rpt-card-head"><span>🧠</span><h3>知识点掌握雷达图</h3></div>
+              <div class="rpt-radar-wrap">
+                <svg viewBox="0 0 300 260" class="rpt-radar-svg">
+                  <g transform="translate(150,130)">
+                    <polygon points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <polygon points="0,-66 57.7,-33 57.7,33 0,66 -57.7,33 -57.7,-33" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <polygon points="0,-33 28.9,-16.5 28.9,16.5 0,33 -28.9,16.5 -28.9,-16.5" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="0" y2="-100" stroke="#e2e8f0"/><line x1="0" y1="0" x2="86.6" y2="-50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="86.6" y2="50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="0" y2="100" stroke="#e2e8f0"/><line x1="0" y1="0" x2="-86.6" y2="50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="-86.6" y2="-50" stroke="#e2e8f0"/>
+                    <polygon points="0,-95 77.9,-45 56.3,45 0,70 -60.6,46 -76.2,-44" fill="#6366f1" fill-opacity=".5" stroke="#6366f1" stroke-width="2"/>
+                    <text x="0" y="-108" text-anchor="middle" font-size="11" fill="#64748b">小数乘除(95)</text>
+                    <text x="96" y="-48" font-size="11" fill="#64748b">简易方程(90)</text>
+                    <text x="96" y="56" font-size="11" fill="#64748b">因数倍数(88)</text>
+                    <text x="0" y="118" text-anchor="middle" font-size="11" fill="#64748b">位置方向(92)</text>
+                    <text x="-96" y="56" text-anchor="end" font-size="11" fill="#64748b">立体几何(65)</text>
+                    <text x="-96" y="-48" text-anchor="end" font-size="11" fill="#64748b">分数性质(70)</text>
+                  </g>
+                </svg>
+              </div>
+              <div class="rpt-radar-legend">
+                <span class="rpt-tag green">✓ 已掌握：小数运算、方程、因数</span>
+                <span class="rpt-tag amber">⚠ 待强化：立体几何、分数性质</span>
+              </div>
+            </div>
+          </div>
+          <div class="rpt-card">
+            <div class="rpt-card-head"><span>📖</span><h3>知识点掌握一览表</h3></div>
+            <table class="rpt-table"><thead><tr><th>知识点名称</th><th>掌握情况</th><th>难度系数</th><th>备注/错误原因诊断</th></tr></thead><tbody>
+              <tr><td class="bold">小数乘除法运算</td><td><span class="rpt-status green">已掌握</span></td><td>★★☆☆☆</td><td class="note">计算精准度极高，小数点移动规律熟练</td></tr>
+              <tr><td class="bold">位置与数对</td><td><span class="rpt-status green">已掌握</span></td><td>★☆☆☆☆</td><td class="note">空间定位能力强，能准确描述位置</td></tr>
+              <tr><td class="bold">2、3、5的倍数特征</td><td><span class="rpt-status green">已掌握</span></td><td>★★☆☆☆</td><td class="note">奇偶数、质合数概念清晰，判断迅速</td></tr>
+              <tr><td class="bold">因数与倍数</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">找因数逻辑完整，无遗漏现象</td></tr>
+              <tr><td class="bold">解简易方程</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">解题步骤规范，符号意识强</td></tr>
+              <tr><td class="bold">分数的意义与性质</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">能熟练进行约分、通分，分数大小比较准确</td></tr>
+              <tr><td class="bold">列方程解决实际问题</td><td><span class="rpt-status amber">部分掌握</span></td><td>★★★★☆</td><td class="note">强于计算，但在"寻找隐蔽等量关系"时稍慢</td></tr>
+              <tr><td class="bold">分数与小数互化</td><td><span class="rpt-status amber">部分掌握</span></td><td>★★★☆☆</td><td class="note">基础互化无误，但在复杂混合运算中反应速度待提升</td></tr>
+              <tr><td class="bold">长方体/正方体表面积</td><td><span class="rpt-status red">未掌握</span></td><td>★★★★★</td><td class="note">属于重灾区。容易混淆公式，或漏掉特定面</td></tr>
+              <tr><td class="bold">组合图形应用</td><td><span class="rpt-status red">未掌握</span></td><td>★★★★★</td><td class="note">缺乏图形拆解思维，对空间切割后的变量不敏感</td></tr>
+            </tbody></table>
+            <p class="rpt-note" style="margin-top:12px">📊 基于课堂互动数据及小学5年级数学课程标准梳理</p>
+          </div>
+          <div class="rpt-analysis">
+            <div class="rpt-card" style="flex:2">
+              <div class="rpt-card-head"><span>🏆</span><h3>深度诊断总结</h3></div>
+              <div class="rpt-profile"><h4>👤 学生画像：学霸型选手</h4><p>态度积极（100%参与），基础雄厚（简单/中等题近乎全对）。当前瓶颈在于建模思维稍弱，习惯心算而非动手画图。</p></div>
+              <div class="rpt-diag-grid">
+                <div class="rpt-diag-item"><h5><span class="dot red"></span>建模思维瓶颈</h5><p>遇到复杂相遇或几何切割题，习惯心算，缺乏画线段图或建立空间模型的习惯。</p></div>
+                <div class="rpt-diag-item"><h5><span class="dot amber"></span>审题惯性思维</h5><p>对常见题型反应快，但对陷阱（如单位不统一、求表面积还是侧面积）警惕性不够。</p></div>
+              </div>
+            </div>
+            <div class="rpt-card rpt-focus">
+              <div class="rpt-card-head" style="color:#fff"><span>⚡</span><h3 style="color:#fff">重点关注方向</h3></div>
+              <div class="rpt-focus-item"><h5>立体图形综合应用</h5><p>解决无盖水箱、刷油漆等多面问题</p></div>
+              <div class="rpt-focus-item"><h5>等量关系翻译能力</h5><p>从题目中提取方程，而非仅解方程</p></div>
+              <div class="rpt-focus-item"><h5>计算步骤规范化</h5><p>减少跳步，防范复杂分数运算失误</p></div>
+            </div>
+          </div>
+          <div class="rpt-card">
+            <div class="rpt-card-head"><span>🎓</span><h3>后续学习与支持建议</h3></div>
+            <div class="rpt-advice">
+              <div><h4 style="color:#4f46e5">📖 学习重点</h4><ul><li>强化"画图法"，用线段图分析数量关系</li><li>建立错题逻辑档案，分析错误根源</li></ul></div>
+              <div><h4 style="color:#059669">🎓 教学支持</h4><ul><li>课堂多分配"说理题"，锻炼逻辑表达</li><li>提供挑战性压轴题，激发求知欲</li></ul></div>
+              <div><h4 style="color:#d97706">🏠 家庭辅导</h4><ul><li>准备长方体模具进行实操切割拆解</li><li>坚持"读题两遍"，规范草稿书写</li></ul></div>
+            </div>
+          </div>
+          <footer class="rpt-footer">
+            <div class="rpt-footer-pill"><p>报告总结：凌轩目前处于优等生稳固期，完全具备冲击满分的实力！</p></div>
+            <p class="rpt-footer-copy">未来素养教育大数据中心 · 2026 阶段性诊断分析</p>
+          </footer>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const tabs=document.querySelectorAll(".tab-btn"),panels=document.querySelectorAll(".tab-panel"),TKEY="productDocActiveTab";
+    function activateTab(t){const b=document.querySelector(`.tab-btn[data-tab="${t}"]`),p=document.getElementById(t);if(!b||!p)return;tabs.forEach(x=>x.classList.remove("active"));panels.forEach(x=>x.classList.remove("active"));b.classList.add("active");p.classList.add("active");localStorage.setItem(TKEY,t)}
+    tabs.forEach(t=>t.addEventListener("click",()=>activateTab(t.dataset.tab)));
+    const sv=localStorage.getItem(TKEY);if(sv)activateTab(sv);
+
+    const students=[
+      {name:"张小明"},{name:"李晓华"},{name:"王芳"},{name:"刘强"},{name:"陈静"},{name:"赵磊"},
+      {name:"孙丽"},{name:"周伟"},{name:"吴娜"},{name:"胡达"},{name:"林勤"},{name:"引玉"},
+      {name:"高翔"},{name:"马琳"},{name:"黄磊"},{name:"杨洁"},{name:"宋涛"},{name:"郑敏"}
+    ];
+    let signedSet=new Set();
+
+    const menuItems=["主课程","课节","录播课","AI课程活动","小学AI口语卡朗读","美术课","在线课堂"];
+    const lessons=[
+      {name:"AI口语朗读打卡营–与背诵、听力…在线课堂-1",meta:"课堂|已结束 · 4月13日 昨天 16:40 开始",status:"已结束"},
+      {name:"AI口语朗读打卡营–与背诵、听力…在线课堂-2",meta:"课堂|已结束 · 4月14日 今天 17:23 开始",status:"已结束"},
+      {name:"AI口语朗读打卡营–与背诵、听力…在线课堂-3",meta:"课堂|未开始 · 4月14日 今天 19:47 开始",status:"未开始"}
+    ];
+
+    function renderTeacherList(showModal){
+      let h=`<div class="ci-app" style="height:100%">
+        <div class="ci-sidebar">
+          <div class="ci-logo"><div class="ci-logo-icon">C</div><div class="ci-logo-text">AI口语朗读<br>打卡营</div></div>
+          <ul class="ci-menu">${menuItems.map((m,i)=>`<li class="${i===6?"active":""}">${m}</li>`).join("")}</ul>
+        </div>
+        <div class="ci-main">
+          <div class="ci-banner"></div>
+          <div class="ci-content">
+            <div class="ci-title">在线课堂</div>
+            <div class="ci-filters"><span class="ci-filter active">全部</span><span class="ci-filter">只看课堂</span></div>
+            <div class="ci-lessons">${lessons.map((l,i)=>`
+              <div class="ci-lesson">
+                <div class="ci-lesson-info"><div class="ci-lesson-name">${l.name}</div><div class="ci-lesson-meta">${l.meta}</div></div>
+                ${i===2?'<button class="ci-start-btn" id="startClassBtn">上课</button>':`<span style="color:#9ca3af;font-size:10px">${l.status}</span>`}
+              </div>`).join("")}
+            </div>
+          </div>
+        </div>
+        ${showModal?`<div class="ci-overlay" id="ciOverlay"><div class="ci-modal">
+          <h4>选择上课模式</h4>
+          <div class="ci-modal-opts">
+            <div class="ci-modal-opt" data-mode="online"><strong>在线教室</strong>全员进入线上教室</div>
+            <div class="ci-modal-opt selected" data-mode="pad"><strong>Pad班</strong>同一教室内无需进教室</div>
+          </div>
+          <div class="ci-modal-footer"><button class="ci-confirm" id="confirmModeBtn">确认进入</button></div>
+        </div></div>`:""}
+      </div>`;
+      return h;
+    }
+
+    let showSignPanel=true;
+    let roomOverlay="none";
+    let answerCorrect=null;
+    let answerChoices={};
+    let answerTimerStart=0;
+    let answerTimerId=null;
+    let answerTimerDisplay="00:00:00";
+    let studentAnswerChoice=null;
+    let studentAnswerSubmitted=false;
+
+    const toolboxItems=[
+      {icon:"✅",name:"签到",key:"sign"},{icon:"📂",name:"打开文件"},{icon:"💾",name:"保存/分享板书"},{icon:"🔄",name:"屏幕共享"},
+      {icon:"🎲",name:"骰子"},{icon:"🅰",name:"答题器",key:"answer"},{icon:"📋",name:"小黑板",key:"blackboard"},{icon:"⏱",name:"计时器"},
+      {icon:"⏳",name:"定时器"},{icon:"👥",name:"分组讨论"},{icon:"👏",name:"抢答器"},{icon:"🖥",name:"随机选人"},
+      {icon:"📡",name:"投屏"},{icon:"🧲",name:"物理实验"},{icon:"🧪",name:"化学实验"},{icon:"🏆",name:"奖励排行榜"},
+      {icon:"📚",name:"教学素材库"},{icon:"🖧",name:"VNC"},{icon:"📝",name:"协作"},{icon:"🌐",name:"浏览器"},
+      {icon:"📖",name:"作业"},{icon:"📹",name:"辅助摄像头"},{icon:"🅰+",name:"测验"},{icon:"⊞",name:"视频墙"}
+    ];
+
+    function renderTeacherRoom(){
+      const total=students.length;
+      const done=signedSet.size;
+      let items=students.map((s,i)=>{
+        const d=signedSet.has(i);
+        return `<li class="ci-sign-item ${d?"done":""}" data-si="${i}" style="cursor:pointer"><span class="ci-sign-avatar"></span><span class="ci-sign-name">${s.name}</span><span class="ci-sign-tag ${d?"done":"pending"}">${d?"✓ 已签到":"点击签到"}</span></li>`;
+      }).join("");
+      const signPanel=showSignPanel?`
+          <div class="ci-room-sign">
+            <div class="ci-sign-head"><h4>课堂签到</h4><span class="ci-sign-metric">${done}/${total} 已签到</span></div>
+            <ul class="ci-sign-list">${items}</ul>
+            <button class="ci-finish-btn" id="finishSignBtn">完成签到</button>
+          </div>`:"";
+
+      let overlayHTML="";
+      if(roomOverlay==="toolbox"){
+        overlayHTML=`<div class="toolbox-overlay" id="toolboxOverlay">
+          <div class="toolbox">
+            <div class="toolbox-head"><span>工具箱</span><div style="display:flex;gap:8px;align-items:center"><span style="color:#999;font-size:12px">编辑</span><span style="color:#999;font-size:12px">|</span><button class="toolbox-close" id="closeToolbox">✕</button></div></div>
+            <div class="toolbox-grid">${toolboxItems.map(t=>`<div class="tb-item ${t.key?"highlight":""}" ${t.key?`data-tool="${t.key}"`:""}>
+              <div class="tb-icon">${t.icon}</div><div class="tb-name">${t.name}</div>
+            </div>`).join("")}</div>
+          </div>
+        </div>`;
+      }else if(roomOverlay==="blackboard"){
+        overlayHTML=`<div class="bb-overlay" id="bbOverlay">
+          <div class="bb-panel">
+            <div class="bb-top"><div class="bb-top-title"><strong>画板小黑板</strong>准备阶段</div><div class="bb-top-controls"><span>—</span><span>↗</span><span id="closeBB">✕</span></div></div>
+            <div class="bb-canvas-area"></div>
+            <div class="bb-bottom">
+              <div class="bb-tools"><span>⬜</span><span>🖌</span><span>◆</span><span>T</span><span>✂</span><span>🖼</span></div>
+              <button class="bb-distribute" id="distributeBtn">分发</button>
+            </div>
+          </div>
+        </div>`;
+      }else if(roomOverlay==="answer-setup"){
+        const opts=["A","B","C","D"].map(k=>`<div class="ans-opt ${answerCorrect===k?"correct":""}" data-opt="${k}">${k}</div>`).join("");
+        overlayHTML=`<div class="ans-overlay" id="ansOverlay">
+          <div class="ans-panel">
+            <div class="ans-top"><div class="ans-top-title"><strong>答题器</strong>准备阶段</div><div class="ans-top-controls"><span>—</span><span>↗</span><span id="closeAns">✕</span></div></div>
+            <div class="ans-body">
+              <div class="ans-head-tip">点击任意选项设定本题的<strong style="color:#86efac">正确答案</strong>，完成后点击「开始答题」下发给学生端。</div>
+              <div class="ans-opts" id="ansSetupOpts">${opts}</div>
+              <div class="ans-hint">${answerCorrect?`已选择正确答案：<strong>${answerCorrect}</strong>`:"尚未选择正确答案（可不设置直接开始）"}</div>
+              <div class="ans-actions">
+                <button class="ans-btn primary" id="ansStartBtn">开始答题</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }else if(roomOverlay==="answer-stats"){
+        const total=students.length;
+        const counts={A:0,B:0,C:0,D:0};
+        Object.values(answerChoices).forEach(v=>{if(counts[v]!==undefined)counts[v]+=1});
+        const answered=Object.keys(answerChoices).length;
+        const maxVal=Math.max(counts.A,counts.B,counts.C,counts.D,1);
+        const percent=Math.round((answered/total)*100);
+        let topOpt="-",topPct="0%";
+        if(answered>0){
+          const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+          topOpt=entries[0][0];topPct=Math.round(entries[0][1]/answered*100)+"%";
+        }
+        const bars=["A","B","C","D"].map(k=>{
+          const v=counts[k];
+          const hPct=Math.max(2,Math.round(v/maxVal*100));
+          const isCorrect=answerCorrect===k;
+          return `<div class="ans-chart-col"><span class="ans-chart-val">${v>0?v:""}</span><div class="ans-chart-bar ${isCorrect?"correct":""}" style="height:${v===0?2:hPct}%"></div><div class="ans-chart-label">${k}</div></div>`;
+        }).join("");
+        overlayHTML=`<div class="ans-overlay" id="ansOverlay">
+          <div class="ans-panel">
+            <div class="ans-top"><div class="ans-top-title"><strong>答题器</strong><span class="ans-timer">${answerTimerDisplay}</span></div><div class="ans-top-controls"><span>—</span><span>↗</span><span id="closeAnsStats">✕</span></div></div>
+            <div class="ans-body">
+              <div class="ans-stats">
+                <div class="ans-stats-count"><span>答题人数</span><strong>${answered} <span style="color:#888;font-size:13px;font-weight:600">/ ${total}</span></strong></div>
+                <div class="ans-stats-bar"><span style="width:${percent}%"></span></div>
+              </div>
+              <div class="ans-chart">${bars}</div>
+              <div class="ans-summary"><div>最多占比：<span>${topPct}</span></div><div>最多选项：<span>${topOpt}</span></div></div>
+              <div class="ans-actions" style="justify-content:space-between">
+                <button class="ans-btn" id="ansReSetBtn">设置答案</button>
+                <button class="ans-btn danger" id="ansEndBtn">结束答题</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      return `<div class="ci-room" style="height:100%">
+        <div class="ci-room-top">
+          <div class="ci-room-controls">
+            <button class="ci-room-ctrl-btn" title="麦克风">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <span class="dropdown-arrow"></span>
+            </button>
+            <button class="ci-room-ctrl-btn" title="摄像头">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg>
+              <span class="dropdown-arrow"></span>
+            </button>
+            <div class="ci-room-sep"></div>
+            <button class="ci-room-ctrl-btn" title="布局">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </button>
+            <div class="ci-room-sep"></div>
+            <button class="ci-room-ctrl-btn" title="最小化">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="12" x2="18" y2="12"/></svg>
+            </button>
+            <button class="ci-room-ctrl-btn" title="全屏">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/></svg>
+            </button>
+            <button class="ci-room-ctrl-btn ci-room-close" title="关闭">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="ci-room-body">
+          <div class="ci-room-toolbar">
+            <!-- 指针/选择工具 -->
+            <button class="tb-btn" title="指针">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2l14 10.5-6 1.2 3.5 7.8-2.5 1-3.5-7.8-4 4.5z"/></svg>
+            </button>
+            <!-- 框选工具 -->
+            <button class="tb-btn" title="框选">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3h4M17 3h4M3 21h4M17 21h4M3 3v4M21 3v4M3 17v4M21 17v4"/></svg>
+            </button>
+            <!-- 画笔工具 -->
+            <button class="tb-btn" title="画笔">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+            </button>
+            <!-- 形状工具（菱形） -->
+            <button class="tb-btn" title="形状">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="12,2 22,12 12,22 2,12"/></svg>
+            </button>
+            <div class="tb-sep"></div>
+            <!-- 文字工具 -->
+            <button class="tb-btn" title="文字">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="4" x2="18" y2="4"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="9" y1="20" x2="15" y2="20"/></svg>
+            </button>
+            <!-- 剪刀工具 -->
+            <button class="tb-btn" title="剪切">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            </button>
+            <!-- 圆形工具 -->
+            <button class="tb-btn" title="圆形">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+            </button>
+            <div class="tb-sep"></div>
+            <!-- 橡皮擦 -->
+            <button class="tb-btn" title="橡皮擦">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H7L3 16a1 1 0 010-1.4l9.6-9.6a1 1 0 011.4 0l7.6 7.6a1 1 0 010 1.4L16 20"/><line x1="6" y1="11" x2="13" y2="18"/></svg>
+            </button>
+            <!-- 图层 -->
+            <button class="tb-btn" title="图层">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </button>
+            <!-- 工具箱入口 -->
+            <button class="tb-btn" id="openToolbox" title="工具箱" style="background:rgba(255,255,255,.08)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+            </button>
+            <div class="tb-sep"></div>
+            <!-- LMS -->
+            <button class="tb-btn" id="openLMS" title="LMS" style="font-size:10px;font-weight:700;color:#bbb;letter-spacing:0.5px">
+              <span style="font-size:9px;line-height:1">LMS</span>
+            </button>
+            <!-- 导出/分享 -->
+            <button class="tb-btn" title="分享">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/><polyline points="16 8 12 4 8 8"/><line x1="12" y1="4" x2="12" y2="16"/></svg>
+            </button>
+            <!-- 聊天 -->
+            <button class="tb-btn" title="聊天">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </button>
+            <!-- 成员 -->
+            <button class="tb-btn" title="成员">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </button>
+          </div>
+          ${!showSignPanel&&roomOverlay==="none"&&teacherView==="room"?'<div class="ci-room-empty">课堂进行中…</div>':""}
+          ${signPanel}
+          ${overlayHTML}
+          ${teacherView==="lms"?`<div class="ci-room-window">${renderTeacherLMS(false)}</div>`:""}
+          ${teacherView==="lms-new"?`<div class="ci-room-window">${renderTeacherLMS(true)}</div>`:""}
+          ${teacherView==="quiz-edit"?`<div class="ci-room-window">${renderTeacherQuizEdit()}</div>`:""}
+          ${teacherView==="quiz-monitor"?`<div class="ci-room-window">${renderTeacherQuizMonitor()}</div>`:""}
+          ${teacherView==="quiz-detail"?`<div class="ci-room-window">${renderTeacherQuizDetail()}</div>`:""}
+        </div>
+      </div>`;
+    }
+
+    let bbTimerSec=0;
+    let bbTimerId=null;
+    let bbMonitorActive=false;
+    let bbRecalled=false;
+    let teacherView="room";
+
+    function renderTeacherLMS(showNewAct){
+      const sideItems=[
+        {label:'Course',section:true,icons:'⚙ +'},
+        {label:'Fall Semester',active:true},{label:'Spring Semester'},{label:'Project Based Learning'},
+        {label:'Collabspace',section:true,icons:'🔔 ⚙ +'},
+        {label:'Blackboard',icon:'📋',indent:false,expand:true},
+        {label:'Survey Report',icon:'📊',indent:true},{label:'Performance',icon:'📈',indent:true},{label:'Role-Play Scenario',icon:'🎬',indent:true},
+        {label:'Debate',icon:'💬'},{label:'Trash',icon:'🗑'},
+        {label:'Agents',section:true,icons:'⚙ +'},
+        {label:'AI Tutor',icon:'🤖'},{label:'AI Learning Analytics',icon:'📊'}
+      ];
+      const lessonList=[
+        {name:'Lesson 1 Vocabulary and Pre-reading',icon:'⚙',tag:'作业',tagClass:'tag-green',tagText:'进行中',meta:'No Deadline　Watched 0/10',hasPublish:false},
+        {name:'Lesson 1 Vocabulary and Pre-reading',icon:'📄',tag:'测验',tagClass:'tag-orange',tagText:'草稿',meta:'No Deadline　Viewed 0/10',hasPublish:true},
+        {name:'Lesson 1 Vocabulary and Pre-reading',icon:'📝',tag:'作业',tagClass:'tag-gray',tagText:'草稿',meta:'04/25 09:35 Deadline　Submitted 1/10',hasPublish:true}
+      ];
+      let sidebar=sideItems.map(it=>{
+        if(it.section) return `<div class="lms-side-section">${it.label}<span class="lms-side-section-icons">${it.icons||''}</span></div>`;
+        return `<div class="lms-side-item ${it.active?'active':''} ${it.indent?'lms-side-indent':''}">${it.icon?`<span class="icon">${it.icon}</span>`:''}${it.label}</div>`;
+      }).join('');
+      let lessons=lessonList.map(l=>`
+        <div class="lms-lesson">
+          <div class="lms-lesson-icon">${l.icon}</div>
+          <div class="lms-lesson-info">
+            <div class="lms-lesson-name">${l.name}</div>
+            <div class="lms-lesson-meta"><span class="tag ${l.tagClass}">${l.tag} | ${l.tagText}</span><span>${l.meta}</span></div>
+          </div>
+          ${l.hasPublish?'<button class="lms-publish-btn lms-pub-action">发布</button>':''}
+        </div>`).join('');
+      let newActHTML='';
+      if(showNewAct){
+        newActHTML=`<div class="new-act-overlay" id="newActOverlay">
+          <div class="new-act-modal">
+            <div class="new-act-title">发布活动</div>
+            <div class="new-act-section">通用活动</div>
+            <div class="new-act-grid wide">
+              <div class="new-act-item big"><div class="act-icon">📺</div><div><div class="act-name">课堂</div><div class="act-desc">多模式实时师生互动授课，AI智能课堂分析与智能章节总结</div></div></div>
+              <div class="new-act-item big"><div class="act-icon">📝</div><div><div class="act-name">作业</div><div class="act-desc">支持图片、语音、视频多格式作业提交，AI智能自动批改</div></div></div>
+            </div>
+            <div class="new-act-grid">
+              <div class="new-act-item"><div class="act-icon">✅</div><div class="act-name">测验</div></div>
+              <div class="new-act-item"><div class="act-icon">🎥</div><div class="act-name">录播课</div></div>
+              <div class="new-act-item"><div class="act-icon">📚</div><div class="act-name">学习资料</div></div>
+              <div class="new-act-item"><div class="act-icon">🃏</div><div class="act-name">答题卡</div></div>
+              <div class="new-act-item"><div class="act-icon">💬</div><div class="act-name">讨论</div></div>
+              <div class="new-act-item"><div class="act-icon">···</div><div class="act-name">展开更多</div></div>
+            </div>
+            <div class="new-act-section">英语 AI 智能教学　<span style="font-size:10px;color:#bbb">2025年教材内容已更新</span></div>
+            <div class="new-act-grid">
+              <div class="new-act-item"><div class="act-icon">🎵</div><div class="act-name">依据教材批量添加</div><span class="new-badge">NEW</span></div>
+              <div class="new-act-item"><div class="act-icon">🗣</div><div class="act-name">跟读(AI口语卡)</div><span class="new-badge">NEW</span></div>
+              <div class="new-act-item"><div class="act-icon">🎧</div><div class="act-name">听写</div></div>
+              <div class="new-act-item"><div class="act-icon">📖</div><div class="act-name">背诵</div></div>
+            </div>
+          </div>
+        </div>`;
+      }
+      return `<div class="lms-page" style="height:100%;position:relative">
+        <div class="lms-side">
+          <div class="lms-side-header">
+            <div class="lms-side-avatar">E6</div>
+            <div class="lms-side-info"><div class="lms-side-name">English Class 6</div><div class="lms-side-org">EEO School</div></div>
+          </div>
+          ${sidebar}
+        </div>
+        <div class="lms-main">
+          <div class="lms-top-bar">
+            <div class="lms-top-left">← Back to Homepage</div>
+            <div class="lms-top-right">
+              <span>🔍</span>
+              <span class="lms-badge">📊 10 lessons</span>
+              <span>⊕</span>
+            </div>
+          </div>
+          <div class="lms-banner"></div>
+          <div class="lms-content">
+            <div class="lms-content-title">Fall Semester</div>
+            <div class="lms-content-bar">
+              <div class="lms-tabs"><span class="lms-tab active">全部</span><span class="lms-tab">只看课堂</span></div>
+              <div style="display:flex;gap:6px;align-items:center">
+                <span style="color:#999">↕ ☰ ⚙ ···</span>
+                <button class="lms-new-btn" id="lmsNewBtn">新建</button>
+              </div>
+            </div>
+            <div class="lms-module">
+              <div class="lms-module-head">▾ Module 1 <span style="color:#999;font-weight:400">(13)</span></div>
+              <div class="lms-module-desc">This course is to improve students' listening, speaking, reading, and writing skills; expand students' vocabulary and grammar knowledge; build confidence in using English for daily communication.</div>
+              ${lessons}
+            </div>
+          </div>
+        </div>
+        ${newActHTML}
+      </div>`;
+    }
+
+    function renderTeacherQuizEdit(){
+      return `<div class="quiz-edit" style="height:100%;display:flex;flex-direction:column">
+        <div class="quiz-edit-top">
+          <div class="quiz-edit-top-title">编辑测验：(第二步)组卷和设置</div>
+          <div class="quiz-edit-top-btns"><button>—</button><button>□</button><button id="quizEditClose">✕</button></div>
+        </div>
+        <div class="quiz-edit-body">
+          <div class="quiz-edit-left">
+            <div class="quiz-edit-left-item">📋 继续选择</div>
+            <div class="quiz-edit-left-sep"></div>
+            <div class="quiz-edit-left-item active">ClassIn题库</div>
+            <div class="quiz-edit-left-item">授权资源</div>
+            <div class="quiz-edit-left-item">我的云盘</div>
+            <div class="quiz-edit-left-sep"></div>
+            <div class="quiz-edit-left-item">⊕ 添加新试题</div>
+            <div class="quiz-edit-left-item" style="padding-left:24px">添加试题</div>
+            <div class="quiz-edit-left-item" style="padding-left:24px">批量添加试题</div>
+          </div>
+          <div class="quiz-edit-center">
+            <div class="quiz-edit-paper">
+              <button class="quiz-edit-paper-close">✕</button>
+              <div class="quiz-edit-paper-title">2020-2021学年山东省淄博市周村区八年级物理试卷（五四学制）</div>
+              <div class="quiz-edit-paper-body">物理：回归教材，注重基础<br>物理科目的考核目标与要求、考试范围与要求均没有变化。主要联系实际，考查学生运用现有知识分析问题解决问题的能力。注重理论联系实际，注重STSE(科学、技术、社会、环境)教育是历年北京物理卷的特点之一。</div>
+              <div class="quiz-edit-paper-count"><span>试题数：5</span><span>总分：100</span><span>☐ 显示答案</span><span>☐ 显示全部信息</span></div>
+            </div>
+            <div class="quiz-edit-q">
+              <div class="quiz-edit-q-tags"><span class="quiz-edit-q-tag type">填空题</span><span class="quiz-edit-q-tag diff">难</span></div>
+              <div class="quiz-edit-q-body"><strong>1.</strong> 在2018年平昌冬奥会男子短道速滑500米决赛中，武大靖打破世界纪录，并为我国夺得首金。终点裁判员裁定他是冠军的依据是：在通过相同的__[1]__时，我国运动员武大靖所用的时间是__[2]__。</div>
+              <div class="quiz-edit-q-footer"><span>分数：4.0　设置分数 ></span><div class="quiz-edit-q-actions"><span>↑ 上移</span><span>↓ 下移</span><span>🗑 删除</span><span>···</span></div></div>
+            </div>
+            <div class="quiz-edit-q">
+              <div class="quiz-edit-q-tags"><span class="quiz-edit-q-tag type">填空题</span><span class="quiz-edit-q-tag diff-easy">易</span></div>
+              <div class="quiz-edit-q-body"><strong>2.</strong> 小明骑自行车去书简，开始以2m/s的速度起了400m，又以5m/s的速度起行了500m，则他在整个过程中的平均速度为　[2]　m/s。</div>
+              <div class="quiz-edit-q-footer"><span>分数：2.0　— +</span><div class="quiz-edit-q-actions"><span>↑ 上移</span><span>↓ 下移</span><span>🗑 删除</span><span>···</span></div></div>
+            </div>
+          </div>
+          <div class="quiz-edit-right">
+            <label>班级</label>
+            <select><option>红学小型高中数学</option></select>
+            <label>单元主题</label>
+            <select><option>第一单元：构建有效的设计体系</option></select>
+            <label>学生</label>
+            <select><option>当前全部学生</option></select>
+            <label>教师</label>
+            <select><option>李老师</option></select>
+            <label>时间</label>
+            <input type="text" value="2020-02-01 21:10　开始" readonly>
+            <input type="text" value="2020-02-01 21:10　截止" readonly style="margin-top:6px">
+            <div style="font-size:10px;color:#999;margin-top:4px">学生提交测验的截止时间，测验结束前15分不可再...</div>
+          </div>
+        </div>
+        <div class="quiz-edit-bottom">
+          <div style="display:flex;gap:6px">
+            <button>预览</button>
+            <button>保存试卷</button>
+            <button>下载试卷</button>
+          </div>
+          <button class="quiz-edit-publish" id="quizPublishBtn">随堂发布</button>
+        </div>
+      </div>`;
+    }
+
+    function fmtTime(s){const m=Math.floor(s/60);const ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}
+
+    function renderTeacherBBMonitor(){
+      const stuList=students.slice(0,Math.min(students.length,6));
+      const cells=stuList.map((s,i)=>{
+        const hasArt=i===1;
+        return `<div class="bb-mon-cell ${hasArt?"active":""}" data-bb-idx="${i}">
+          <canvas class="bb-mon-canvas" data-ci="${i}"></canvas>
+          <span class="bb-mon-cell-name">${s.name}</span>
+        </div>`;
+      }).join("");
+
+      return `<div class="bb-monitor" style="height:100%">
+        <div class="bb-mon-top">
+          <span class="bb-mon-title">画板小黑板</span>
+          <span class="bb-mon-phase">${bbRecalled?'已收回':'答题阶段'}</span>
+          <span class="bb-mon-timer" id="bbMonTimer">${fmtTime(bbTimerSec)}</span>
+          <span class="bb-mon-spacer"></span>
+          <div class="bb-mon-layouts">
+            <button class="bb-mon-layout-btn" title="单人视图">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            </button>
+            <button class="bb-mon-layout-btn active" title="2x2视图">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"/></svg>
+            </button>
+            <button class="bb-mon-layout-btn" title="3x3视图">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5.3" height="5.3" rx="1"/><rect x="9.35" y="2" width="5.3" height="5.3" rx="1"/><rect x="16.7" y="2" width="5.3" height="5.3" rx="1"/><rect x="2" y="9.35" width="5.3" height="5.3" rx="1"/><rect x="9.35" y="9.35" width="5.3" height="5.3" rx="1"/><rect x="16.7" y="9.35" width="5.3" height="5.3" rx="1"/><rect x="2" y="16.7" width="5.3" height="5.3" rx="1"/><rect x="9.35" y="16.7" width="5.3" height="5.3" rx="1"/><rect x="16.7" y="16.7" width="5.3" height="5.3" rx="1"/></svg>
+            </button>
+          </div>
+          <div class="bb-mon-sep"></div>
+          <div class="bb-mon-student">
+            <span>${stuList[1]?.name||students[0].name}</span>
+            <span class="bb-mon-avatar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg></span>
+            <span class="bb-mon-dropdown">▼</span>
+          </div>
+          <div class="bb-mon-sep"></div>
+          <button class="bb-mon-ctrl" title="最小化">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="12" x2="18" y2="12"/></svg>
+          </button>
+          <button class="bb-mon-ctrl" title="全屏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/></svg>
+          </button>
+          <button class="bb-mon-ctrl close-btn" title="关闭" id="bbMonClose">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="bb-mon-body">
+          <div class="bb-mon-grid cols-2">${cells}</div>
+          <div class="bb-mon-float">
+            <button class="bb-mon-float-btn" title="成员">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg>
+            </button>
+            <button class="bb-mon-float-btn" title="排行榜">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 22V8a2 2 0 00-2-2H6v10"/><path d="M14 22V8a2 2 0 012-2h2v10"/><path d="M8 6h8"/><path d="M12 6V2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="bb-mon-bottom">
+          <div class="bb-mon-pager">
+            <button>◀</button>
+            <span>1/1</span>
+            <button>▶</button>
+          </div>
+          ${bbRecalled
+            ?'<button class="bb-mon-recall" id="bbMonCloseResult" style="background:#555;color:#ddd">关闭</button>'
+            :'<button class="bb-mon-recall" id="bbRecallBtn">收回</button>'}
+        </div>
+      </div>`;
+    }
+
+    function initBBMonitorCanvases(){
+      document.querySelectorAll('.bb-mon-canvas').forEach(canvas=>{
+        const cell=canvas.parentElement;
+        const rect=cell.getBoundingClientRect();
+        canvas.width=rect.width;
+        canvas.height=rect.height;
+        const ci=Number(canvas.dataset.ci);
+        if(ci===1){
+          const ctx=canvas.getContext('2d');
+          ctx.strokeStyle='#e53e3e';
+          ctx.lineWidth=2.5;
+          ctx.lineCap='round';
+          ctx.lineJoin='round';
+          drawRandomScribble(ctx,canvas.width,canvas.height);
+        }
+      });
+    }
+
+    function drawRandomScribble(ctx,w,h){
+      const curves=[
+        [[w*.15,h*.5],[w*.25,h*.2],[w*.4,h*.35],[w*.35,h*.55]],
+        [[w*.3,h*.6],[w*.45,h*.3],[w*.55,h*.15],[w*.65,h*.25]],
+        [[w*.5,h*.4],[w*.6,h*.2],[w*.75,h*.15],[w*.85,h*.3]],
+        [[w*.55,h*.55],[w*.65,h*.4],[w*.75,h*.5],[w*.7,h*.65]],
+        [[w*.2,h*.7],[w*.35,h*.5],[w*.5,h*.6],[w*.45,h*.75]]
+      ];
+      curves.forEach(pts=>{
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0],pts[0][1]);
+        for(let i=1;i<pts.length-1;i++){
+          const xc=(pts[i][0]+pts[i+1][0])/2;
+          const yc=(pts[i][1]+pts[i+1][1])/2;
+          ctx.quadraticCurveTo(pts[i][0],pts[i][1],xc,yc);
+        }
+        ctx.stroke();
+      });
+      ctx.beginPath();ctx.ellipse(w*.55,h*.22,w*.08,h*.06,0,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.ellipse(w*.3,h*.42,w*.06,h*.08,-.5,0,Math.PI*2);ctx.stroke();
+    }
+
+    function startBBTimer(){
+      bbTimerSec=0;
+      if(bbTimerId) clearInterval(bbTimerId);
+      bbTimerId=setInterval(()=>{
+        bbTimerSec++;
+        const el=document.getElementById('bbMonTimer');
+        if(el) el.textContent=fmtTime(bbTimerSec);
+      },1000);
+    }
+
+    function stopBBTimer(){
+      if(bbTimerId){clearInterval(bbTimerId);bbTimerId=null}
+    }
+
+    function startAnswerTimer(){
+      answerTimerStart=Date.now();
+      answerTimerDisplay="00:00:00";
+      if(answerTimerId) clearInterval(answerTimerId);
+      answerTimerId=setInterval(()=>{
+        const sec=Math.floor((Date.now()-answerTimerStart)/1000);
+        const h=String(Math.floor(sec/3600)).padStart(2,"0");
+        const m=String(Math.floor((sec%3600)/60)).padStart(2,"0");
+        const s=String(sec%60).padStart(2,"0");
+        answerTimerDisplay=`${h}:${m}:${s}`;
+        const el1=document.querySelector(".ans-timer");
+        if(el1) el1.textContent=answerTimerDisplay;
+        const el2=document.querySelector(".stu-ans-timer");
+        if(el2) el2.textContent=answerTimerDisplay;
+      },1000);
+    }
+
+    function stopAnswerTimer(){
+      if(answerTimerId){clearInterval(answerTimerId);answerTimerId=null}
+    }
+
+    let quizTimerSec=0;
+    let quizTimerId=null;
+    let stuQuizCurrent=0;
+    let sqSideOpen=false;
+    let sqScratchColor='#333';
+    let sqScratchSize=2;
+    const quizQuestions=[
+      {type:'填空题',pts:4,diff:'难',content:'1. 在2018年平昌冬奥会男子短道速滑500米决赛中，武大靖打破世界纪录，并为我国夺得首金。终点裁判员裁定他是冠军的依据是：在通过相同的 <input class="sq-blank" placeholder="[1]"> 时，我国运动员武大靖所用的时间是 <input class="sq-blank" placeholder="[2]"> 。',mode:'blank'},
+      {type:'填空题',pts:2,diff:'易',content:'2. 小明骑自行车去书简，开始以2m/s的速度起了400m，又以5m/s的速度起行了500m，则他在整个过程中的平均速度为 <input class="sq-blank" placeholder="[1]"> m/s。',mode:'blank'},
+      {type:'单选题',pts:5,diff:'中',content:'3. 下列关于声现象的说法中正确的是( )',opts:[{v:'A',t:'声音在真空中传播速度最快'},{v:'B',t:'一切正在发声的物体都在振动'},{v:'C',t:'声音在各种介质中传播速度相同'},{v:'D',t:'声音只能在空气中传播'}],mode:'radio'},
+      {type:'单选题',pts:5,diff:'易',content:'4. 关于惯性，下列说法正确的是( )',opts:[{v:'A',t:'物体只有静止时才有惯性'},{v:'B',t:'物体运动速度越大，惯性越大'},{v:'C',t:'一切物体在任何情况下都有惯性'},{v:'D',t:'物体受力越大，惯性越大'}],mode:'radio'},
+      {type:'填空题',pts:4,diff:'中',content:'5. 一辆汽车在平直公路上匀速行驶，在10s内前进了200m，则汽车的速度为 <input class="sq-blank" placeholder="[1]"> m/s，合 <input class="sq-blank" placeholder="[2]"> km/h。',mode:'blank'}
+    ];
+
+    function renderStudentQuiz(){
+      const total=quizQuestions.length;
+      const q=quizQuestions[stuQuizCurrent];
+      const progress=Math.round(((stuQuizCurrent)/total)*100);
+      let qBody='';
+      if(q.mode==='radio'&&q.opts){
+        qBody=`<div class="q-options">${q.opts.map(o=>`<label class="opt" data-v="${o.v}"><input type="radio" name="sq_q${stuQuizCurrent}" value="${o.v}"> ${o.v}. ${o.t}</label>`).join('')}</div>`;
+      }
+      const nums=quizQuestions.map((_,i)=>{
+        let cls='sq-num';
+        if(i===stuQuizCurrent) cls+=' current';
+        return `<span class="${cls}" data-qi="${i}">${i+1}</span>`;
+      }).join('');
+
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-quiz">
+          <div class="stu-quiz-header">
+            <span class="sq-status">测验进行中</span>
+            <span class="sq-timer" id="quizTimer">${fmtTime(quizTimerSec)}</span>
+            <button class="sq-close" id="quizCloseBtn">×</button>
+          </div>
+          <div class="stu-quiz-body">
+            <div class="stu-quiz-main">
+              <div class="sq-question">
+                <div class="q-tag">${q.type} · ${q.pts}分</div>
+                <div class="q-content">${q.content}</div>
+                ${qBody}
+              </div>
+              <div class="sq-scratch">
+                <div class="sq-scratch-head">草稿区</div>
+                <div class="sq-scratch-toolbar">
+                  <button class="sq-tool-btn active" id="sqPenBtn" title="画笔">✎</button>
+                  <button class="sq-tool-btn" id="sqEraserBtn" title="橡皮擦">⌫</button>
+                  <span class="sq-stroke-btn active" data-s="2"></span>
+                  <span class="sq-stroke-btn" data-s="4"></span>
+                  <span class="sq-stroke-btn" data-s="7"></span>
+                  <span class="sq-color-btn active" data-c="black"></span>
+                  <span class="sq-color-btn" data-c="red"></span>
+                  <span class="sq-color-btn" data-c="blue"></span>
+                </div>
+                <div class="sq-scratch-wrap"><canvas id="stuQuizCanvas"></canvas></div>
+              </div>
+            </div>
+            <div class="sq-side ${sqSideOpen?'expanded':''}" id="sqSide">
+              <div class="sq-side-title">答题卡</div>
+              <div class="sq-side-grid">${nums}</div>
+              <div class="sq-side-legend">● 未答　● 已答</div>
+              <div class="sq-side-timer">剩余时间 <span id="sqSideTimer">${fmtTime(quizTimerSec)}</span></div>
+              <button class="sq-side-submit" id="quizSubmit">提交测验</button>
+            </div>
+            <div class="sq-progress-sticky">
+              <div class="sq-progress-row">
+                ${stuQuizCurrent>0?'<button class="sq-nav-btn" id="quizPrev">上一题</button>':''}
+                ${stuQuizCurrent<total-1?'<button class="sq-nav-btn primary" id="quizNext">下一题</button>':'<button class="sq-nav-btn primary" id="quizSubmitBottom">提交</button>'}
+                <span class="sq-progress-label">进度: ${stuQuizCurrent}/${total}</span>
+                <div class="sq-progress-track"><div class="sq-progress-fill" style="width:${progress}%"></div></div>
+                <span class="sq-progress-pct">${progress}%</span>
+                <button class="sq-toggle-card" id="sqToggleCard">答题卡</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    const qrStudents=[
+      {name:'张伟',status:'done',statusText:'已完成',bell:3,award:3,progress:100,qProg:'5/5',thumbQ:'第5题 热力学第二定律的表述( )',thumbOpts:['A','B','<span class="selected">C ✓</span>','D']},
+      {name:'王芳',status:'ing',statusText:'正在作答',bell:1,award:1,progress:80,qProg:'4/5',thumbQ:'第4题 城阙辅三秦, [填空]…',thumbOpts:['<span class="selected">已填</span>','[2]']},
+      {name:'李强',status:'done',statusText:'已完成',bell:0,award:0,progress:100,qProg:'5/5',thumbQ:'第3题 计算下列积分的结果( )',thumbOpts:['<span class="selected">A 学生选</span>','B','<span class="thumb-opt correct">C 正确</span>','D'],overlay:true},
+      {name:'赵敏',status:'warn',statusText:'正在作答',bell:1,award:1,progress:60,qProg:'3/5',thumbQ:'第3题 以下选项是2的倍数的是( )',thumbOpts:['A','<span class="selected">B ✓</span>','C','D']}
+    ];
+
+    function renderTeacherQuizMonitor(){
+      let cards=qrStudents.map(s=>{
+        const opts=s.thumbOpts.map(o=>`<span class="thumb-opt">${o}</span>`).join('');
+        return `<div class="qr-stu-card">
+          <div class="qr-card-head">
+            <div class="qr-card-left">
+              <div class="qr-card-avatar-wrap"><div class="qr-card-avatar"></div><span class="qr-card-dot ${s.status}"></span></div>
+              <div><div class="qr-card-name">${s.name}</div><div class="qr-card-status ${s.status}">● ${s.statusText}</div></div>
+            </div>
+            <div class="qr-card-right">
+              ${s.award?`<span class="qr-card-award">🏆 ${s.award}</span>`:''}
+              <span class="qr-card-bell">🔔${s.bell?`<span class="qr-card-bell-badge">${s.bell}</span>`:''}</span>
+            </div>
+          </div>
+          <div class="qr-card-preview">
+            <div class="qr-card-preview-inner">
+              <div class="thumb-q">${s.thumbQ}</div>
+              <div class="thumb-opts">${opts}</div>
+            </div>
+            ${s.overlay?'<div class="qr-card-preview-overlay"><button>查看实时作答屏幕</button></div>':''}
+          </div>
+          <div class="qr-card-progress">
+            <div class="row"><span>进度: ${s.qProg}</span><span class="pct ${s.status}">${s.progress}%</span></div>
+            <div class="qr-card-pbar"><div class="qr-card-pfill ${s.status}" style="width:${s.progress}%"></div></div>
+          </div>
+        </div>`;
+      }).join('');
+
+      return `<div class="qr-page" style="height:100%">
+        <div class="qr-header">
+          <div class="qr-header-left">
+            <div class="qr-logo">📈</div>
+            <span class="qr-title">2020-2021学年山东省淄博市周村区八年级物理试卷（五四学制）</span>
+          </div>
+          <div class="qr-win-ctrls">
+            <span title="刷新">↻</span><span title="最小化">−</span><span title="最大化">□</span><span title="关闭" id="qrCloseBtn">×</span>
+          </div>
+        </div>
+        <div class="qr-body">
+          <div class="qr-section-row"><div class="qr-section-title">☰ 试卷内容</div><span class="qr-section-action">展开 ▼</span></div>
+          <div class="qr-section-row"><div class="qr-section-title">📈 活动数据</div><span class="qr-section-action">详情 ▶</span></div>
+          <div class="qr-stats-grid">
+            <div class="qr-stat-card"><div class="qr-stat-top"><div class="qr-stat-icon indigo">📈</div><span class="qr-stat-trend">+12%</span></div><div class="qr-stat-label">作答完成率</div><div class="qr-stat-value">50%</div></div>
+            <div class="qr-stat-card"><div class="qr-stat-top"><div class="qr-stat-icon emerald">👥</div></div><div class="qr-stat-label">已提交人数</div><div><span class="qr-stat-value">4</span><span class="qr-stat-sub">/ 8</span></div></div>
+            <div class="qr-stat-card"><div class="qr-stat-top"><div class="qr-stat-icon amber">👤</div></div><div class="qr-stat-label">未提交人数</div><div><span class="qr-stat-value">4</span><span class="qr-stat-sub">/ 8</span></div></div>
+            <div class="qr-stat-card"><div class="qr-stat-top"><div class="qr-stat-icon blue">✓</div></div><div class="qr-stat-label">作答正确人数</div><div class="qr-stat-value">3</div></div>
+            <div class="qr-stat-card"><div class="qr-stat-top"><div class="qr-stat-icon rose">✗</div></div><div class="qr-stat-label">错误人数</div><div class="qr-stat-value">1</div></div>
+          </div>
+          <div class="qr-section-row" style="margin-bottom:10px"><div class="qr-section-title">👥 学生作答详情</div></div>
+          <div class="qr-toolbar">
+            <div class="qr-search-wrap"><input class="qr-search" type="text" placeholder="搜索学生姓名..."></div>
+            <div class="qr-filter-group">
+              <button class="active">全部(18)</button><button>未交(4)</button><button>待批(12)</button><button>已批(2)</button>
+            </div>
+          </div>
+          <div class="qr-students-grid">${cards}</div>
+        </div>
+        <div class="qr-bottom">
+          <span class="qr-time">剩余时间 <span id="qrMonTimer">${fmtTime(600-quizTimerSec>0?600-quizTimerSec:0)}</span></span>
+          <button class="qr-end-btn" id="qrEndBtn">结束本次练习</button>
+        </div>
+      </div>`;
+    }
+
+    let qrDetailStudent=null;
+    let qrDetailQIdx=0;
+
+    const detailQuestions=[
+      {num:1,type:'连线题',time:'3分20秒',result:'correct',resultText:'正确',content:'请将左侧数学概念与右侧英文释义正确连线。',meta:'用时: 3分20秒　学生答案: 全部正确　参考答案: 配对见下方',answer:['方程 ↔ equation','函数 ↔ function','几何 ↔ geometry','概率 ↔ probability']},
+      {num:2,type:'单选题',time:'0分6秒',result:'correct',resultText:'正确',content:'若 x = -5 是关于 x 的方程 2x - 3 = a 的解，则 a 的值为( )',meta:'用时: 0分6秒　学生答案: A　参考答案: A',answer:['学生选择: A. -13 ✓']},
+      {num:3,type:'多选题',time:'2分48秒',result:'correct',resultText:'正确',content:'以下选项是 2 的倍数的有( )',meta:'用时: 2分48秒　学生答案: ABD　参考答案: ABD',answer:['学生选择: A, B, D ✓']},
+      {num:4,type:'判断题',time:'1分10秒',result:'correct',resultText:'正确',content:'0 乘任何数都得 0。',meta:'用时: 1分10秒　学生答案: 正确　参考答案: 正确',answer:['学生选择: ✓ 正确']},
+      {num:5,type:'填空题',time:'2分15秒',result:'correct',resultText:'正确',content:'完成名句：城阙辅三秦，__________。与君离别意，__________。',meta:'用时: 2分15秒',answer:['[1] 风烟望五津','[2] 同是宦游人']},
+      {num:6,type:'问答题',time:'0.6分',result:'correct',resultText:'正确',content:'请结合生活实例，说明一次函数 y = kx + b 中 k 的实际意义。',meta:'用时: 0.6分',answer:['k 表示变化率，即自变量每增加1时因变量的增量。']},
+      {num:7,type:'材料分析题',time:'0.8分',result:'correct',resultText:'正确',content:'阅读材料并回答问题。',meta:'用时: 0.8分',answer:['(1) 人均用水量逐周下降，说明节水措施有效。','(2) 建议随手关闭水龙头。']}
+    ];
+
+    function renderTeacherQuizDetail(){
+      const s=qrDetailStudent;
+      if(!s) return '';
+      const q=detailQuestions[qrDetailQIdx]||detailQuestions[0];
+      const sidebar=detailQuestions.map((dq,i)=>`
+        <div class="qr-detail-q-item ${i===qrDetailQIdx?'active':''}" data-dqi="${i}">
+          <div><div class="q-label">第 ${dq.num} 题</div><div class="q-time">⏱ ${dq.time}</div></div>
+          <span class="q-check">✓</span>
+        </div>`).join('');
+
+      const answerLines=q.answer.map(a=>`<div class="line">${a}</div>`).join('');
+
+      return `<div class="qr-detail" style="height:100%">
+        <div class="qr-detail-header">
+          <button class="qr-detail-back" id="qrDetailBack">← ${s.name}</button>
+          <span class="qr-detail-htitle">2020-2021学年山东省淄博市周村区八年级物理试卷(五四学制)</span>
+          <div class="qr-detail-hctrls"><span>↻</span><span>−</span><span>□</span><span id="qrDetailClose">×</span></div>
+        </div>
+        <div class="qr-detail-body">
+          <div class="qr-detail-info">
+            <div class="qr-detail-info-left">
+              <div class="qr-detail-info-avatar"><span class="dot" style="background:${s.status==='done'?'#10b981':s.status==='ing'?'#fb923c':'#ef4444'}"></span></div>
+              <div>
+                <div><span class="qr-detail-info-name">${s.name}</span><span class="qr-detail-info-badge ${s.status}">${s.statusText}</span></div>
+                <div class="qr-detail-info-sub">● ${s.statusText}</div>
+              </div>
+            </div>
+            <div class="qr-detail-info-stats">
+              <div class="qr-detail-info-stat"><div class="num">${s.progress}</div><div class="lbl">完成率</div></div>
+              <div class="qr-detail-info-sep"></div>
+              <div class="qr-detail-info-stat"><div class="num">${s.qProg}</div><div class="lbl">题目进度</div></div>
+              <div class="qr-detail-info-sep"></div>
+              <div class="qr-detail-info-award"><span>🏆</span><div class="num">${s.award}</div></div>
+            </div>
+          </div>
+          <div class="qr-detail-grid">
+            <div class="qr-detail-sidebar">
+              <h3>📋 题目列表</h3>
+              ${sidebar}
+            </div>
+            <div class="qr-detail-main">
+              <div class="qr-detail-q-head">
+                <div>
+                  <div class="qr-detail-q-title">第 ${q.num} 题 · ${q.type}</div>
+                  <div class="qr-detail-q-subtitle"><span class="${q.result}">${q.resultText}</span></div>
+                </div>
+                <button class="qr-detail-grade-btn">批阅本题</button>
+              </div>
+              <div class="qr-detail-q-meta">${q.meta}</div>
+              <div class="qr-detail-q-content">${q.content}</div>
+              <div class="qr-detail-q-answer">${answerLines}</div>
+              <div class="qr-detail-q-note">
+                <span>该学生答案可能仍在更新（提示：手写进行中的题）</span>
+              </div>
+              <div class="qr-detail-scratch-area">
+                <div class="qr-detail-scratch-label">🖊 学生草稿纸</div>
+                <canvas class="qr-detail-scratch-canvas" id="qrScratchCanvas"></canvas>
+              </div>
+              <div class="qr-detail-nav">
+                <button id="qrDetailPrevQ">← 上一题</button>
+                <button class="primary" id="qrDetailBackToList">返回监控页面</button>
+                <button id="qrDetailNextQ">下一题 →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function startQuizTimer(){
+      quizTimerSec=0;
+      if(quizTimerId) clearInterval(quizTimerId);
+      quizTimerId=setInterval(()=>{
+        quizTimerSec++;
+        const el=document.getElementById('quizTimer');
+        if(el) el.textContent=fmtTime(quizTimerSec);
+        const el2=document.getElementById('sqSideTimer');
+        if(el2) el2.textContent=fmtTime(quizTimerSec);
+        const el3=document.getElementById('qrMonTimer');
+        if(el3){const r=600-quizTimerSec;el3.textContent=fmtTime(r>0?r:0)}
+      },1000);
+    }
+    function stopQuizTimer(){if(quizTimerId){clearInterval(quizTimerId);quizTimerId=null}}
+
+    function initQuizCanvas(){
+      const canvas=document.getElementById('stuQuizCanvas');
+      if(!canvas) return;
+      const wrap=canvas.parentElement;
+      const rect=wrap.getBoundingClientRect();
+      canvas.width=rect.width;
+      canvas.height=160;
+      const ctx=canvas.getContext('2d');
+      ctx.strokeStyle=sqScratchColor;
+      ctx.lineWidth=sqScratchSize;
+      ctx.lineCap='round';
+      ctx.lineJoin='round';
+      let drawing=false;
+      canvas.addEventListener('pointerdown',e=>{drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX,e.offsetY)});
+      canvas.addEventListener('pointermove',e=>{if(!drawing)return;ctx.strokeStyle=sqScratchColor;ctx.lineWidth=sqScratchSize;ctx.lineTo(e.offsetX,e.offsetY);ctx.stroke()});
+      canvas.addEventListener('pointerup',()=>{drawing=false});
+      canvas.addEventListener('pointerleave',()=>{drawing=false});
+    }
+
+    function renderStudentLock(mode){
+      const isPre=mode==="preclass";
+      const icon=isPre?"📘":"🔒";
+      const title=isPre?"ClassIn Focus":"设备管控中";
+      const btn=isPre?"静候开课":"禁止操作";
+      const note=isPre?"你的智慧学伴已准备就绪":"此设备正在受到管理";
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-lock">
+          <div class="stu-lock-shape" style="width:90px;height:90px;top:10%;left:8%"></div>
+          <div class="stu-lock-shape" style="width:60px;height:60px;bottom:12%;left:22%"></div>
+          <div class="stu-lock-sq" style="width:36px;height:36px;top:15%;right:12%"></div>
+          <div class="stu-lock-sq" style="width:48px;height:48px;bottom:18%;right:8%"></div>
+          <div class="stu-lock-sq" style="width:24px;height:24px;top:8%;left:30%"></div>
+          <div style="position:relative;z-index:1">
+            <div class="stu-lock-icon">${icon}</div>
+            <h3>${title}</h3>
+            <div class="stu-lock-btn">${btn}</div>
+            <div class="stu-lock-note">${note}</div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    function renderStudentRoom(){
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-room">
+          <div class="stu-room-top">
+            <div class="signal"><span>124ms</span></div>
+            <div>24秋季-新概念 U1-U4-主课程-12</div>
+            <div>已经开课 41:54</div>
+          </div>
+          <div class="stu-room-body"></div>
+          <div class="stu-room-hand">✋</div>
+          <div class="stu-room-bottom">
+            <div class="stu-room-bottom-btn">💬</div>
+            <div class="stu-room-bottom-btn">👥</div>
+            <div class="stu-room-bottom-btn">⚙</div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    function renderStudentAnswer(){
+      if(studentAnswerSubmitted){
+        return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+          <div class="stu-ans">
+            <div class="stu-ans-top"><strong>答题器</strong><span class="stu-ans-timer">${answerTimerDisplay}</span></div>
+            <div class="stu-ans-done">✓ 已提交，等待老师结束本次答题</div>
+          </div>
+        </div></div>`;
+      }
+      const opts=["A","B","C","D"].map(k=>`<div class="stu-ans-opt ${studentAnswerChoice===k?"picked":""}" data-opt="${k}">${k}</div>`).join("");
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-ans">
+          <div class="stu-ans-top"><strong>答题器</strong><span class="stu-ans-timer">${answerTimerDisplay}</span></div>
+          <div class="stu-ans-card">
+            <div class="stu-ans-opts">${opts}</div>
+          </div>
+          <button class="stu-ans-submit" id="stuAnsSubmit" ${studentAnswerChoice?"":"disabled"}>提 交 答 案</button>
+        </div>
+      </div></div>`;
+    }
+
+    function renderStudentBlackboard(){
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-bb">
+          <div class="stu-bb-top"><span><strong>画板小黑板</strong>　答题阶段　00:33</span></div>
+          <div class="stu-bb-canvas" id="stuCanvasWrap"><canvas id="stuCanvas"></canvas></div>
+          <div class="stu-bb-bottom"><span>⬜</span><span style="background:#c05020;color:#fff">🖌</span><span>◆</span><span>T</span><span>✂</span><span>🖼</span></div>
+        </div>
+      </div></div>`;
+    }
+
+    function initCanvas(){
+      const wrap=document.getElementById("stuCanvasWrap");
+      const canvas=document.getElementById("stuCanvas");
+      if(!wrap||!canvas) return;
+      const rect=wrap.getBoundingClientRect();
+      canvas.width=rect.width;
+      canvas.height=rect.height;
+      const ctx=canvas.getContext("2d");
+      ctx.strokeStyle="#ffffff";
+      ctx.lineWidth=2;
+      ctx.lineCap="round";
+      ctx.lineJoin="round";
+      let drawing=false;
+      canvas.addEventListener("pointerdown",(e)=>{drawing=true;ctx.beginPath();ctx.moveTo(e.offsetX,e.offsetY)});
+      canvas.addEventListener("pointermove",(e)=>{if(!drawing)return;ctx.lineTo(e.offsetX,e.offsetY);ctx.stroke()});
+      canvas.addEventListener("pointerup",()=>{drawing=false});
+      canvas.addEventListener("pointerleave",()=>{drawing=false});
+    }
+
+    function renderStudentSign(){
+      const total=students.length;
+      const done=signedSet.size;
+      let cards=students.map((s,i)=>{
+        const d=signedSet.has(i);
+        return `<div class="stu-card ${d?"signed":""}" data-si="${i}">
+          <span class="stu-card-check">✓</span>
+          <div class="stu-card-avatar"></div>
+          <div class="stu-card-name">${s.name}</div>
+          <div class="stu-card-status">${d?"✓ 已签到":"点击签到"}</div>
+        </div>`;
+      }).join("");
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-sign">
+          <div class="stu-sign-head">
+            <div><h3>课堂签到</h3><div class="stu-sign-sub">请点击你的名字完成签到</div></div>
+            <div class="stu-sign-badge">签到进度<strong>${done} / ${total}</strong></div>
+          </div>
+          <div class="stu-sign-grid" id="signGrid">${cards}</div>
+        </div>
+      </div></div>`;
+    }
+
+    const steps=[
+      {title:"步骤 1：教师点击上课",sub:"教师在课堂列表点击「上课」按钮，学生端处于静默锁屏状态。",log:"学生端：设备管控中，禁止操作。",teacher:"list",student:"lock",descT:"老师点击上课，进入模式选择前置流程。",descS:"默认不可操作，只有老师发起互动后才可操作。\n1. 该 Demo 版本，基于安卓 Pad 开发一个单独的 App，且 App 中只有教室上课页面。\n2. 学生端 APP 名称为「ClassIn Focus」。\n3. 学生端的安卓 Pad 与教师端大屏通过后台建立绑定关系，当教师进入教室后发起签到，学生的 Pad 端自动弹出签到页面。\n4. 一个 Pad 可同时绑定多个大屏设备。当 A、B 两个设备同时有课堂时，Pad 将优先联动最早进入教室的设备（如 A）。签到完成后，Pad 仅与 A 保持联动，专注服务该设备。\n5. 大屏没有进入课堂时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。"},
+      {title:"步骤 2：弹出模式选择",sub:"弹出「选择上课模式」弹窗，教师选择 Pad班。学生端仍保持锁屏。",log:"教师端弹出模式选择弹窗，学生端保持静默。",teacher:"list-modal",student:"lock",descT:"ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。",descS:"默认管控状态不可操作，只有老师发起互动后才可操作。"},
+      {title:"步骤 3：进入教室 · 自动签到",sub:"教师确认进入后自动到教室并发起签到，学生端同步弹出签到页面。",log:"联动触发：教师进入教室 → 学生端自动弹出签到界面。",teacher:"room",student:"sign",descT:"1. 教师确认进入教室后，系统自动进入教室并发起签到，黑板区域弹出「课堂签到」窗口。\n2. 签到名单来自于该班级的学生，姓名排序按班级昵称字母 A-Z 排列，学生信息显示头像、班级名称。\n3. 当学生在 Pad 端点击已签到后，教师端要同步显示签到状态，右上角统计当前已签到多少人/总人数。\n4. 老师可操作：当学生点击已签到后，老师可以手动点击该学生头像和姓名区域取消签到，此时学生端可以再次点击签到。但教师不可以帮助学生操作成「已签到」。\n5. 当点击「完成签到」关闭该窗口，再次进入此节课的课堂不弹出签到页面。\n6. 签到页面窗口可以通过工具栏再次调取出来。\n　* 再次打开后，要保留上一次已完成签到的状态和学生设备绑定的行为，打开后学生端也同步显示签到页面，可操作点击名单继续签到。",descS:"1. 学生端 Pad 同时取消管控状态，并弹出学生名单，学生头像、排序与教师端逻辑一致。（通过大屏与 Pad 提前绑定建立互动关系）\n2. 弹窗标题为：课堂签到，说明文案为：请点击你的名字完成签到。\n3. 学生可点击任意名字进行签到，且只能点击一个，如果已选中一个名字可以再次点击取消选中，或点击其他名字，取消上一个选中的状态。当点击名字后，状态变为「已签到」。\n4. 当有 A 设备点击了已签到，B 设备再次点击时无响应。此时只有老师端或 A 设备可取消签到。\n5. 当教师端点击「完成签到」，此时已完成签到的学生端关闭签到窗口，恢复成管控不可操作状态，同时完成学生设备与学生账号绑定关系。此后该 Pad 上发生的数据归属于当前签到的学生名下。\n6. Pad 设备没有完成签到状态下，老师取消管控后，Pad 优先弹出签到页面，完成签到后再显示其他互动窗口。\n7. <strong>特殊边界兜底说明：</strong>当 Pad 与大屏处于非绑定状态，或大屏没有进入教室时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。"}
+    ];
+
+    const dLog=document.getElementById("dLog");
+    const dDescTeacher=document.getElementById("dDescTeacher");
+    const dDescStudent=document.getElementById("dDescStudent");
+    const dExtraSign=document.getElementById("dExtraSign");
+    const teacherUI=document.getElementById("teacherUI");
+    const studentUI=document.getElementById("studentUI");
+
+    let cur=0;
+
+    function syncExtraSign(show){
+      if(!dExtraSign) return;
+      dExtraSign.classList.toggle("show",!!show);
+    }
+
+    function render(){
+      const s=steps[cur];
+      dLog.textContent="联动日志："+s.log;
+      dDescTeacher.innerHTML=(s.descT||"").replace(/\n/g,"<br>");
+      dDescStudent.innerHTML=(s.descS||"").replace(/\n/g,"<br>");
+      syncExtraSign(s.student==="sign");
+
+      if(s.teacher==="list") teacherUI.innerHTML=renderTeacherList(false);
+      else if(s.teacher==="list-modal") teacherUI.innerHTML=renderTeacherList(true);
+      else if(s.teacher==="room") teacherUI.innerHTML=renderTeacherRoom();
+
+      if(s.student==="lock") studentUI.innerHTML=renderStudentLock("preclass");
+      else if(s.student==="sign") studentUI.innerHTML=renderStudentSign();
+
+      bindEvents();
+    }
+
+    function refreshRoom(){
+      teacherUI.innerHTML=renderTeacherRoom();
+      bindEvents();
+      if(teacherView==='quiz-detail') setTimeout(initDetailScratch,50);
+    }
+
+    function initDetailScratch(){
+      const canvas=document.getElementById('qrScratchCanvas');
+      if(!canvas) return;
+      const rect=canvas.parentElement.getBoundingClientRect();
+      canvas.width=rect.width;
+      canvas.height=140;
+      const ctx=canvas.getContext('2d');
+      ctx.strokeStyle='#555';
+      ctx.lineWidth=1.5;
+      ctx.lineCap='round';
+      ctx.lineJoin='round';
+      const w=canvas.width,h=canvas.height;
+      const strokes=[
+        [[w*.05,h*.3],[w*.12,h*.15],[w*.2,h*.25],[w*.28,h*.2],[w*.35,h*.35]],
+        [[w*.4,h*.5],[w*.48,h*.3],[w*.55,h*.4],[w*.62,h*.25],[w*.7,h*.45]],
+        [[w*.1,h*.6],[w*.2,h*.55],[w*.3,h*.65],[w*.4,h*.7],[w*.5,h*.6]],
+        [[w*.55,h*.7],[w*.65,h*.65],[w*.72,h*.75],[w*.8,h*.6]]
+      ];
+      strokes.forEach(pts=>{
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0],pts[0][1]);
+        for(let i=1;i<pts.length-1;i++){
+          const xc=(pts[i][0]+pts[i+1][0])/2;
+          const yc=(pts[i][1]+pts[i+1][1])/2;
+          ctx.quadraticCurveTo(pts[i][0],pts[i][1],xc,yc);
+        }
+        const last=pts[pts.length-1];
+        ctx.lineTo(last[0],last[1]);
+        ctx.stroke();
+      });
+    }
+
+    function bindEvents(){
+      const startBtn=document.getElementById("startClassBtn");
+      if(startBtn) startBtn.addEventListener("click",()=>{cur=1;render()});
+
+      const confirmBtn=document.getElementById("confirmModeBtn");
+      if(confirmBtn) confirmBtn.addEventListener("click",()=>{showSignPanel=true;cur=2;render()});
+
+      document.querySelectorAll(".ci-modal-opt").forEach(o=>{
+        o.addEventListener("click",()=>{
+          document.querySelectorAll(".ci-modal-opt").forEach(x=>x.classList.remove("selected"));
+          o.classList.add("selected");
+        });
+      });
+
+      const finishBtn=document.getElementById("finishSignBtn");
+      if(finishBtn){
+        finishBtn.addEventListener("click",()=>{
+          showSignPanel=false;
+          roomOverlay="none";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          syncExtraSign(false);
+          dLog.textContent="联动日志：教师点击「完成签到」→ 学生端回到设备管控状态。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      document.querySelectorAll(".ci-sign-item[data-si]").forEach(item=>{
+        item.addEventListener("click",(e)=>{
+          e.stopPropagation();
+          const idx=Number(item.dataset.si);
+          const name=students[idx]?.name||'';
+          if(signedSet.has(idx)){
+            signedSet.delete(idx);
+            dLog.textContent=`联动日志：教师取消「${name}」的签到，学生端可再次签到。`;
+            studentUI.innerHTML=renderStudentSign();
+            refreshRoom();
+          }else{
+            dLog.textContent=`联动日志：教师不可代签，需由「${name}」本人在 Pad 上点击完成签到。`;
+          }
+        });
+      });
+
+      const openTB=document.getElementById("openToolbox");
+      if(openTB){
+        openTB.addEventListener("click",()=>{
+          roomOverlay="toolbox";
+          refreshRoom();
+        });
+      }
+
+      const closeTB=document.getElementById("closeToolbox");
+      if(closeTB) closeTB.addEventListener("click",()=>{roomOverlay="none";refreshRoom()});
+
+      const toolboxOverlay=document.getElementById("toolboxOverlay");
+      if(toolboxOverlay){
+        toolboxOverlay.addEventListener("click",(e)=>{
+          if(e.target===toolboxOverlay){roomOverlay="none";refreshRoom();return}
+          const item=e.target.closest("[data-tool]");
+          if(item&&item.dataset.tool==="sign"){
+            roomOverlay="none";
+            showSignPanel=true;
+            refreshRoom();
+            studentUI.innerHTML=renderStudentSign();
+            syncExtraSign(true);
+            dLog.textContent="联动日志：教师通过工具栏再次调出签到页 → 学生端同步显示签到页面，可继续签到。";
+            dDescTeacher.innerHTML="教师通过工具栏再次打开签到窗口，保留上次已完成签到的状态和学生设备绑定关系。尚未签到的学生可继续在 Pad 上点击完成签到。";
+            dDescStudent.innerHTML="学生端同步显示签到页面：已完成签到的学生状态保留不变；未签到的学生可继续点击自己的名字完成签到。";
+            bindEvents();
+          }else if(item&&item.dataset.tool==="blackboard"){
+            roomOverlay="blackboard";
+            refreshRoom();
+            studentUI.innerHTML=renderStudentLock();
+            syncExtraSign(false);
+            dLog.textContent="联动日志：教师打开小黑板工具窗口 → 学生端仍处于管控状态，等待教师分发。";
+            dDescTeacher.innerHTML="教师从工具栏选择小黑板，进入准备阶段。点击「分发」后学生端将收到画板。";
+            dDescStudent.innerHTML="保持管控状态，等待教师点击「分发」后进入教室并显示小黑板。<br>管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+            bindEvents();
+          }else if(item&&item.dataset.tool==="answer"){
+            answerCorrect=null;
+            answerChoices={};
+            studentAnswerChoice=null;
+            studentAnswerSubmitted=false;
+            roomOverlay="answer-setup";
+            refreshRoom();
+            syncExtraSign(false);
+            dLog.textContent="联动日志：教师打开答题器 → 先选择正确答案。";
+            dDescTeacher.innerHTML="教师在答题器准备阶段，点击 A / B / C / D 可设定正确答案（可不设置），点击「开始答题」后学生端进入答题卡。";
+            dDescStudent.innerHTML="保持管控状态，等待教师发布答题。";
+          }
+        });
+      }
+
+      const closeBB=document.getElementById("closeBB");
+      if(closeBB) closeBB.addEventListener("click",()=>{
+        roomOverlay="none";
+        refreshRoom();
+        studentUI.innerHTML=renderStudentLock();
+        dLog.textContent="联动日志：教师关闭小黑板工具 → 学生端恢复管控状态。";
+        dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+        dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+        bindEvents();
+      });
+
+      const closeAns=document.getElementById("closeAns");
+      if(closeAns) closeAns.addEventListener("click",()=>{
+        stopAnswerTimer();
+        roomOverlay="none";
+        refreshRoom();
+        studentUI.innerHTML=renderStudentLock();
+        dLog.textContent="联动日志：教师关闭答题器 → 学生端恢复管控状态。";
+        dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+        dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+        bindEvents();
+      });
+
+      const closeAnsStats=document.getElementById("closeAnsStats");
+      if(closeAnsStats) closeAnsStats.addEventListener("click",()=>{
+        stopAnswerTimer();
+        roomOverlay="none";
+        refreshRoom();
+        studentUI.innerHTML=renderStudentLock();
+        dLog.textContent="联动日志：教师关闭答题器 → 学生端恢复管控状态。";
+        dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+        dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+        bindEvents();
+      });
+
+      const ansSetupOpts=document.getElementById("ansSetupOpts");
+      if(ansSetupOpts){
+        ansSetupOpts.addEventListener("click",(e)=>{
+          const item=e.target.closest(".ans-opt");
+          if(!item) return;
+          const k=item.dataset.opt;
+          answerCorrect=answerCorrect===k?null:k;
+          refreshRoom();
+          dLog.textContent=answerCorrect?`联动日志：教师设定正确答案为「${answerCorrect}」。`:"联动日志：教师取消了正确答案设置。";
+        });
+      }
+
+      const ansStartBtn=document.getElementById("ansStartBtn");
+      if(ansStartBtn){
+        ansStartBtn.addEventListener("click",()=>{
+          answerChoices={};
+          studentAnswerChoice=null;
+          studentAnswerSubmitted=false;
+          roomOverlay="answer-stats";
+          startAnswerTimer();
+          refreshRoom();
+          studentUI.innerHTML=renderStudentAnswer();
+          dLog.textContent="联动日志：教师点击「开始答题」→ 学生端解除管控，弹出答题卡。";
+          dDescTeacher.innerHTML="教师端进入数据统计页，实时查看学生作答分布；可点击「设置答案」回到设定页，点击「结束答题」收回学生端。";
+          dDescStudent.innerHTML="学生端已解除管控，弹出答题器。请选择一个选项后点击「提交答案」。";
+          bindEvents();
+        });
+      }
+
+      const ansReSetBtn=document.getElementById("ansReSetBtn");
+      if(ansReSetBtn){
+        ansReSetBtn.addEventListener("click",()=>{
+          stopAnswerTimer();
+          roomOverlay="answer-setup";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          studentAnswerChoice=null;
+          studentAnswerSubmitted=false;
+          dLog.textContent="联动日志：教师返回「设置答案」，学生端回到管控状态。";
+          dDescTeacher.innerHTML="教师返回答题器设置页，可重新设定正确答案后再次「开始答题」。";
+          dDescStudent.innerHTML="设备管控中，等待教师重新发布答题。";
+          bindEvents();
+        });
+      }
+
+      const ansEndBtn=document.getElementById("ansEndBtn");
+      if(ansEndBtn){
+        ansEndBtn.addEventListener("click",()=>{
+          stopAnswerTimer();
+          roomOverlay="none";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：教师点击「结束答题」→ 学生端回到管控状态。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      document.querySelectorAll(".stu-ans-opt").forEach(el=>{
+        el.addEventListener("click",()=>{
+          if(studentAnswerSubmitted) return;
+          studentAnswerChoice=el.dataset.opt;
+          studentUI.innerHTML=renderStudentAnswer();
+          bindEvents();
+        });
+      });
+
+      const stuAnsSubmit=document.getElementById("stuAnsSubmit");
+      if(stuAnsSubmit){
+        stuAnsSubmit.addEventListener("click",()=>{
+          if(!studentAnswerChoice) return;
+          answerChoices["self"]=studentAnswerChoice;
+          studentAnswerSubmitted=true;
+          studentUI.innerHTML=renderStudentAnswer();
+          refreshRoom();
+          dLog.textContent=`联动日志：学生提交答案「${studentAnswerChoice}」→ 教师端数据同步更新。`;
+          dDescStudent.innerHTML="学生已提交答案，等待教师结束本次答题。";
+          bindEvents();
+        });
+      }
+
+      const distBtn=document.getElementById("distributeBtn");
+      if(distBtn){
+        distBtn.addEventListener("click",()=>{
+          bbMonitorActive=true;
+          bbRecalled=false;
+          teacherUI.innerHTML=renderTeacherBBMonitor();
+          studentUI.innerHTML=renderStudentBlackboard();
+          dLog.textContent="联动日志：教师点击「分发」小黑板 → 学生端解除管控，进入教室并显示小黑板画板，教师端进入实时监控。";
+          dDescTeacher.innerHTML="教师点击「分发」后进入实时监控界面，可查看所有学生的书写进度。";
+          dDescStudent.innerHTML="学生端解除管控，进入教室并自动弹出可书写画板，学生可在画板上进行书写和绘画操作。";
+          startBBTimer();
+          setTimeout(()=>{initBBMonitorCanvases();initCanvas()},50);
+          bindEvents();
+        });
+      }
+
+      const bbRecallBtn=document.getElementById("bbRecallBtn");
+      if(bbRecallBtn){
+        bbRecallBtn.addEventListener("click",()=>{
+          bbRecalled=true;
+          stopBBTimer();
+          studentUI.innerHTML=renderStudentLock();
+          teacherUI.innerHTML=renderTeacherBBMonitor();
+          dLog.textContent="联动日志：教师点击「收回」→ 学生端回到管控状态，教师端保留小黑板结果。";
+          dDescTeacher.innerHTML="教师点击「收回」后，教师端保留所有学生的小黑板书写结果，可进行查看和点评。";
+          dDescStudent.innerHTML="教师收回后，学生端恢复为设备管控状态，不可操作。";
+          setTimeout(initBBMonitorCanvases,50);
+          bindEvents();
+        });
+      }
+
+      const bbMonCloseResult=document.getElementById("bbMonCloseResult");
+      if(bbMonCloseResult){
+        bbMonCloseResult.addEventListener("click",()=>{
+          bbMonitorActive=false;
+          bbRecalled=false;
+          roomOverlay="none";
+          showSignPanel=false;
+          refreshRoom();
+          dLog.textContent="联动日志：教师关闭小黑板结果视图，回到课堂。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      const bbMonClose=document.getElementById("bbMonClose");
+      if(bbMonClose){
+        bbMonClose.addEventListener("click",()=>{
+          bbMonitorActive=false;
+          bbRecalled=false;
+          stopBBTimer();
+          roomOverlay="none";
+          showSignPanel=false;
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：教师关闭小黑板监控 → 学生端回到设备管控状态。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      const signGrid=document.getElementById("signGrid");
+      if(signGrid){
+        signGrid.addEventListener("click",(e)=>{
+          const card=e.target.closest(".stu-card");
+          if(!card) return;
+          const idx=Number(card.dataset.si);
+          signedSet.add(idx);
+          refreshRoom();
+          studentUI.innerHTML=renderStudentSign();
+          bindEvents();
+        });
+      }
+
+      const openLMS=document.getElementById("openLMS");
+      if(openLMS){
+        openLMS.addEventListener("click",()=>{
+          teacherView="lms";
+          refreshRoom();
+          dLog.textContent="联动日志：教师打开 LMS 课程管理页面。";
+        });
+      }
+
+      const lmsNewBtn=document.getElementById("lmsNewBtn");
+      if(lmsNewBtn){
+        lmsNewBtn.addEventListener("click",()=>{
+          teacherView="lms-new";
+          refreshRoom();
+          dLog.textContent="联动日志：教师点击「新建」，弹出发布活动选择。";
+        });
+      }
+
+      const newActOverlay=document.getElementById("newActOverlay");
+      if(newActOverlay){
+        newActOverlay.addEventListener("click",(e)=>{
+          if(e.target===newActOverlay){
+            teacherView="lms";
+            refreshRoom();
+          }
+        });
+      }
+
+      document.querySelectorAll(".lms-pub-action").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          teacherView="quiz-edit";
+          refreshRoom();
+          dLog.textContent="联动日志：教师进入测验编辑/发布页面。";
+        });
+      });
+
+      const quizEditClose=document.getElementById("quizEditClose");
+      if(quizEditClose){
+        quizEditClose.addEventListener("click",()=>{
+          teacherView="lms";
+          refreshRoom();
+          dLog.textContent="联动日志：教师关闭测验编辑，返回 LMS。";
+        });
+      }
+
+      const quizPublishBtn=document.getElementById("quizPublishBtn");
+      if(quizPublishBtn){
+        quizPublishBtn.addEventListener("click",()=>{
+          teacherView="quiz-monitor";
+          stuQuizCurrent=0;
+          sqSideOpen=false;
+          refreshRoom();
+          studentUI.innerHTML=renderStudentQuiz();
+          startQuizTimer();
+          dLog.textContent="联动日志：教师点击「随堂发布」→ 学生端进入测验作答，教师端进入监控面板。";
+          dDescTeacher.innerHTML="教师点击「随堂发布」后进入监控面板，可实时查看学生作答进度。";
+          dDescStudent.innerHTML="学生端自动弹出测验页面，学生可进行答题操作。";
+          setTimeout(initQuizCanvas,50);
+          bindEvents();
+        });
+      }
+
+      const qrEndBtn=document.getElementById("qrEndBtn");
+      if(qrEndBtn){
+        qrEndBtn.addEventListener("click",()=>{
+          stopQuizTimer();
+          teacherView="room";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：教师点击「结束本次练习」→ 学生端回到管控状态。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      const qrCloseBtn=document.getElementById("qrCloseBtn");
+      if(qrCloseBtn){
+        qrCloseBtn.addEventListener("click",()=>{
+          stopQuizTimer();
+          teacherView="room";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：教师关闭监控面板 → 回到教室。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+
+      document.querySelectorAll(".qr-stu-card").forEach(card=>{
+        card.addEventListener("click",(e)=>{
+          if(e.target.closest(".qr-card-preview-overlay")) return;
+          const name=card.querySelector(".qr-card-name")?.textContent;
+          qrDetailStudent=qrStudents.find(s=>s.name===name)||qrStudents[0];
+          qrDetailQIdx=0;
+          teacherView="quiz-detail";
+          refreshRoom();
+          dLog.textContent=`联动日志：教师查看「${qrDetailStudent.name}」的作答详情。`;
+        });
+      });
+
+      const qrDetailBack=document.getElementById("qrDetailBack");
+      if(qrDetailBack){
+        qrDetailBack.addEventListener("click",()=>{
+          teacherView="quiz-monitor";
+          refreshRoom();
+          dLog.textContent="联动日志：教师返回监控面板。";
+        });
+      }
+      const qrDetailBackToList=document.getElementById("qrDetailBackToList");
+      if(qrDetailBackToList){
+        qrDetailBackToList.addEventListener("click",()=>{
+          teacherView="quiz-monitor";
+          refreshRoom();
+          dLog.textContent="联动日志：教师返回监控面板。";
+        });
+      }
+      const qrDetailClose=document.getElementById("qrDetailClose");
+      if(qrDetailClose){
+        qrDetailClose.addEventListener("click",()=>{
+          stopQuizTimer();
+          teacherView="room";
+          refreshRoom();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：教师关闭详情页 → 回到教室。";
+          dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
+          dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
+          bindEvents();
+        });
+      }
+      const qrDetailPrevQ=document.getElementById("qrDetailPrevQ");
+      if(qrDetailPrevQ){
+        qrDetailPrevQ.addEventListener("click",()=>{
+          if(qrDetailQIdx>0) qrDetailQIdx--;
+          refreshRoom();
+        });
+      }
+      const qrDetailNextQ=document.getElementById("qrDetailNextQ");
+      if(qrDetailNextQ){
+        qrDetailNextQ.addEventListener("click",()=>{
+          if(qrDetailQIdx<detailQuestions.length-1) qrDetailQIdx++;
+          refreshRoom();
+        });
+      }
+      document.querySelectorAll(".qr-detail-q-item").forEach(item=>{
+        item.addEventListener("click",()=>{
+          qrDetailQIdx=Number(item.dataset.dqi);
+          refreshRoom();
+        });
+      });
+
+      const quizPrev=document.getElementById("quizPrev");
+      if(quizPrev){
+        quizPrev.addEventListener("click",()=>{
+          if(stuQuizCurrent>0) stuQuizCurrent--;
+          studentUI.innerHTML=renderStudentQuiz();
+          setTimeout(initQuizCanvas,50);
+          bindEvents();
+        });
+      }
+      const quizNext=document.getElementById("quizNext");
+      if(quizNext){
+        quizNext.addEventListener("click",()=>{
+          if(stuQuizCurrent<quizQuestions.length-1) stuQuizCurrent++;
+          studentUI.innerHTML=renderStudentQuiz();
+          setTimeout(initQuizCanvas,50);
+          bindEvents();
+        });
+      }
+      const quizSubmit=document.getElementById("quizSubmit");
+      if(quizSubmit){
+        quizSubmit.addEventListener("click",()=>{
+          stopQuizTimer();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：学生提交测验 → 回到设备管控状态。";
+          bindEvents();
+        });
+      }
+      const quizSubmitBottom=document.getElementById("quizSubmitBottom");
+      if(quizSubmitBottom){
+        quizSubmitBottom.addEventListener("click",()=>{
+          stopQuizTimer();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：学生提交测验 → 回到设备管控状态。";
+          bindEvents();
+        });
+      }
+      const quizCloseBtn=document.getElementById("quizCloseBtn");
+      if(quizCloseBtn){
+        quizCloseBtn.addEventListener("click",()=>{
+          stopQuizTimer();
+          studentUI.innerHTML=renderStudentLock();
+          dLog.textContent="联动日志：学生关闭测验页面。";
+          bindEvents();
+        });
+      }
+
+      const sqToggleCard=document.getElementById("sqToggleCard");
+      if(sqToggleCard){
+        sqToggleCard.addEventListener("click",()=>{
+          sqSideOpen=!sqSideOpen;
+          const side=document.getElementById("sqSide");
+          if(side) side.classList.toggle("expanded",sqSideOpen);
+        });
+      }
+
+      document.querySelectorAll(".sq-side-grid .sq-num").forEach(n=>{
+        n.addEventListener("click",()=>{
+          stuQuizCurrent=Number(n.dataset.qi);
+          studentUI.innerHTML=renderStudentQuiz();
+          setTimeout(initQuizCanvas,50);
+          bindEvents();
+        });
+      });
+
+      document.querySelectorAll(".sq-question .opt").forEach(opt=>{
+        opt.addEventListener("click",()=>{
+          opt.closest(".q-options").querySelectorAll(".opt").forEach(o=>o.classList.remove("selected"));
+          opt.classList.add("selected");
+        });
+      });
+
+      document.querySelectorAll(".sq-color-btn").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          document.querySelectorAll(".sq-color-btn").forEach(b=>b.classList.remove("active"));
+          btn.classList.add("active");
+          const c=btn.dataset.c;
+          sqScratchColor=c==='red'?'#f5222d':c==='blue'?'#1890ff':'#333';
+        });
+      });
+      document.querySelectorAll(".sq-stroke-btn").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          document.querySelectorAll(".sq-stroke-btn").forEach(b=>b.classList.remove("active"));
+          btn.classList.add("active");
+          sqScratchSize=Number(btn.dataset.s);
+        });
+      });
+    }
+
+    signedSet=new Set();
+    showSignPanel=true;
+    render();
+  </script>
+</body>
+</html>
