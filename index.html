@@ -87,6 +87,18 @@
     .demo-split{display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;min-height:600px}
     .demo-label{font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:6px}
     .event-log{margin-top:10px;border:1px dashed #cddaf8;border-radius:10px;padding:8px 10px;background:#f9fbff;color:#334155;font-size:13px}
+    .demo-stepper{display:flex;align-items:stretch;gap:0;margin:8px 0 16px;padding:6px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;overflow-x:auto}
+    .demo-step{flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12.5px;color:#64748b;position:relative;cursor:pointer;transition:all .2s;border-radius:8px;white-space:nowrap}
+    .demo-step:hover{background:#fff}
+    .demo-step+.demo-step::before{content:"";position:absolute;left:-2px;top:50%;width:4px;height:4px;background:#cbd5e1;border-radius:50%;transform:translateY(-50%);box-shadow:-6px 0 0 #cbd5e1,-12px 0 0 #cbd5e1}
+    .demo-step-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;border:1.5px solid #cbd5e1;background:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;color:#94a3b8;transition:all .2s}
+    .demo-step-label{font-weight:600;color:#475569;line-height:1.35;white-space:normal;font-size:12px}
+    .demo-step.active{background:#0f172a;color:#fff}
+    .demo-step.active .demo-step-num{background:#fff;border-color:#fff;color:#0f172a}
+    .demo-step.active .demo-step-label{color:#fff;font-weight:700}
+    .demo-step.done{background:#dcfce7}
+    .demo-step.done .demo-step-num{background:#22c55e;border-color:#22c55e;color:#fff}
+    .demo-step.done .demo-step-label{color:#166534}
     .demo-desc{display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;margin-top:12px}
     .demo-desc-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px}
     .demo-desc-label{font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:4px}
@@ -621,6 +633,15 @@
     .stu-lock-shape{position:absolute;border-radius:50%;opacity:.18;background:#22c55e}
     .stu-lock-sq{position:absolute;border-radius:8px;opacity:.15;background:#22c55e}
 
+    /* 学生端：默认解锁空页 */
+    .stu-empty{flex:1;background:linear-gradient(180deg,#f8fafc,#e2e8f0);display:flex;flex-direction:column;color:#334155;padding:16px;gap:12px}
+    .stu-empty-app{display:flex;justify-content:space-between;align-items:center;padding:4px 6px;font-size:11px;color:#64748b}
+    .stu-empty-badge{background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:999px;font-weight:700;font-size:11px;border:1px solid #bfdbfe}
+    .stu-empty-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+    .stu-empty-icon{font-size:48px;filter:grayscale(.1);opacity:.85}
+    .stu-empty h3{font-size:17px;font-weight:700;color:#1e293b}
+    .stu-empty-note{font-size:12.5px;color:#64748b;line-height:1.6;max-width:220px}
+
     /* 学生端：教室视图（已解除管控、等待互动） */
     .stu-room{flex:1;background:#2a2a2a;display:flex;flex-direction:column;position:relative;overflow:hidden}
     .stu-room-top{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:11px;color:#888}
@@ -756,6 +777,127 @@
       .demo-split{grid-template-columns:1fr}
       .tabs{position:static}
     }
+
+    /* ===== 大小屏设备管理 ===== */
+    #devicemgmt.tab-panel{padding:0;border:none;box-shadow:none;background:transparent;overflow:hidden}
+    .dm-layout{display:grid;grid-template-columns:360px 1fr;gap:16px;min-height:720px}
+    .dm-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);display:flex;flex-direction:column;overflow:hidden}
+    .dm-card-head{padding:20px;border-bottom:1px solid #e5e7eb}
+    .dm-card-body{flex:1;overflow-y:auto;padding:20px}
+    .dm-title{font-size:17px;font-weight:700;color:#111;margin-bottom:4px}
+    .dm-sub{font-size:13px;color:#6b7280}
+    .dm-input-wrap{position:relative}
+    .dm-input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:14px;pointer-events:none}
+    .dm-input{width:100%;padding:9px 14px 9px 34px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;color:#111;background:#fff;outline:none}
+    .dm-input:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+    .dm-input.blue:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+    .dm-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:8px;border:1px solid transparent;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+    .dm-btn-emerald{background:#10b981;color:#fff}
+    .dm-btn-emerald:hover{background:#059669}
+    .dm-btn-blue{background:#3b82f6;color:#fff}
+    .dm-btn-blue:hover{background:#2563eb}
+    .dm-btn-orange{background:#f97316;color:#fff}
+    .dm-btn-orange:hover{background:#ea580c}
+    .dm-btn-ghost{background:#fff;color:#4b5563;border-color:#d1d5db}
+    .dm-btn-ghost:hover{background:#f9fafb}
+    .dm-btn-text{background:none;border:none;color:#6b7280;padding:4px 8px;font-size:12px;cursor:pointer}
+    .dm-btn-text:hover{color:#111}
+    .dm-btn:disabled{background:#d1d5db;color:#fff;cursor:not-allowed}
+    .dm-btn-block{width:100%}
+
+    /* 教师设备卡片 */
+    .dm-teacher-list{display:flex;flex-direction:column;gap:12px}
+    .dm-teacher-card{border:2px solid #10b981;background:#ecfdf5;border-radius:12px;padding:14px}
+    .dm-teacher-card-head{display:flex;gap:12px;margin-bottom:10px}
+    .dm-teacher-icon{width:44px;height:44px;background:#10b981;border-radius:8px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+    .dm-teacher-icon svg{width:26px;height:26px}
+    .dm-teacher-name{font-size:14px;font-weight:600;color:#111;margin-bottom:2px}
+    .dm-teacher-sn{font-size:12px;color:#6b7280}
+    .dm-teacher-meta{font-size:12px;color:#6b7280}
+    .dm-teacher-meta span{color:#111}
+    .dm-empty{text-align:center;color:#9ca3af;padding:36px 0;font-size:13px}
+
+    /* Tabs */
+    .dm-tabs{display:flex;gap:8px;margin-top:14px}
+    .dm-tab{padding:7px 14px;border-radius:8px;background:#f3f4f6;color:#374151;font-size:13px;border:none;cursor:pointer;transition:all .15s}
+    .dm-tab:hover{background:#e5e7eb}
+    .dm-tab.active{background:#3b82f6;color:#fff}
+
+    /* 选中栏 */
+    .dm-selected-bar{margin-bottom:14px;padding:14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    .dm-selected-bar .dm-sel-text{font-size:13px;color:#1e3a8a}
+    .dm-selected-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .dm-select{padding:7px 12px;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;color:#fff;background:#10b981}
+    .dm-select:hover{background:#059669}
+
+    /* 班级分组 */
+    .dm-class-list{display:flex;flex-direction:column;gap:10px}
+    .dm-class{border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;background:#fff}
+    .dm-class-head{padding:12px 14px;background:#f9fafb;display:flex;align-items:center;gap:10px}
+    .dm-class-head input[type=checkbox]{width:16px;height:16px;accent-color:#3b82f6;cursor:pointer}
+    .dm-class-toggle{display:flex;align-items:center;gap:8px;flex:1;background:none;border:none;cursor:pointer;color:#111;padding:0;font-size:13px;text-align:left}
+    .dm-class-toggle .dm-chev{color:#6b7280;transition:transform .15s;font-family:system-ui}
+    .dm-class.expanded .dm-chev{transform:rotate(90deg)}
+    .dm-class-name{font-weight:600;color:#111}
+    .dm-class-count{font-size:12px;color:#6b7280;margin-left:auto}
+    .dm-class-body{display:none;border-top:1px solid #f3f4f6}
+    .dm-class.expanded .dm-class-body{display:block}
+    .dm-device-row{padding:14px;border-bottom:1px solid #f3f4f6;display:flex;gap:12px;align-items:flex-start;transition:background .12s}
+    .dm-device-row:last-child{border-bottom:none}
+    .dm-device-row:hover{background:#f9fafb}
+    .dm-device-row.selected{background:#eff6ff}
+    .dm-device-row input[type=checkbox]{margin-top:4px;width:16px;height:16px;accent-color:#3b82f6;cursor:pointer}
+    .dm-device-icon{width:38px;height:38px;background:#dbeafe;border-radius:8px;display:grid;place-items:center;color:#2563eb;flex-shrink:0}
+    .dm-device-icon svg{width:20px;height:20px}
+    .dm-device-main{flex:1;min-width:0}
+    .dm-device-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+    .dm-device-info{flex:1;min-width:0}
+    .dm-device-name{font-weight:600;color:#111;font-size:13.5px;margin-bottom:2px}
+    .dm-device-sn{font-size:12px;color:#6b7280}
+    .dm-badge{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;flex-shrink:0}
+    .dm-badge-ok{background:#d1fae5;color:#065f46}
+    .dm-badge-pending{background:#ffedd5;color:#9a3412}
+    .dm-device-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:12px;color:#6b7280}
+    .dm-device-meta span{color:#111}
+
+    /* Modal */
+    .dm-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}
+    .dm-modal-backdrop.show{display:flex}
+    .dm-modal{background:#fff;border-radius:12px;width:100%;max-width:960px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+    .dm-modal.wide{max-width:1080px}
+    .dm-modal-head{padding:20px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:flex-start}
+    .dm-modal-close{background:none;border:none;color:#9ca3af;font-size:22px;cursor:pointer;line-height:1}
+    .dm-modal-close:hover{color:#4b5563}
+    .dm-modal-tabs{display:flex;border-bottom:1px solid #e5e7eb}
+    .dm-modal-tab{flex:1;padding:12px;background:none;border:none;color:#4b5563;font-size:13.5px;cursor:pointer;border-bottom:2px solid transparent}
+    .dm-modal-tab.active{color:#10b981;border-color:#10b981;font-weight:600}
+    .dm-modal-tab.blue.active{color:#3b82f6;border-color:#3b82f6}
+    .dm-modal-body{flex:1;overflow:hidden;display:flex}
+    .dm-modal-body.single{display:block;padding:24px;overflow-y:auto}
+    .dm-field{margin-bottom:18px}
+    .dm-label{display:block;font-size:13px;color:#374151;margin-bottom:6px}
+    .dm-label .req{color:#ef4444}
+    .dm-input-text{width:100%;padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;outline:none}
+    .dm-input-text:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+    .dm-batch-pane{flex:1;padding:24px;display:flex;flex-direction:column;min-width:0}
+    .dm-batch-pane + .dm-batch-pane{border-left:1px solid #e5e7eb}
+    .dm-batch-tip{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:10px 12px;margin-bottom:12px;font-size:12.5px;color:#4b5563;line-height:1.6}
+    .dm-batch-tip strong{color:#111}
+    .dm-textarea{flex:1;min-height:200px;padding:14px;border:1px solid #d1d5db;border-radius:8px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;resize:none;outline:none}
+    .dm-textarea:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+    .dm-preview-table{width:100%;border-collapse:collapse;font-size:12.5px}
+    .dm-preview-table thead th{position:sticky;top:0;background:#f9fafb;text-align:left;padding:8px 12px;color:#374151;font-weight:600;border-bottom:1px solid #e5e7eb}
+    .dm-preview-table tbody td{padding:8px 12px;border-bottom:1px solid #f3f4f6;color:#111}
+    .dm-preview-empty{flex:1;display:grid;place-items:center;color:#9ca3af;font-size:13px;text-align:center}
+    .dm-preview-wrap{flex:1;border:1px solid #e5e7eb;border-radius:8px;overflow-y:auto}
+    .dm-modal-foot{padding:16px 24px;border-top:1px solid #e5e7eb;display:flex;gap:12px}
+    .dm-modal-foot .dm-btn{flex:1}
+
+    @media(max-width:900px){
+      .dm-layout{grid-template-columns:1fr}
+      .dm-modal-body:not(.single){flex-direction:column}
+      .dm-batch-pane + .dm-batch-pane{border-left:none;border-top:1px solid #e5e7eb}
+    }
   </style>
 </head>
 <body>
@@ -771,6 +913,7 @@
       <button class="tab-btn" data-tab="student">3. 学生端</button>
       <button class="tab-btn" data-tab="demo">4. 产品演示</button>
       <button class="tab-btn" data-tab="report">5. 课堂报告</button>
+      <button class="tab-btn" data-tab="devicemgmt">6. 大小屏设备管理</button>
     </nav>
 
     <section id="product" class="tab-panel active">
@@ -875,6 +1018,14 @@
     <section id="demo" class="tab-panel">
       <h2 class="section-title">产品演示</h2>
       <p class="section-sub">左侧教师端界面 · 右侧学生 Pad 端 · 教师动作驱动学生端自动联动。</p>
+      <div class="demo-stepper" id="demoStepper">
+        <div class="demo-step" data-pstep="0"><div class="demo-step-num">1</div><div class="demo-step-label">默认解锁<br>静候开课</div></div>
+        <div class="demo-step" data-pstep="1"><div class="demo-step-num">2</div><div class="demo-step-label">老师点击上课<br>选择 Pad 班模式</div></div>
+        <div class="demo-step" data-pstep="2"><div class="demo-step-num">3</div><div class="demo-step-label">进入教室<br>自动发起点名签到</div></div>
+        <div class="demo-step" data-pstep="3"><div class="demo-step-num">4</div><div class="demo-step-label">签到完成<br>设备自动锁定</div></div>
+        <div class="demo-step" data-pstep="4"><div class="demo-step-num">5</div><div class="demo-step-label">课中参与互动</div></div>
+        <div class="demo-step" data-pstep="5"><div class="demo-step-num">6</div><div class="demo-step-label">下课 · 自动退出登录<br>设备保持锁定</div></div>
+      </div>
       <div class="demo-shell">
         <div class="demo-split">
           <div>
@@ -1054,6 +1205,135 @@
         </div>
       </div>
     </section>
+
+    <section id="devicemgmt" class="tab-panel">
+      <div class="dm-layout">
+        <!-- 左侧：教师主设备 -->
+        <div class="dm-card">
+          <div class="dm-card-head">
+            <div class="dm-title">教师主设备 (MASTER)</div>
+            <button class="dm-btn dm-btn-emerald dm-btn-block" id="dmOpenAddTeacher" style="margin:14px 0">
+              <span style="font-size:16px;font-weight:800">+</span> 添加设备
+            </button>
+            <div class="dm-input-wrap">
+              <span class="dm-input-icon">🔍</span>
+              <input class="dm-input" id="dmTeacherSearch" placeholder="搜索设备名称、SN号或机构" />
+            </div>
+          </div>
+          <div class="dm-card-body" id="dmTeacherList"></div>
+        </div>
+
+        <!-- 右侧：学生设备 -->
+        <div class="dm-card">
+          <div class="dm-card-head">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;flex-wrap:wrap">
+              <div>
+                <div class="dm-title">学生设备管理</div>
+                <div class="dm-sub">管理学生设备信息及关联教师主设备</div>
+              </div>
+              <button class="dm-btn dm-btn-blue" id="dmOpenBatchImport">⬆ 批量导入</button>
+            </div>
+            <div class="dm-input-wrap">
+              <span class="dm-input-icon">🔍</span>
+              <input class="dm-input blue" id="dmStudentSearch" placeholder="搜索设备名称、SN号或班级" />
+            </div>
+            <div class="dm-tabs" id="dmStudentTabs"></div>
+          </div>
+          <div class="dm-card-body">
+            <div class="dm-selected-bar" id="dmSelectedBar" style="display:none"></div>
+            <div id="dmStudentList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 添加教师设备 Modal -->
+      <div class="dm-modal-backdrop" id="dmAddTeacherModal">
+        <div class="dm-modal">
+          <div class="dm-modal-head">
+            <div>
+              <div class="dm-title">添加教师主设备</div>
+              <div class="dm-sub">支持单个添加或批量导入设备信息</div>
+            </div>
+            <button class="dm-modal-close" data-close-modal="dmAddTeacherModal">✕</button>
+          </div>
+          <div class="dm-modal-tabs">
+            <button class="dm-modal-tab active" data-teacher-mode="single">单个添加</button>
+            <button class="dm-modal-tab" data-teacher-mode="batch">批量导入</button>
+          </div>
+          <div id="dmAddTeacherSingle" class="dm-modal-body single">
+            <div class="dm-field">
+              <label class="dm-label">SN 号 <span class="req">*</span></label>
+              <input class="dm-input-text" id="dmTSn" placeholder="请输入设备SN号" />
+            </div>
+            <div class="dm-field">
+              <label class="dm-label">设备名称 <span class="req">*</span></label>
+              <input class="dm-input-text" id="dmTName" placeholder="请输入设备名称" />
+            </div>
+            <div class="dm-field">
+              <label class="dm-label">所属机构 <span class="req">*</span></label>
+              <input class="dm-input-text" id="dmTInst" placeholder="请输入所属机构" />
+            </div>
+          </div>
+          <div id="dmAddTeacherBatch" class="dm-modal-body" style="display:none">
+            <div class="dm-batch-pane">
+              <div class="dm-batch-tip">
+                <strong>输入格式：</strong>SN号;设备名称;所属机构<br>
+                <span style="color:#6b7280">示例：TEA-262E-891;张华主设备;实验小学</span>
+              </div>
+              <textarea class="dm-textarea" id="dmTBatchText" placeholder="TEA-262E-891;张华主设备;实验小学&#10;TEA-362F-123;李老师主设备;实验小学"></textarea>
+              <button class="dm-btn dm-btn-emerald" id="dmTBatchParse" style="margin-top:12px">解析数据</button>
+            </div>
+            <div class="dm-batch-pane">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                <div style="font-size:13px;color:#374151">预览结果 (<span id="dmTPreviewCount">0</span> 条)</div>
+              </div>
+              <div class="dm-preview-wrap" id="dmTPreviewWrap"><div class="dm-preview-empty">请先输入数据并点击"解析数据"</div></div>
+            </div>
+          </div>
+          <div class="dm-modal-foot">
+            <button class="dm-btn dm-btn-ghost" data-close-modal="dmAddTeacherModal">取消</button>
+            <button class="dm-btn dm-btn-emerald" id="dmAddTeacherConfirm">确认添加</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 批量导入学生设备 Modal -->
+      <div class="dm-modal-backdrop" id="dmBatchImportModal">
+        <div class="dm-modal wide">
+          <div class="dm-modal-head">
+            <div>
+              <div class="dm-title">批量导入学生设备</div>
+              <div class="dm-sub">按照固定格式输入设备信息，系统将自动解析</div>
+            </div>
+            <button class="dm-modal-close" data-close-modal="dmBatchImportModal">✕</button>
+          </div>
+          <div class="dm-modal-body">
+            <div class="dm-batch-pane">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                <label class="dm-label" style="margin-bottom:0">导入数据</label>
+                <button class="dm-btn-text" id="dmSBatchReset">清空</button>
+              </div>
+              <div class="dm-batch-tip">
+                <strong>输入格式：</strong>SN号;设备名称;所属班级<br>
+                <span style="color:#6b7280">示例：STU-001-ABC;王小设备;一年级A班<br>每行一个设备，使用中文或英文分号分隔</span>
+              </div>
+              <textarea class="dm-textarea" id="dmSBatchText" placeholder="STU-001-ABC;王小设备;一年级A班&#10;STU-002-DEF;张宁设备;一年级A班&#10;STU-003-GHI;杨红设备;一年级B班"></textarea>
+              <button class="dm-btn dm-btn-blue" id="dmSBatchParse" style="margin-top:12px">解析数据</button>
+            </div>
+            <div class="dm-batch-pane">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                <div style="font-size:13px;color:#374151">预览结果 (<span id="dmSPreviewCount">0</span> 条)</div>
+              </div>
+              <div class="dm-preview-wrap" id="dmSPreviewWrap"><div class="dm-preview-empty">请先输入数据并点击"解析数据"</div></div>
+            </div>
+          </div>
+          <div class="dm-modal-foot">
+            <button class="dm-btn dm-btn-ghost" data-close-modal="dmBatchImportModal">取消</button>
+            <button class="dm-btn dm-btn-blue" id="dmSBatchConfirm">确认导入 (0)</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -1131,7 +1411,7 @@
       const done=signedSet.size;
       let items=students.map((s,i)=>{
         const d=signedSet.has(i);
-        return `<li class="ci-sign-item ${d?"done":""}" data-si="${i}" style="cursor:pointer"><span class="ci-sign-avatar"></span><span class="ci-sign-name">${s.name}</span><span class="ci-sign-tag ${d?"done":"pending"}">${d?"✓ 已签到":"点击签到"}</span></li>`;
+        return `<li class="ci-sign-item ${d?"done":""}" data-si="${i}" style="cursor:pointer"><span class="ci-sign-avatar"></span><span class="ci-sign-name">${s.name}</span>${d?'<span class="ci-sign-tag done">✓ 已签到</span>':""}</li>`;
       }).join("");
       const signPanel=showSignPanel?`
           <div class="ci-room-sign">
@@ -1911,6 +2191,19 @@
       </div></div>`;
     }
 
+    function renderStudentEmpty(){
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-empty">
+          <div class="stu-empty-app"><span class="stu-empty-badge">ClassIn Focus</span></div>
+          <div class="stu-empty-body">
+            <div class="stu-empty-icon">📖</div>
+            <h3>静候开课</h3>
+            <div class="stu-empty-note">你的智慧学伴已准备就绪</div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
     function renderStudentRoom(){
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-room">
@@ -1920,12 +2213,6 @@
             <div>已经开课 41:54</div>
           </div>
           <div class="stu-room-body"></div>
-          <div class="stu-room-hand">✋</div>
-          <div class="stu-room-bottom">
-            <div class="stu-room-bottom-btn">💬</div>
-            <div class="stu-room-bottom-btn">👥</div>
-            <div class="stu-room-bottom-btn">⚙</div>
-          </div>
         </div>
       </div></div>`;
     }
@@ -2004,8 +2291,8 @@
     }
 
     const steps=[
-      {title:"步骤 1：教师点击上课",sub:"教师在课堂列表点击「上课」按钮，学生端处于静默锁屏状态。",log:"学生端：设备管控中，禁止操作。",teacher:"list",student:"lock",descT:"老师点击上课，进入模式选择前置流程。",descS:"默认不可操作，只有老师发起互动后才可操作。\n1. 该 Demo 版本，基于安卓 Pad 开发一个单独的 App，且 App 中只有教室上课页面。\n2. 学生端 APP 名称为「ClassIn Focus」。\n3. 学生端的安卓 Pad 与教师端大屏通过后台建立绑定关系，当教师进入教室后发起签到，学生的 Pad 端自动弹出签到页面。\n4. 一个 Pad 可同时绑定多个大屏设备。当 A、B 两个设备同时有课堂时，Pad 将优先联动最早进入教室的设备（如 A）。签到完成后，Pad 仅与 A 保持联动，专注服务该设备。\n5. 大屏没有进入课堂时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。"},
-      {title:"步骤 2：弹出模式选择",sub:"弹出「选择上课模式」弹窗，教师选择 Pad班。学生端仍保持锁屏。",log:"教师端弹出模式选择弹窗，学生端保持静默。",teacher:"list-modal",student:"lock",descT:"ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。",descS:"默认管控状态不可操作，只有老师发起互动后才可操作。"},
+      {title:"步骤 1：教师点击上课",sub:"教师在课堂列表点击「上课」按钮，学生端处于默认解锁空页面状态。",log:"学生端：默认解锁，暂无课堂数据，显示空页面。",teacher:"list",student:"empty",descT:"老师点击上课，进入模式选择前置流程。",descS:"默认设备为解锁状态。\n1. 无签到数据时，Pad 显示空页面，提示「静候开课。你的智慧学伴已准备就绪」。\n2. 有签到数据时，学生点击自己名字完成签到并进入教室，设备自动进入锁屏状态（被教师端接管）。\n3. 该 Demo 版本基于安卓 Pad 开发独立 App，App 中只有教室上课页面（线下课模式进入教室；教室内隐藏、聊天、花名册、举手功能）。\n4. 学生端 APP 名称为「ClassIn Focus」。\n5. Pad 与教师端大屏通过后台建立绑定关系。一个 Pad 可同时绑定多个大屏设备；A、B 两个设备同时开课时，Pad 优先联动最早进入教室的设备（如 A），签到完成后只与 A 保持联动。"},
+      {title:"步骤 2：弹出模式选择",sub:"弹出「选择上课模式」弹窗，教师选择 Pad班。学生端仍为默认解锁空页。",log:"教师端弹出模式选择弹窗，学生端默认解锁，暂无课堂数据。",teacher:"list-modal",student:"empty",descT:"ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。",descS:"默认设备为解锁状态，暂未收到签到数据，显示空页面，等待老师发起签到。"},
       {title:"步骤 3：进入教室 · 自动签到",sub:"教师确认进入后自动到教室并发起签到，学生端同步弹出签到页面。",log:"联动触发：教师进入教室 → 学生端自动弹出签到界面。",teacher:"room",student:"sign",descT:"1. 教师确认进入教室后，系统自动进入教室并发起签到，黑板区域弹出「课堂签到」窗口。\n2. 签到名单来自于该班级的学生，姓名排序按班级昵称字母 A-Z 排列，学生信息显示头像、班级名称。\n3. 当学生在 Pad 端点击已签到后，教师端要同步显示签到状态，右上角统计当前已签到多少人/总人数。\n4. 老师可操作：当学生点击已签到后，老师可以手动点击该学生头像和姓名区域取消签到，此时学生端可以再次点击签到。但教师不可以帮助学生操作成「已签到」。\n5. 当点击「完成签到」关闭该窗口，再次进入此节课的课堂不弹出签到页面。\n6. 签到页面窗口可以通过工具栏再次调取出来。\n　* 再次打开后，要保留上一次已完成签到的状态和学生设备绑定的行为，打开后学生端也同步显示签到页面，可操作点击名单继续签到。",descS:"1. 学生端 Pad 同时取消管控状态，并弹出学生名单，学生头像、排序与教师端逻辑一致。（通过大屏与 Pad 提前绑定建立互动关系）\n2. 弹窗标题为：课堂签到，说明文案为：请点击你的名字完成签到。\n3. 学生可点击任意名字进行签到，且只能点击一个，如果已选中一个名字可以再次点击取消选中，或点击其他名字，取消上一个选中的状态。当点击名字后，状态变为「已签到」。\n4. 当有 A 设备点击了已签到，B 设备再次点击时无响应。此时只有老师端或 A 设备可取消签到。\n5. 当教师端点击「完成签到」，此时已完成签到的学生端关闭签到窗口，恢复成管控不可操作状态，同时完成学生设备与学生账号绑定关系。此后该 Pad 上发生的数据归属于当前签到的学生名下。\n6. Pad 设备没有完成签到状态下，老师取消管控后，Pad 优先弹出签到页面，完成签到后再显示其他互动窗口。\n7. <strong>特殊边界兜底说明：</strong>当 Pad 与大屏处于非绑定状态，或大屏没有进入教室时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。"}
     ];
 
@@ -2023,6 +2310,69 @@
       dExtraSign.classList.toggle("show",!!show);
     }
 
+    const demoStepper=document.getElementById("demoStepper");
+    function setProgressStep(i){
+      if(!demoStepper) return;
+      demoStepper.querySelectorAll(".demo-step").forEach((el,idx)=>{
+        el.classList.toggle("active",idx===i);
+        el.classList.toggle("done",idx<i);
+      });
+    }
+    function resetDemoState(){
+      roomOverlay="none";
+      showSignPanel=true;
+      signedSet=new Set();
+      bbMonitorActive=false;
+      bbRecalled=false;
+      if(typeof teacherView!=="undefined") teacherView="room";
+      if(typeof stopBBTimer==="function") stopBBTimer();
+      if(typeof stopAnswerTimer==="function") stopAnswerTimer();
+      if(typeof stopQuizTimer==="function") stopQuizTimer();
+      studentAnswerChoice=null;
+      studentAnswerSubmitted=false;
+      answerCorrect=null;
+      answerChoices={};
+    }
+    if(demoStepper){
+      demoStepper.addEventListener("click",e=>{
+        const step=e.target.closest(".demo-step");
+        if(!step) return;
+        const i=Number(step.dataset.pstep);
+        resetDemoState();
+        if(i<=2){
+          cur=i;
+          render();
+        }else if(i===3){
+          cur=2;
+          render();
+          const finishBtn=document.getElementById("finishSignBtn");
+          if(finishBtn) finishBtn.click();
+        }else if(i===4){
+          cur=2;
+          render();
+          const finishBtn=document.getElementById("finishSignBtn");
+          if(finishBtn) finishBtn.click();
+          setTimeout(()=>{
+            const openTB=document.getElementById("openToolbox");
+            if(openTB) openTB.click();
+            setTimeout(()=>{
+              const blackboardItem=document.querySelector('[data-tool="blackboard"]');
+              if(blackboardItem) blackboardItem.click();
+            },30);
+          },30);
+        }else if(i===5){
+          cur=2;
+          render();
+          const finishBtn=document.getElementById("finishSignBtn");
+          if(finishBtn) finishBtn.click();
+          setProgressStep(5);
+          dLog.textContent="联动日志：下课 → 学生端自动退出登录，设备保持锁定状态。";
+          dDescTeacher.innerHTML="下课后系统自动退出教室，学生端 App 自动退出登录。";
+          dDescStudent.innerHTML="学生端自动退出登录，Pad 保持锁定状态，等待下一节课开始时由老师再次激活。";
+        }
+      });
+    }
+
     function render(){
       const s=steps[cur];
       dLog.textContent="联动日志："+s.log;
@@ -2034,8 +2384,13 @@
       else if(s.teacher==="list-modal") teacherUI.innerHTML=renderTeacherList(true);
       else if(s.teacher==="room") teacherUI.innerHTML=renderTeacherRoom();
 
-      if(s.student==="lock") studentUI.innerHTML=renderStudentLock("preclass");
+      if(s.student==="empty") studentUI.innerHTML=renderStudentEmpty();
+      else if(s.student==="lock") studentUI.innerHTML=renderStudentLock("preclass");
       else if(s.student==="sign") studentUI.innerHTML=renderStudentSign();
+
+      if(cur===0) setProgressStep(0);
+      else if(cur===1) setProgressStep(1);
+      else if(cur===2) setProgressStep(showSignPanel?2:3);
 
       bindEvents();
     }
@@ -2100,6 +2455,7 @@
           refreshRoom();
           studentUI.innerHTML=renderStudentLock();
           syncExtraSign(false);
+          setProgressStep(3);
           dLog.textContent="联动日志：教师点击「完成签到」→ 学生端回到设备管控状态。";
           dDescTeacher.innerHTML="1. 教室内支持互动的工具包括：答题器、小黑板、抢答器。<br>3. 教师分发后，学生端自动弹出互动工具（仅限于显示互动工具），支持操作。<br><br><strong>解除管控和进入管控时机说明：</strong><br>· <strong>答题器</strong><br>　　1. 学生解除管控时机：教师点击「开始答题」即为解除管控；<br>　　2. 进入管控时机：教师点击「结束答题」。<br>· <strong>小黑板</strong><br>　　1. 学生解除管控时机：教师点击「分发」/「再次分发」后即为解除管控；<br>　　2. 进入管控时机：教师点击「收回」。<br>· <strong>抢答器</strong><br>　　学生解除管控时机：教师点击「开始答题」后即为解除管控；进入管控时机：教师点击「结束答题」。";
           dDescStudent.innerHTML="1. 设备管控中，等待教师发起互动。教师分发互动工具后，学生端将自动弹出对应工具界面。<br>2. 管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
@@ -2145,6 +2501,7 @@
             refreshRoom();
             studentUI.innerHTML=renderStudentSign();
             syncExtraSign(true);
+            setProgressStep(2);
             dLog.textContent="联动日志：教师通过工具栏再次调出签到页 → 学生端同步显示签到页面，可继续签到。";
             dDescTeacher.innerHTML="教师通过工具栏再次打开签到窗口，保留上次已完成签到的状态和学生设备绑定关系。尚未签到的学生可继续在 Pad 上点击完成签到。";
             dDescStudent.innerHTML="学生端同步显示签到页面：已完成签到的学生状态保留不变；未签到的学生可继续点击自己的名字完成签到。";
@@ -2154,6 +2511,7 @@
             refreshRoom();
             studentUI.innerHTML=renderStudentLock();
             syncExtraSign(false);
+            setProgressStep(4);
             dLog.textContent="联动日志：教师打开小黑板工具窗口 → 学生端仍处于管控状态，等待教师分发。";
             dDescTeacher.innerHTML="教师从工具栏选择小黑板，进入准备阶段。点击「分发」后学生端将收到画板。";
             dDescStudent.innerHTML="保持管控状态，等待教师点击「分发」后进入教室并显示小黑板。<br>管控期间学生不接收任何来自课堂的数据同步，例如（本书、课件、授权等等）。";
@@ -2166,6 +2524,7 @@
             roomOverlay="answer-setup";
             refreshRoom();
             syncExtraSign(false);
+            setProgressStep(4);
             dLog.textContent="联动日志：教师打开答题器 → 先选择正确答案。";
             dDescTeacher.innerHTML="教师在答题器准备阶段，点击 A / B / C / D 可设定正确答案（可不设置），点击「开始答题」后学生端进入答题卡。";
             dDescStudent.innerHTML="保持管控状态，等待教师发布答题。";
@@ -2609,6 +2968,304 @@
     signedSet=new Set();
     showSignPanel=true;
     render();
+
+    /* ===================== 大小屏设备管理 ===================== */
+    const dmState={
+      teacherDevices:[
+        {id:"1",sn:"TEA-262E-891",name:"张华主设备",institution:"实验小学"},
+        {id:"2",sn:"TEA-362F-123",name:"李老师主设备",institution:"实验小学"}
+      ],
+      studentDevices:[
+        {id:"1",sn:"STU-001-ABC",name:"王小设备",className:"一年级A班",associatedTeachers:["1"],isAssociated:true},
+        {id:"2",sn:"STU-002-DEF",name:"张宁设备",className:"一年级A班",associatedTeachers:["1","2"],isAssociated:true},
+        {id:"3",sn:"STU-003-GHI",name:"杨红设备",className:"一年级B班",associatedTeachers:[],isAssociated:false},
+        {id:"4",sn:"STU-004-JKL",name:"赵七设备",className:"一年级B班",associatedTeachers:[],isAssociated:false},
+        {id:"5",sn:"STU-005-MNO",name:"刘六设备",className:"二年级A班",associatedTeachers:["2"],isAssociated:true}
+      ],
+      teacherSearch:"",
+      studentSearch:"",
+      activeTab:"all",
+      selected:new Set(),
+      expandedClasses:new Set(),
+      teacherAddMode:"single",
+      teacherPreview:[],
+      studentPreview:[]
+    };
+
+    const dmEscape=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+
+    function dmFilteredTeachers(){
+      const q=dmState.teacherSearch.toLowerCase();
+      return dmState.teacherDevices.filter(d=>!q||d.name.toLowerCase().includes(q)||d.sn.toLowerCase().includes(q)||d.institution.toLowerCase().includes(q));
+    }
+
+    function dmFilteredStudents(){
+      const q=dmState.studentSearch.toLowerCase();
+      return dmState.studentDevices.filter(d=>{
+        const mSearch=!q||d.name.toLowerCase().includes(q)||d.sn.toLowerCase().includes(q)||d.className.toLowerCase().includes(q);
+        const mTab=dmState.activeTab==="all"||(dmState.activeTab==="pending"&&!d.isAssociated)||(dmState.activeTab==="associated"&&d.isAssociated);
+        return mSearch&&mTab;
+      });
+    }
+
+    function dmRenderTeacherList(){
+      const el=document.getElementById("dmTeacherList");
+      if(!el)return;
+      const list=dmFilteredTeachers();
+      if(list.length===0){el.innerHTML=`<div class="dm-empty">暂无设备数据</div>`;return}
+      el.innerHTML=`<div class="dm-teacher-list">${list.map(d=>`
+        <div class="dm-teacher-card">
+          <div class="dm-teacher-card-head">
+            <div class="dm-teacher-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/></svg></div>
+            <div style="flex:1;min-width:0">
+              <div class="dm-teacher-name">${dmEscape(d.name)}</div>
+              <div class="dm-teacher-sn">${dmEscape(d.sn)}</div>
+            </div>
+          </div>
+          <div class="dm-teacher-meta">所属机构：<span>${dmEscape(d.institution)}</span></div>
+        </div>`).join("")}</div>`;
+    }
+
+    function dmRenderStudentTabs(){
+      const el=document.getElementById("dmStudentTabs");
+      if(!el)return;
+      const all=dmState.studentDevices.length;
+      const pending=dmState.studentDevices.filter(d=>!d.isAssociated).length;
+      const associated=dmState.studentDevices.filter(d=>d.isAssociated).length;
+      const tabs=[["all","全部设备",all],["pending","待关联设备",pending],["associated","已关联设备",associated]];
+      el.innerHTML=tabs.map(([k,l,c])=>`<button class="dm-tab ${dmState.activeTab===k?"active":""}" data-dm-tab="${k}">${l} (${c})</button>`).join("");
+    }
+
+    function dmGetTeacherName(id){const t=dmState.teacherDevices.find(x=>x.id===id);return t?t.name:""}
+
+    function dmRenderStudentList(){
+      const wrap=document.getElementById("dmStudentList");
+      if(!wrap)return;
+      const list=dmFilteredStudents();
+      if(list.length===0){wrap.innerHTML=`<div class="dm-empty">暂无设备数据</div>`;return}
+      const byClass={};
+      list.forEach(d=>{(byClass[d.className]=byClass[d.className]||[]).push(d)});
+      wrap.innerHTML=`<div class="dm-class-list">${Object.entries(byClass).map(([cls,items])=>{
+        const expanded=dmState.expandedClasses.has(cls);
+        const ids=items.map(d=>d.id);
+        const allSel=ids.every(i=>dmState.selected.has(i));
+        const someSel=!allSel&&ids.some(i=>dmState.selected.has(i));
+        return `<div class="dm-class ${expanded?"expanded":""}" data-cls="${dmEscape(cls)}">
+          <div class="dm-class-head">
+            <input type="checkbox" data-dm-class-check="${dmEscape(cls)}" ${allSel?"checked":""} ${someSel?'data-indeterminate="1"':""}>
+            <button class="dm-class-toggle" data-dm-class-toggle="${dmEscape(cls)}">
+              <span class="dm-chev">▶</span>
+              <span class="dm-class-name">${dmEscape(cls)}</span>
+              <span class="dm-class-count">(${items.length} 台设备)</span>
+            </button>
+          </div>
+          <div class="dm-class-body">${items.map(d=>{
+            const sel=dmState.selected.has(d.id);
+            const teachers=d.associatedTeachers.map(dmGetTeacherName).filter(Boolean).join(", ")||"未关联";
+            return `<div class="dm-device-row ${sel?"selected":""}">
+              <input type="checkbox" data-dm-device="${d.id}" ${sel?"checked":""}>
+              <div class="dm-device-main">
+                <div class="dm-device-top">
+                  <div class="dm-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                  <div class="dm-device-info">
+                    <div class="dm-device-name">${dmEscape(d.name)}</div>
+                    <div class="dm-device-sn">SN: ${dmEscape(d.sn)}</div>
+                  </div>
+                  <div class="dm-badge ${d.isAssociated?"dm-badge-ok":"dm-badge-pending"}">${d.isAssociated?"已关联":"待关联"}</div>
+                </div>
+                <div class="dm-device-meta">
+                  <div>所属班级：<span>${dmEscape(d.className)}</span></div>
+                  <div>关联教师：<span>${dmEscape(teachers)}</span></div>
+                </div>
+              </div>
+            </div>`;
+          }).join("")}</div>
+        </div>`;
+      }).join("")}</div>`;
+      wrap.querySelectorAll('input[type=checkbox][data-indeterminate="1"]').forEach(cb=>{cb.indeterminate=true});
+    }
+
+    function dmRenderSelectedBar(){
+      const bar=document.getElementById("dmSelectedBar");
+      if(!bar)return;
+      if(dmState.selected.size===0){bar.style.display="none";return}
+      bar.style.display="flex";
+      const opts=dmState.teacherDevices.map(t=>`<option value="${t.id}">${dmEscape(t.name)}</option>`).join("");
+      bar.innerHTML=`
+        <span class="dm-sel-text">已选择 ${dmState.selected.size} 个设备</span>
+        <div class="dm-selected-actions">
+          <button class="dm-btn dm-btn-ghost" id="dmClearSel">取消选择</button>
+          <button class="dm-btn dm-btn-orange" id="dmDisassociate">解除关联</button>
+          <select class="dm-select" id="dmAssociateSelect"><option value="">关联到教师设备...</option>${opts}</select>
+        </div>`;
+    }
+
+    function dmRender(){
+      dmRenderTeacherList();
+      dmRenderStudentTabs();
+      dmRenderStudentList();
+      dmRenderSelectedBar();
+    }
+
+    // ===== 事件处理 =====
+    const dmRoot=document.getElementById("devicemgmt");
+    if(dmRoot){
+      document.getElementById("dmTeacherSearch").addEventListener("input",e=>{dmState.teacherSearch=e.target.value;dmRenderTeacherList()});
+      document.getElementById("dmStudentSearch").addEventListener("input",e=>{dmState.studentSearch=e.target.value;dmRenderStudentList()});
+
+      dmRoot.addEventListener("click",e=>{
+        const tab=e.target.closest("[data-dm-tab]");
+        if(tab){dmState.activeTab=tab.dataset.dmTab;dmState.selected=new Set();dmRender();return}
+
+        const closeBtn=e.target.closest("[data-close-modal]");
+        if(closeBtn){document.getElementById(closeBtn.dataset.closeModal).classList.remove("show");return}
+
+        const classToggle=e.target.closest("[data-dm-class-toggle]");
+        if(classToggle){
+          const cls=classToggle.dataset.dmClassToggle;
+          if(dmState.expandedClasses.has(cls))dmState.expandedClasses.delete(cls);else dmState.expandedClasses.add(cls);
+          dmRenderStudentList();
+          return;
+        }
+      });
+
+      dmRoot.addEventListener("change",e=>{
+        const devCb=e.target.closest("input[type=checkbox][data-dm-device]");
+        if(devCb){
+          const id=devCb.dataset.dmDevice;
+          if(dmState.selected.has(id))dmState.selected.delete(id);else dmState.selected.add(id);
+          dmRender();
+          return;
+        }
+        const classCb=e.target.closest("input[type=checkbox][data-dm-class-check]");
+        if(classCb){
+          const cls=classCb.dataset.dmClassCheck;
+          const ids=dmFilteredStudents().filter(d=>d.className===cls).map(d=>d.id);
+          const allSel=ids.every(i=>dmState.selected.has(i));
+          if(allSel)ids.forEach(i=>dmState.selected.delete(i));else ids.forEach(i=>dmState.selected.add(i));
+          dmRender();
+          return;
+        }
+        const assocSel=e.target.closest("#dmAssociateSelect");
+        if(assocSel){
+          const tid=assocSel.value;
+          if(tid&&dmState.selected.size>0){
+            dmState.studentDevices=dmState.studentDevices.map(d=>{
+              if(!dmState.selected.has(d.id))return d;
+              const at=d.associatedTeachers.includes(tid)?d.associatedTeachers:[...d.associatedTeachers,tid];
+              return {...d,associatedTeachers:at,isAssociated:true};
+            });
+            dmState.selected=new Set();
+            dmRender();
+          }
+        }
+      });
+
+      // 清空 / 解除关联
+      dmRoot.addEventListener("click",e=>{
+        if(e.target.closest("#dmClearSel")){dmState.selected=new Set();dmRender();return}
+        if(e.target.closest("#dmDisassociate")){
+          const ids=dmState.selected;
+          dmState.studentDevices=dmState.studentDevices.map(d=>ids.has(d.id)?{...d,associatedTeachers:[],isAssociated:false}:d);
+          dmState.selected=new Set();
+          dmRender();
+        }
+      });
+
+      // 添加教师设备 Modal
+      document.getElementById("dmOpenAddTeacher").addEventListener("click",()=>{
+        document.getElementById("dmAddTeacherModal").classList.add("show");
+      });
+
+      // 切换模式（单个/批量）
+      document.querySelectorAll('[data-teacher-mode]').forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          const mode=btn.dataset.teacherMode;
+          dmState.teacherAddMode=mode;
+          document.querySelectorAll('[data-teacher-mode]').forEach(b=>b.classList.toggle("active",b.dataset.teacherMode===mode));
+          document.getElementById("dmAddTeacherSingle").style.display=mode==="single"?"block":"none";
+          document.getElementById("dmAddTeacherBatch").style.display=mode==="batch"?"flex":"none";
+          document.getElementById("dmAddTeacherConfirm").textContent=mode==="single"?"确认添加":`确认导入 (${dmState.teacherPreview.length})`;
+        });
+      });
+
+      document.getElementById("dmTBatchParse").addEventListener("click",()=>{
+        const text=document.getElementById("dmTBatchText").value;
+        const lines=text.split("\n").map(l=>l.trim()).filter(Boolean);
+        const arr=[];
+        lines.forEach(l=>{const p=l.split(/[;；]/).map(x=>x.trim());if(p.length>=3)arr.push({sn:p[0],name:p[1],institution:p[2]})});
+        dmState.teacherPreview=arr;
+        document.getElementById("dmTPreviewCount").textContent=arr.length;
+        const wrap=document.getElementById("dmTPreviewWrap");
+        if(arr.length===0){wrap.innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`}
+        else{wrap.innerHTML=`<table class="dm-preview-table"><thead><tr><th>序号</th><th>SN号</th><th>设备名称</th><th>所属机构</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td>${i+1}</td><td>${dmEscape(d.sn)}</td><td>${dmEscape(d.name)}</td><td>${dmEscape(d.institution)}</td></tr>`).join("")}</tbody></table>`}
+        document.getElementById("dmAddTeacherConfirm").textContent=`确认导入 (${arr.length})`;
+      });
+
+      document.getElementById("dmAddTeacherConfirm").addEventListener("click",()=>{
+        if(dmState.teacherAddMode==="single"){
+          const sn=document.getElementById("dmTSn").value.trim();
+          const name=document.getElementById("dmTName").value.trim();
+          const inst=document.getElementById("dmTInst").value.trim();
+          if(!sn||!name||!inst){alert("请填写完整信息");return}
+          dmState.teacherDevices=[...dmState.teacherDevices,{id:"t"+Date.now(),sn,name,institution:inst}];
+          document.getElementById("dmTSn").value="";
+          document.getElementById("dmTName").value="";
+          document.getElementById("dmTInst").value="";
+        }else{
+          if(dmState.teacherPreview.length===0)return;
+          const add=dmState.teacherPreview.map((d,i)=>({id:"t"+Date.now()+"_"+i,...d}));
+          dmState.teacherDevices=[...dmState.teacherDevices,...add];
+          dmState.teacherPreview=[];
+          document.getElementById("dmTBatchText").value="";
+          document.getElementById("dmTPreviewCount").textContent=0;
+          document.getElementById("dmTPreviewWrap").innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`;
+        }
+        document.getElementById("dmAddTeacherModal").classList.remove("show");
+        dmRender();
+      });
+
+      // 批量导入学生设备
+      document.getElementById("dmOpenBatchImport").addEventListener("click",()=>{
+        document.getElementById("dmBatchImportModal").classList.add("show");
+      });
+
+      document.getElementById("dmSBatchReset").addEventListener("click",()=>{
+        document.getElementById("dmSBatchText").value="";
+        dmState.studentPreview=[];
+        document.getElementById("dmSPreviewCount").textContent=0;
+        document.getElementById("dmSPreviewWrap").innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`;
+        document.getElementById("dmSBatchConfirm").textContent=`确认导入 (0)`;
+      });
+
+      document.getElementById("dmSBatchParse").addEventListener("click",()=>{
+        const text=document.getElementById("dmSBatchText").value;
+        const lines=text.split("\n").map(l=>l.trim()).filter(Boolean);
+        const arr=[];
+        lines.forEach(l=>{const p=l.split(/[;；]/).map(x=>x.trim());if(p.length>=3)arr.push({sn:p[0],name:p[1],className:p[2],associatedTeachers:[],isAssociated:false})});
+        dmState.studentPreview=arr;
+        document.getElementById("dmSPreviewCount").textContent=arr.length;
+        const wrap=document.getElementById("dmSPreviewWrap");
+        if(arr.length===0){wrap.innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`}
+        else{wrap.innerHTML=`<table class="dm-preview-table"><thead><tr><th>序号</th><th>SN号</th><th>设备名称</th><th>所属班级</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td>${i+1}</td><td>${dmEscape(d.sn)}</td><td>${dmEscape(d.name)}</td><td>${dmEscape(d.className)}</td></tr>`).join("")}</tbody></table>`}
+        document.getElementById("dmSBatchConfirm").textContent=`确认导入 (${arr.length})`;
+      });
+
+      document.getElementById("dmSBatchConfirm").addEventListener("click",()=>{
+        if(dmState.studentPreview.length===0)return;
+        const add=dmState.studentPreview.map((d,i)=>({id:"s"+Date.now()+"_"+i,...d}));
+        dmState.studentDevices=[...dmState.studentDevices,...add];
+        dmState.studentPreview=[];
+        document.getElementById("dmSBatchText").value="";
+        document.getElementById("dmSPreviewCount").textContent=0;
+        document.getElementById("dmSPreviewWrap").innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`;
+        document.getElementById("dmSBatchConfirm").textContent=`确认导入 (0)`;
+        document.getElementById("dmBatchImportModal").classList.remove("show");
+        dmRender();
+      });
+
+      dmRender();
+    }
   </script>
 </body>
 </html>
