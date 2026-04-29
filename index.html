@@ -120,6 +120,22 @@
     .cx-pill.mid{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
     .cx-pill.high{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
     .bind-matrix strong{color:#1e3a8a}
+
+    /* 方案2 · 点名签到 · 边界兜底 */
+    .edge-card{margin-top:18px;background:linear-gradient(135deg,#f0fdf4 0%,#fff 70%);border:1px solid #a7f3d0;border-left:4px solid #10b981;border-radius:12px;padding:18px 20px}
+    .edge-card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .edge-tag{display:inline-flex;align-items:center;background:#10b981;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.5px}
+    .edge-card-head h4{font-size:15px;font-weight:700;color:#0f172a;margin:0}
+    .edge-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;counter-reset:edgec}
+    .edge-item{position:relative;padding-left:36px;counter-increment:edgec}
+    .edge-item::before{content:counter(edgec);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:#10b981;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+    .edge-q{font-size:13.5px;font-weight:700;color:#0f172a;margin-bottom:6px}
+    .edge-a{font-size:13px;color:#475569;line-height:1.75}
+    .edge-a strong{color:#0f172a}
+    .edge-a .hl-s2{background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:600}
+    .edge-a .warn{color:#dc2626;font-weight:700}
+    .edge-note{margin-top:10px;background:#ecfdf5;border:1px dashed #6ee7b7;border-radius:8px;padding:10px 14px;color:#065f46;font-size:13px}
+    .edge-note strong{color:#047857}
     @media (max-width:900px){
       .bind-matrix{font-size:11.5px}
       .bind-matrix tbody td:first-child{width:auto}
@@ -668,25 +684,44 @@
     .stu-ans-submit:disabled{background:#374151;color:#9ca3af;cursor:not-allowed}
     .stu-ans-done{flex:1;display:grid;place-items:center;color:#86efac;font-size:14px}
 
-    /* 学生端：签到页 */
-    .stu-sign{flex:1;background:linear-gradient(155deg,#0a3e43,#0d5965 52%,#0d4046);color:#e6f8ff;padding:10px;display:flex;flex-direction:column;overflow:hidden}
-    .stu-sign-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
-    .stu-sign h3{font-size:16px;font-weight:700}
-    .stu-sign-sub{font-size:11px;color:#a8dbe8;margin-bottom:8px}
-    .stu-sign-badge{background:rgba(6,78,59,.6);border:1px solid rgba(74,222,128,.45);border-radius:8px;padding:4px 8px;text-align:center;font-size:11px;color:#dcfce7;line-height:1.2}
-    .stu-sign-badge strong{display:block;font-size:18px;font-weight:800}
-    .stu-sign-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;overflow-y:auto}
-    .stu-card{border:1px solid rgba(117,198,227,.25);border-radius:10px;background:rgba(3,37,44,.32);padding:6px 4px;text-align:center;cursor:pointer;transition:all .15s}
-    .stu-card:hover{border-color:rgba(74,222,128,.5)}
-    .stu-card-avatar{width:32px;height:32px;border-radius:50%;margin:0 auto 4px;background:linear-gradient(180deg,#94a3b8,#64748b);border:2px solid rgba(255,255,255,.2);overflow:hidden}
-    .stu-card-name{font-size:11px;font-weight:600;margin-bottom:2px}
-    .stu-card-status{font-size:10px;color:#a8dbe8}
-    .stu-card.signed{border-color:rgba(74,222,128,.6);background:rgba(22,101,52,.35)}
-    .stu-card.signed .stu-card-status{color:#86efac}
+    /* 学生端：签到页 - 中性深色风 */
+    .stu-sign{flex:1;position:relative;background:linear-gradient(180deg,#1e2227 0%,#181b20 100%);color:#e6e9ef;padding:12px 10px;display:flex;flex-direction:column;overflow:hidden}
+    .stu-sign>*{position:relative;z-index:1}
+    .stu-sign-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:10px;padding:2px 2px 8px}
+    .stu-sign-head-l{display:flex;align-items:flex-start;gap:10px;min-width:0}
+    .stu-sign-icon{width:32px;height:32px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,#22c55e,#16a34a);display:grid;place-items:center;font-size:16px;color:#fff;box-shadow:0 4px 10px rgba(34,197,94,.25)}
+    .stu-sign h3{font-size:17px;font-weight:700;color:#f4f6fa;letter-spacing:.5px;line-height:1.2}
+    .stu-sign-sub{font-size:11px;color:#8a93a4;margin-top:3px;letter-spacing:.3px}
+    .stu-sign-badge{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:5px 12px;text-align:center;font-size:10px;color:#8a93a4;line-height:1.2;flex-shrink:0}
+    .stu-sign-badge strong{display:block;font-size:16px;font-weight:700;color:#f4f6fa;margin-top:2px;letter-spacing:.5px;font-family:"SF Mono","DIN Alternate",Consolas,monospace}
+    .stu-sign-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;flex:1;overflow-y:auto;padding:2px 2px 4px;align-content:start}
+    .stu-card{position:relative;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(255,255,255,.025);padding:12px 6px 10px;text-align:center;cursor:pointer;transition:all .18s;overflow:hidden}
+    .stu-card:hover{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.05);transform:translateY(-1px)}
+    .stu-card-num{display:none}
+    .stu-card-avatar{width:42px;height:42px;border-radius:50%;margin:2px auto 6px;display:grid;place-items:center;font-size:24px;line-height:1;background:linear-gradient(180deg,#3a404a,#2a2f38);border:1.5px solid rgba(255,255,255,.1);overflow:hidden}
+    .stu-card-name{font-size:12px;font-weight:600;margin-bottom:3px;color:#f4f6fa;letter-spacing:.3px}
+    .stu-card-status{font-size:10px;color:#6b7180;letter-spacing:.3px}
+    .stu-card.signed{border-color:rgba(74,222,128,.55);background:rgba(34,197,94,.08);box-shadow:0 0 0 1px rgba(74,222,128,.25)}
     .stu-card.signed .stu-card-avatar{border-color:rgba(74,222,128,.6)}
-    .stu-card-check{display:none;position:absolute;right:-2px;top:-2px;width:14px;height:14px;border-radius:50%;background:#22c55e;color:#fff;font-size:9px;line-height:14px;text-align:center}
-    .stu-card.signed .stu-card-check{display:block}
-    .stu-card{position:relative}
+    .stu-card.signed .stu-card-name{color:#4ade80}
+    .stu-card.signed .stu-card-status{color:#4ade80;font-weight:600}
+    .stu-card-check{display:none}
+
+    /* 学生端：签到聚焦视图 */
+    .stu-pick-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:12px}
+    .stu-pick-card{position:relative;width:200px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 6px 22px rgba(0,0,0,.35)}
+    .stu-pick-card.signed{border-color:rgba(74,222,128,.6);background:rgba(34,197,94,.08);box-shadow:0 0 0 1px rgba(74,222,128,.25),0 6px 22px rgba(0,0,0,.35)}
+    .stu-pick-avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:42px;line-height:1;background:linear-gradient(180deg,#3a404a,#2a2f38);border:2px solid rgba(255,255,255,.14);box-shadow:0 4px 14px rgba(0,0,0,.3)}
+    .stu-pick-card.signed .stu-pick-avatar{background:linear-gradient(180deg,#4ade80,#16a34a);color:#fff;border-color:rgba(134,239,172,.5)}
+    .stu-pick-name{font-size:18px;font-weight:700;color:#f4f6fa;letter-spacing:.8px}
+    .stu-pick-card.signed .stu-pick-name{color:#4ade80}
+    .stu-pick-status{font-size:11px;color:#8a93a4;letter-spacing:.6px;font-weight:500}
+    .stu-pick-card.signed .stu-pick-status{color:#4ade80;font-weight:700}
+    .stu-pick-btn{width:200px;border-radius:10px;padding:11px 0;font-size:13px;font-weight:700;cursor:pointer;border:1px solid transparent;letter-spacing:1.5px;transition:all .18s}
+    .stu-pick-btn.confirm{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 4px 14px rgba(34,197,94,.35)}
+    .stu-pick-btn.confirm:hover{background:linear-gradient(135deg,#16a34a,#15803d);transform:translateY(-1px)}
+    .stu-pick-btn.ghost{background:transparent;color:#8a93a4;border-color:rgba(255,255,255,.12)}
+    .stu-pick-btn.ghost:hover{background:rgba(255,255,255,.04);color:#f4f6fa;border-color:rgba(255,255,255,.22)}
 
     /* ===== 课堂报告 ===== */
     .rpt{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#1e293b;line-height:1.6}
@@ -778,6 +813,56 @@
       .tabs{position:static}
     }
 
+    /* ===== MVP 新报告（课堂学习记录） ===== */
+    #report.tab-panel{padding:24px 0;background:transparent;border:none;box-shadow:none}
+    #report.tab-panel.active{display:flex;justify-content:center}
+    .mvp-report{width:100%;max-width:520px;background:#fff;border:2px solid #10b981;border-radius:24px;padding:0;overflow:hidden;box-shadow:0 8px 28px rgba(16,185,129,.12);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+    .mvp-banner{background:#10b981;color:#fff;text-align:center;padding:12px;font-weight:700;font-size:15px;letter-spacing:.5px}
+    .mvp-banner span{display:inline-flex;align-items:center;gap:8px}
+    .mvp-header{padding:28px 28px 20px;text-align:center}
+    .mvp-title{font-size:22px;font-weight:800;color:#0f172a;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:6px}
+    .mvp-sub{font-size:13.5px;color:#475569;margin-bottom:4px}
+    .mvp-meta{font-size:12.5px;color:#94a3b8}
+    .mvp-divider{height:3px;background:linear-gradient(to right,#ef4444,#f97316);margin:20px 28px 0;border-radius:2px}
+    .mvp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:22px 18px;border-bottom:1px solid #f1f5f9}
+    .mvp-stat{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;padding:14px 8px;text-align:center}
+    .mvp-stat.amber{background:#fffbeb;border-color:#fde68a}
+    .mvp-stat.blue{background:#eff6ff;border-color:#bfdbfe}
+    .mvp-stat.rose{background:#fef2f2;border-color:#fecaca}
+    .mvp-stat-val{font-size:22px;font-weight:800;color:#0f172a;line-height:1;margin-bottom:6px;display:flex;align-items:baseline;justify-content:center;gap:3px}
+    .mvp-stat-val small{font-size:12px;font-weight:600;color:#64748b}
+    .mvp-stat-label{font-size:12px;color:#64748b}
+    .mvp-body{padding:4px 22px 20px}
+    .mvp-inter{padding:14px 0;border-bottom:1px solid #f1f5f9}
+    .mvp-inter:last-of-type{border-bottom:none}
+    .mvp-inter-head{font-size:13px;color:#475569;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:4px}
+    .mvp-inter-head .mvp-dot{width:6px;height:6px;background:#94a3b8;border-radius:50%;margin-right:4px;display:inline-block}
+    .mvp-bb-img{background:#1f1f1f;border:1px solid #1f1f1f;border-radius:10px;padding:0;overflow:hidden}
+    .mvp-bb-img img{width:100%;display:block;background:#1f1f1f}
+    .mvp-bb-cap{background:#fffbeb;color:#92400e;padding:8px 12px;font-size:12px;font-weight:600;border-top:1.5px solid #fde68a;text-align:center}
+    .mvp-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mvp-slot{border:1.5px dashed #e2e8f0;border-radius:10px;padding:22px 12px;text-align:center;font-size:12.5px;color:#64748b;background:#f8fafc;line-height:1.5}
+    .mvp-slot.amber{background:#fffbeb;border-color:#fcd34d;color:#92400e;border-style:solid;border-width:1.5px}
+    .mvp-slot .mvp-slot-icon{font-size:18px;margin-bottom:4px;display:block}
+    .mvp-choice{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;font-size:14px;color:#0f172a;display:flex;align-items:center;gap:6px;font-weight:600}
+    .mvp-choice strong{color:#059669;font-weight:800;margin:0 2px}
+    .mvp-more{text-align:center;border:1.5px dashed #cbd5e1;border-radius:10px;padding:14px;font-size:12.5px;color:#94a3b8;margin:6px 0 12px}
+    .mvp-comment{border-top:1px dashed #e2e8f0;margin-top:14px;padding-top:16px}
+    .mvp-comment-title{font-size:13px;color:#475569;margin-bottom:10px;font-weight:600}
+    .mvp-comment-box{background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.7;color:#0f172a}
+    .mvp-comment-box .row{display:flex;gap:8px;margin-bottom:8px}
+    .mvp-comment-box .row:last-child{margin-bottom:0}
+    .mvp-comment-box .row .lbl{color:#64748b;flex-shrink:0}
+    .mvp-comment-box .row .lbl.teacher{color:#d97706}
+    .mvp-comment-box .row .val.muted{color:#94a3b8;font-style:italic}
+    .mvp-tag{margin:14px 22px 20px;padding:12px 16px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;text-align:center;color:#065f46;font-size:13px;font-weight:600}
+    .mvp-footer{border-top:1px solid #f1f5f9;padding:14px;text-align:center;color:#10b981;font-weight:700;font-size:13.5px;letter-spacing:.5px}
+
+    @media(max-width:520px){
+      .mvp-stats{grid-template-columns:repeat(2,1fr)}
+      .mvp-stat-val{font-size:20px}
+    }
+
     /* ===== 大小屏设备管理 ===== */
     #devicemgmt.tab-panel{padding:0;border:none;box-shadow:none;background:transparent;overflow:hidden}
     .dm-layout{display:grid;grid-template-columns:360px 1fr;gap:16px;min-height:720px}
@@ -805,16 +890,43 @@
     .dm-btn:disabled{background:#d1d5db;color:#fff;cursor:not-allowed}
     .dm-btn-block{width:100%}
 
-    /* 教师设备卡片 */
-    .dm-teacher-list{display:flex;flex-direction:column;gap:12px}
-    .dm-teacher-card{border:2px solid #10b981;background:#ecfdf5;border-radius:12px;padding:14px}
-    .dm-teacher-card-head{display:flex;gap:12px;margin-bottom:10px}
-    .dm-teacher-icon{width:44px;height:44px;background:#10b981;border-radius:8px;display:grid;place-items:center;color:#fff;flex-shrink:0}
-    .dm-teacher-icon svg{width:26px;height:26px}
-    .dm-teacher-name{font-size:14px;font-weight:600;color:#111;margin-bottom:2px}
-    .dm-teacher-sn{font-size:12px;color:#6b7280}
-    .dm-teacher-meta{font-size:12px;color:#6b7280}
-    .dm-teacher-meta span{color:#111}
+    /* 当前主设备大卡片 */
+    .dm-current-card{position:relative;border:2px solid #10b981;background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 100%);border-radius:14px;padding:18px;overflow:hidden;margin-bottom:20px}
+    .dm-current-card::after{content:"";position:absolute;right:-22px;top:-22px;width:90px;height:90px;border-radius:50%;background:rgba(16,185,129,.1);pointer-events:none}
+    .dm-current-head{display:flex;gap:12px;align-items:center;margin-bottom:16px;position:relative;z-index:1}
+    .dm-current-icon{width:44px;height:44px;background:#10b981;border-radius:10px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+    .dm-current-icon svg{width:24px;height:24px}
+    .dm-current-label{font-size:14px;font-weight:700;color:#0f172a;line-height:1.2}
+    .dm-current-status{font-size:11px;color:#10b981;font-weight:600;letter-spacing:1px;margin-top:2px}
+    .dm-current-empty{text-align:center;color:#10b981;font-weight:600;padding:12px 0;font-size:13px}
+    .dm-current-fields{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+    .dm-current-field-label{font-size:11px;color:#64748b;margin-bottom:2px}
+    .dm-current-field-value{font-size:14px;color:#0f172a;font-weight:700;letter-spacing:.3px}
+    .dm-current-field-value.mono{font-family:ui-monospace,Menlo,monospace;font-size:18px;letter-spacing:1px;color:#065f46}
+
+    /* 设备管理区块 */
+    .dm-manage-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:10px}
+    .dm-manage-toolbar{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+    .dm-manage-toolbar .dm-input-wrap{flex:1}
+    .dm-manage-toolbar .dm-input{padding:8px 10px 8px 30px;font-size:12.5px}
+    .dm-btn-sm{padding:8px 12px;font-size:12.5px;border-radius:6px}
+    .dm-filter-btn{padding:8px 12px;border:1px solid #d1d5db;background:#fff;color:#4b5563;border-radius:6px;cursor:pointer;font-size:12.5px}
+    .dm-filter-btn:hover{background:#f9fafb}
+
+    /* 教师设备列表行 */
+    .dm-teacher-list{display:flex;flex-direction:column;gap:6px}
+    .dm-teacher-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;transition:all .15s}
+    .dm-teacher-row:hover{background:#f9fafb;border-color:#cbd5e1}
+    .dm-teacher-row.selected{background:#ecfdf5;border-color:#10b981;box-shadow:0 0 0 1px #10b981 inset}
+    .dm-teacher-radio{flex-shrink:0;width:14px;height:14px;border-radius:50%;border:1.5px solid #cbd5e1;margin-top:3px;position:relative;transition:all .15s}
+    .dm-teacher-row.selected .dm-teacher-radio{border-color:#10b981;background:#10b981;box-shadow:0 0 0 2px #fff inset}
+    .dm-teacher-row-main{flex:1;min-width:0}
+    .dm-teacher-row-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+    .dm-teacher-row-sn{font-size:13px;font-weight:700;color:#0f172a;font-family:ui-monospace,Menlo,monospace;letter-spacing:.3px}
+    .dm-teacher-row-name{font-size:12px;color:#4b5563;margin-bottom:1px}
+    .dm-teacher-row-inst{font-size:11.5px;color:#94a3b8}
+    .dm-teacher-badge{font-size:10px;padding:2px 6px;border-radius:4px;background:#10b981;color:#fff;font-weight:600;flex-shrink:0}
+    .dm-teacher-count{font-size:12px;color:#94a3b8;text-align:center;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9}
     .dm-empty{text-align:center;color:#9ca3af;padding:36px 0;font-size:13px}
 
     /* Tabs */
@@ -1071,7 +1183,7 @@
                 <td class="col-complex"><span class="cx-pill mid">中</span></td>
               </tr>
               <tr>
-                <td>3. 尾号验证</td>
+                <td>3. 签到+尾号验证</td>
                 <td>点击头像 + 输入家长手机号后 4 位。</td>
                 <td><strong>平衡性最佳</strong>：通过双重复核防止误点，隐私压力小，利用现有数据库即可。</td>
                 <td><strong>操作冲突处理</strong>：需设定为"先选人，后验号"，以规避不同家长手机尾号相同的物理碰撞。但要考虑学生能否记住家长后四位号码。</td>
@@ -1084,125 +1196,58 @@
                 <td><strong>法律合规风险</strong>：未成年肖像权极其敏感；需提前采集底片；受光线等物理环境影响大。</td>
                 <td class="col-complex"><span class="cx-pill high">高</span></td>
               </tr>
+              <tr>
+                <td>5. 手机号尾号验证</td>
+                <td>通过手机尾号后 4 位 + 机构学生范围判断。</td>
+                <td><strong>防代签</strong>：操作少、撞号概率降低。</td>
+                <td><strong>小概率撞号</strong>：可通过二次确认判断解决账号认领。</td>
+                <td class="col-complex"><span class="cx-pill low">低</span></td>
+              </tr>
             </tbody>
           </table>
+
         </div>
       </div>
     </section>
 
-    <section id="report" class="tab-panel" style="padding:0;border:none;background:transparent;box-shadow:none">
-      <div class="rpt-card" style="margin:0 0 16px;background:#f8fafc;border:1px dashed #cbd5e1">
-        <div class="rpt-card-head"><span>💡</span><h3>数据说明</h3></div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:13px;color:#475569;line-height:1.8">
-          <li style="display:flex;gap:8px"><span style="color:#6366f1;font-weight:700;flex-shrink:0">●</span>系统需记录每位学生的小黑板内容，课后支持通过 API 接口调取对应数据，由智能体基于该内容输出课后报告。</li>
-          <li style="display:flex;gap:8px"><span style="color:#6366f1;font-weight:700;flex-shrink:0">●</span>同步记录学生答题器使用次数，以及答题正确、错误次数。</li>
-        </ul>
-      </div>
-      <div class="rpt">
-        <header class="rpt-hero">
-          <div class="rpt-hero-bg"></div>
-          <div class="rpt-hero-inner">
-            <div class="rpt-hero-left">
-              <span class="rpt-badge-pill">📊 2026-Q1 阶段性诊断</span>
-              <h1 class="rpt-hero-title">张凌轩 <span>数学学习报告</span></h1>
-              <p class="rpt-hero-sub">未来素养2026-01季度-五年级-A+班级表现深度分析</p>
-            </div>
-            <div class="rpt-hero-stats">
-              <div class="rpt-hero-stat"><p class="label">综合正确率</p><p class="value green">91.2%</p></div>
-              <div class="rpt-hero-sep"></div>
-              <div class="rpt-hero-stat"><p class="label">学习等级</p><p class="value indigo">A+</p></div>
-            </div>
-          </div>
-        </header>
-        <div class="rpt-body">
-          <div class="rpt-metrics">
-            <div class="rpt-metric"><div class="rpt-metric-icon bg-indigo">🎯</div><div><p class="rpt-metric-label">总互动题量</p><div class="rpt-metric-val">34 <span>覆盖7课时</span></div></div></div>
-            <div class="rpt-metric"><div class="rpt-metric-icon bg-green">✓</div><div><p class="rpt-metric-label">答对题数</p><div class="rpt-metric-val">31 <span>步骤完整</span></div></div></div>
-            <div class="rpt-metric"><div class="rpt-metric-icon bg-amber">⚠</div><div><p class="rpt-metric-label">答错题数</p><div class="rpt-metric-val">3 <span>集中于综合题</span></div></div></div>
-            <div class="rpt-metric"><div class="rpt-metric-icon bg-rose">📈</div><div><p class="rpt-metric-label">参与率</p><div class="rpt-metric-val">100% <span>全勤互动</span></div></div></div>
-            <div class="rpt-metric"><div class="rpt-metric-icon bg-yellow">🏆</div><div><p class="rpt-metric-label">获得奖杯数</p><div class="rpt-metric-val">12 <span>课堂表彰</span></div></div></div>
-          </div>
-          <div class="rpt-charts">
-            <div class="rpt-card">
-              <div class="rpt-card-head"><span>📊</span><h3>题目难度分层分析</h3></div>
-              <div class="rpt-bar-chart">
-                <div class="rpt-bar-group"><div class="rpt-bar-label">简单题</div><div class="rpt-bars"><div class="rpt-bar" style="height:100%;background:#6366f1" title="个人100%"></div><div class="rpt-bar" style="height:95%;background:#cbd5e1" title="平均95%"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">100%</span><span style="color:#94a3b8">95%</span></div></div>
-                <div class="rpt-bar-group"><div class="rpt-bar-label">中等题</div><div class="rpt-bars"><div class="rpt-bar" style="height:92.8%;background:#6366f1"></div><div class="rpt-bar" style="height:82%;background:#cbd5e1"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">92.8%</span><span style="color:#94a3b8">82%</span></div></div>
-                <div class="rpt-bar-group"><div class="rpt-bar-label">难题</div><div class="rpt-bars"><div class="rpt-bar" style="height:60%;background:#6366f1"></div><div class="rpt-bar" style="height:45%;background:#cbd5e1"></div></div><div class="rpt-bar-vals"><span style="color:#6366f1">60%</span><span style="color:#94a3b8">45%</span></div></div>
-              </div>
-              <div class="rpt-legend"><span class="rpt-legend-dot" style="background:#6366f1"></span>个人正确率 <span class="rpt-legend-dot" style="background:#cbd5e1;margin-left:12px"></span>同级平均</div>
-              <p class="rpt-note">* 在简单与中等难度题目中表现极其稳定，难题正确率60%高于平均水平，具备极高潜力。</p>
-            </div>
-            <div class="rpt-card">
-              <div class="rpt-card-head"><span>🧠</span><h3>知识点掌握雷达图</h3></div>
-              <div class="rpt-radar-wrap">
-                <svg viewBox="0 0 300 260" class="rpt-radar-svg">
-                  <g transform="translate(150,130)">
-                    <polygon points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50" fill="none" stroke="#e2e8f0" stroke-width="1"/>
-                    <polygon points="0,-66 57.7,-33 57.7,33 0,66 -57.7,33 -57.7,-33" fill="none" stroke="#e2e8f0" stroke-width="1"/>
-                    <polygon points="0,-33 28.9,-16.5 28.9,16.5 0,33 -28.9,16.5 -28.9,-16.5" fill="none" stroke="#e2e8f0" stroke-width="1"/>
-                    <line x1="0" y1="0" x2="0" y2="-100" stroke="#e2e8f0"/><line x1="0" y1="0" x2="86.6" y2="-50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="86.6" y2="50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="0" y2="100" stroke="#e2e8f0"/><line x1="0" y1="0" x2="-86.6" y2="50" stroke="#e2e8f0"/><line x1="0" y1="0" x2="-86.6" y2="-50" stroke="#e2e8f0"/>
-                    <polygon points="0,-95 77.9,-45 56.3,45 0,70 -60.6,46 -76.2,-44" fill="#6366f1" fill-opacity=".5" stroke="#6366f1" stroke-width="2"/>
-                    <text x="0" y="-108" text-anchor="middle" font-size="11" fill="#64748b">小数乘除(95)</text>
-                    <text x="96" y="-48" font-size="11" fill="#64748b">简易方程(90)</text>
-                    <text x="96" y="56" font-size="11" fill="#64748b">因数倍数(88)</text>
-                    <text x="0" y="118" text-anchor="middle" font-size="11" fill="#64748b">位置方向(92)</text>
-                    <text x="-96" y="56" text-anchor="end" font-size="11" fill="#64748b">立体几何(65)</text>
-                    <text x="-96" y="-48" text-anchor="end" font-size="11" fill="#64748b">分数性质(70)</text>
-                  </g>
-                </svg>
-              </div>
-              <div class="rpt-radar-legend">
-                <span class="rpt-tag green">✓ 已掌握：小数运算、方程、因数</span>
-                <span class="rpt-tag amber">⚠ 待强化：立体几何、分数性质</span>
-              </div>
-            </div>
-          </div>
-          <div class="rpt-card">
-            <div class="rpt-card-head"><span>📖</span><h3>知识点掌握一览表</h3></div>
-            <table class="rpt-table"><thead><tr><th>知识点名称</th><th>掌握情况</th><th>难度系数</th><th>备注/错误原因诊断</th></tr></thead><tbody>
-              <tr><td class="bold">小数乘除法运算</td><td><span class="rpt-status green">已掌握</span></td><td>★★☆☆☆</td><td class="note">计算精准度极高，小数点移动规律熟练</td></tr>
-              <tr><td class="bold">位置与数对</td><td><span class="rpt-status green">已掌握</span></td><td>★☆☆☆☆</td><td class="note">空间定位能力强，能准确描述位置</td></tr>
-              <tr><td class="bold">2、3、5的倍数特征</td><td><span class="rpt-status green">已掌握</span></td><td>★★☆☆☆</td><td class="note">奇偶数、质合数概念清晰，判断迅速</td></tr>
-              <tr><td class="bold">因数与倍数</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">找因数逻辑完整，无遗漏现象</td></tr>
-              <tr><td class="bold">解简易方程</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">解题步骤规范，符号意识强</td></tr>
-              <tr><td class="bold">分数的意义与性质</td><td><span class="rpt-status green">已掌握</span></td><td>★★★☆☆</td><td class="note">能熟练进行约分、通分，分数大小比较准确</td></tr>
-              <tr><td class="bold">列方程解决实际问题</td><td><span class="rpt-status amber">部分掌握</span></td><td>★★★★☆</td><td class="note">强于计算，但在"寻找隐蔽等量关系"时稍慢</td></tr>
-              <tr><td class="bold">分数与小数互化</td><td><span class="rpt-status amber">部分掌握</span></td><td>★★★☆☆</td><td class="note">基础互化无误，但在复杂混合运算中反应速度待提升</td></tr>
-              <tr><td class="bold">长方体/正方体表面积</td><td><span class="rpt-status red">未掌握</span></td><td>★★★★★</td><td class="note">属于重灾区。容易混淆公式，或漏掉特定面</td></tr>
-              <tr><td class="bold">组合图形应用</td><td><span class="rpt-status red">未掌握</span></td><td>★★★★★</td><td class="note">缺乏图形拆解思维，对空间切割后的变量不敏感</td></tr>
-            </tbody></table>
-            <p class="rpt-note" style="margin-top:12px">📊 基于课堂互动数据及小学5年级数学课程标准梳理</p>
-          </div>
-          <div class="rpt-analysis">
-            <div class="rpt-card" style="flex:2">
-              <div class="rpt-card-head"><span>🏆</span><h3>深度诊断总结</h3></div>
-              <div class="rpt-profile"><h4>👤 学生画像：学霸型选手</h4><p>态度积极（100%参与），基础雄厚（简单/中等题近乎全对）。当前瓶颈在于建模思维稍弱，习惯心算而非动手画图。</p></div>
-              <div class="rpt-diag-grid">
-                <div class="rpt-diag-item"><h5><span class="dot red"></span>建模思维瓶颈</h5><p>遇到复杂相遇或几何切割题，习惯心算，缺乏画线段图或建立空间模型的习惯。</p></div>
-                <div class="rpt-diag-item"><h5><span class="dot amber"></span>审题惯性思维</h5><p>对常见题型反应快，但对陷阱（如单位不统一、求表面积还是侧面积）警惕性不够。</p></div>
-              </div>
-            </div>
-            <div class="rpt-card rpt-focus">
-              <div class="rpt-card-head" style="color:#fff"><span>⚡</span><h3 style="color:#fff">重点关注方向</h3></div>
-              <div class="rpt-focus-item"><h5>立体图形综合应用</h5><p>解决无盖水箱、刷油漆等多面问题</p></div>
-              <div class="rpt-focus-item"><h5>等量关系翻译能力</h5><p>从题目中提取方程，而非仅解方程</p></div>
-              <div class="rpt-focus-item"><h5>计算步骤规范化</h5><p>减少跳步，防范复杂分数运算失误</p></div>
-            </div>
-          </div>
-          <div class="rpt-card">
-            <div class="rpt-card-head"><span>🎓</span><h3>后续学习与支持建议</h3></div>
-            <div class="rpt-advice">
-              <div><h4 style="color:#4f46e5">📖 学习重点</h4><ul><li>强化"画图法"，用线段图分析数量关系</li><li>建立错题逻辑档案，分析错误根源</li></ul></div>
-              <div><h4 style="color:#059669">🎓 教学支持</h4><ul><li>课堂多分配"说理题"，锻炼逻辑表达</li><li>提供挑战性压轴题，激发求知欲</li></ul></div>
-              <div><h4 style="color:#d97706">🏠 家庭辅导</h4><ul><li>准备长方体模具进行实操切割拆解</li><li>坚持"读题两遍"，规范草稿书写</li></ul></div>
-            </div>
-          </div>
-          <footer class="rpt-footer">
-            <div class="rpt-footer-pill"><p>报告总结：凌轩目前处于优等生稳固期，完全具备冲击满分的实力！</p></div>
-            <p class="rpt-footer-copy">未来素养教育大数据中心 · 2026 阶段性诊断分析</p>
-          </footer>
+    <section id="report" class="tab-panel">
+      <div class="mvp-report">
+        <div class="mvp-banner"><span>✅ MVP 新报告</span></div>
+        <div class="mvp-header">
+          <div class="mvp-title">📊 课堂学习记录</div>
+          <div class="mvp-sub">陈思琪 · 五年级数学 · 第 3 讲</div>
+          <div class="mvp-meta">2026/4/13 · 张老师 · 出勤 88 分钟</div>
         </div>
+        <div class="mvp-divider"></div>
+        <div class="mvp-stats">
+          <div class="mvp-stat"><div class="mvp-stat-val">6/6</div><div class="mvp-stat-label">互动参与</div></div>
+          <div class="mvp-stat amber"><div class="mvp-stat-val">75%</div><div class="mvp-stat-label">选择正确率</div></div>
+          <div class="mvp-stat blue"><div class="mvp-stat-val">88<small>min</small></div><div class="mvp-stat-label">出勤时长</div></div>
+          <div class="mvp-stat rose"><div class="mvp-stat-val">3 🏆</div><div class="mvp-stat-label">获得奖杯</div></div>
+        </div>
+        <div class="mvp-body">
+          <div class="mvp-inter">
+            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 1 次 · 小黑板 · 19:35</div>
+            <div class="mvp-bb-img"><img src="images/bb-student-work.png" alt="学生手写 · 第1次小黑板"><div class="mvp-bb-cap"></div></div>
+          </div>
+          <div class="mvp-inter">
+            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 2 次 · 选择题 · 19:42</div>
+            <div class="mvp-choice">我的选择：<strong>B</strong> · 正确答案：<strong>B</strong> ✅</div>
+          </div>
+          <div class="mvp-inter">
+            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 3 次 · 小黑板 · 19:55</div>
+            <div class="mvp-bb-img"><img src="images/bb-student-work.png" alt="学生手写 · 第3次小黑板"><div class="mvp-bb-cap"）</div></div>
+          </div>
+          <div class="mvp-more">… 第 4-6 次互动 …</div>
+          <div class="mvp-comment">
+            <div class="mvp-comment-title">💬 老师点评</div>
+            <div class="mvp-comment-box">
+              <div class="row"><span class="lbl">🖥 系统：</span><span class="val">本节课参与全部 6 次互动，选择题正确率 75%，小黑板书写完整。</span></div>
+              <div class="row"><span class="lbl teacher">✏️ 老师：</span><span class="val muted">（可选补充）</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="mvp-footer">MVP 新报告 — 学习过程可视化</div>
       </div>
     </section>
 
@@ -1211,13 +1256,15 @@
         <!-- 左侧：教师主设备 -->
         <div class="dm-card">
           <div class="dm-card-head">
-            <div class="dm-title">教师主设备 (MASTER)</div>
-            <button class="dm-btn dm-btn-emerald dm-btn-block" id="dmOpenAddTeacher" style="margin:14px 0">
-              <span style="font-size:16px;font-weight:800">+</span> 添加设备
-            </button>
-            <div class="dm-input-wrap">
-              <span class="dm-input-icon">🔍</span>
-              <input class="dm-input" id="dmTeacherSearch" placeholder="搜索设备名称、SN号或机构" />
+            <div class="dm-title" style="margin-bottom:16px">教师主设备 (MASTER)</div>
+            <div id="dmCurrentCard"></div>
+            <div class="dm-manage-title">设备管理</div>
+            <div class="dm-manage-toolbar">
+              <button class="dm-btn dm-btn-emerald dm-btn-sm" id="dmOpenAddTeacher">＋ 添加设备</button>
+              <div class="dm-input-wrap" style="flex:1">
+                <span class="dm-input-icon">🔍</span>
+                <input class="dm-input" id="dmTeacherSearch" placeholder="搜索 SN 码或设备名称..." />
+              </div>
             </div>
           </div>
           <div class="dm-card-body" id="dmTeacherList"></div>
@@ -1317,7 +1364,7 @@
                 <strong>输入格式：</strong>SN号;设备名称;所属班级<br>
                 <span style="color:#6b7280">示例：STU-001-ABC;王小设备;一年级A班<br>每行一个设备，使用中文或英文分号分隔</span>
               </div>
-              <textarea class="dm-textarea" id="dmSBatchText" placeholder="STU-001-ABC;王小设备;一年级A班&#10;STU-002-DEF;张宁设备;一年级A班&#10;STU-003-GHI;杨红设备;一年级B班"></textarea>
+              <textarea class="dm-textarea" id="dmSBatchText" placeholder="STU-001-ABC;王小设备;未来校区1教室&#10;STU-002-DEF;张宁设备;一年级A班&#10;STU-003-GHI;杨红设备;一年级B班"></textarea>
               <button class="dm-btn dm-btn-blue" id="dmSBatchParse" style="margin-top:12px">解析数据</button>
             </div>
             <div class="dm-batch-pane">
@@ -1388,6 +1435,7 @@
     }
 
     let showSignPanel=true;
+    let studentPickedIdx=null;
     let roomOverlay="none";
     let answerCorrect=null;
     let answerChoices={};
@@ -2173,7 +2221,7 @@
       const icon=isPre?"📘":"🔒";
       const title=isPre?"ClassIn Focus":"设备管控中";
       const btn=isPre?"静候开课":"禁止操作";
-      const note=isPre?"你的智慧学伴已准备就绪":"此设备正在受到管理";
+      const note=isPre?"你的智慧学伴已准备就绪":"管控期间，请等待老师发起互动";
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-lock">
           <div class="stu-lock-shape" style="width:90px;height:90px;top:10%;left:8%"></div>
@@ -2267,24 +2315,53 @@
       canvas.addEventListener("pointerleave",()=>{drawing=false});
     }
 
+    const stuEmoji=["👦","👧","👩","🧑","👧","👨","👩","🧒","👧","🧑","👨","👩","🧑","👧","👨","👩","👨","👧"];
+    function padNum(n){return String(n).padStart(2,"0")}
     function renderStudentSign(){
       const total=students.length;
       const done=signedSet.size;
+      const headHtml=(subText)=>`
+        <div class="stu-sign-head">
+          <div class="stu-sign-head-l">
+            <div class="stu-sign-icon">📋</div>
+            <div><h3>课堂签到</h3><div class="stu-sign-sub">${subText}</div></div>
+          </div>
+          <div class="stu-sign-badge">签到进度<strong>${done} / ${total}</strong></div>
+        </div>`;
+
+      if(studentPickedIdx!=null){
+        const s=students[studentPickedIdx];
+        const isConfirmed=signedSet.has(studentPickedIdx);
+        const emoji=stuEmoji[studentPickedIdx%stuEmoji.length];
+        const focused=`<div class="stu-pick-card ${isConfirmed?"signed":""}">
+            <div class="stu-pick-avatar">${isConfirmed?"✓":emoji}</div>
+            <div class="stu-pick-name">${s.name}</div>
+            <div class="stu-pick-status">${isConfirmed?"✓ 已签到":"点击确认签到"}</div>
+          </div>
+          ${isConfirmed
+            ? `<button class="stu-pick-btn ghost" id="signCancelConfirmedBtn">取消签到</button>`
+            : `<button class="stu-pick-btn confirm" id="signConfirmBtn">确认签到</button>
+               <button class="stu-pick-btn ghost" id="signBackBtn">不是我，重新选择</button>`}`;
+        return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+          <div class="stu-sign">
+            ${headHtml(isConfirmed?"签到成功，请等待老师开始上课":"请确认你选择的名字")}
+            <div class="stu-pick-wrap">${focused}</div>
+          </div>
+        </div></div>`;
+      }
+
       let cards=students.map((s,i)=>{
-        const d=signedSet.has(i);
-        return `<div class="stu-card ${d?"signed":""}" data-si="${i}">
-          <span class="stu-card-check">✓</span>
-          <div class="stu-card-avatar"></div>
+        const emoji=stuEmoji[i%stuEmoji.length];
+        return `<div class="stu-card" data-si="${i}">
+          <span class="stu-card-num">${padNum(i+1)}</span>
+          <div class="stu-card-avatar">${emoji}</div>
           <div class="stu-card-name">${s.name}</div>
-          <div class="stu-card-status">${d?"✓ 已签到":"点击签到"}</div>
+          <div class="stu-card-status">点击签到</div>
         </div>`;
       }).join("");
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-sign">
-          <div class="stu-sign-head">
-            <div><h3>课堂签到</h3><div class="stu-sign-sub">请点击你的名字完成签到</div></div>
-            <div class="stu-sign-badge">签到进度<strong>${done} / ${total}</strong></div>
-          </div>
+          ${headHtml("点击你的名字完成签到")}
           <div class="stu-sign-grid" id="signGrid">${cards}</div>
         </div>
       </div></div>`;
@@ -2293,7 +2370,7 @@
     const steps=[
       {title:"步骤 1：教师点击上课",sub:"教师在课堂列表点击「上课」按钮，学生端处于默认解锁空页面状态。",log:"学生端：默认解锁，暂无课堂数据，显示空页面。",teacher:"list",student:"empty",descT:"老师点击上课，进入模式选择前置流程。",descS:"默认设备为解锁状态。\n1. 无签到数据时，Pad 显示空页面，提示「静候开课。你的智慧学伴已准备就绪」。\n2. 有签到数据时，学生点击自己名字完成签到并进入教室，设备自动进入锁屏状态（被教师端接管）。\n3. 该 Demo 版本基于安卓 Pad 开发独立 App，App 中只有教室上课页面（线下课模式进入教室；教室内隐藏、聊天、花名册、举手功能）。\n4. 学生端 APP 名称为「ClassIn Focus」。\n5. Pad 与教师端大屏通过后台建立绑定关系。一个 Pad 可同时绑定多个大屏设备；A、B 两个设备同时开课时，Pad 优先联动最早进入教室的设备（如 A），签到完成后只与 A 保持联动。"},
       {title:"步骤 2：弹出模式选择",sub:"弹出「选择上课模式」弹窗，教师选择 Pad班。学生端仍为默认解锁空页。",log:"教师端弹出模式选择弹窗，学生端默认解锁，暂无课堂数据。",teacher:"list-modal",student:"empty",descT:"ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。",descS:"默认设备为解锁状态，暂未收到签到数据，显示空页面，等待老师发起签到。"},
-      {title:"步骤 3：进入教室 · 自动签到",sub:"教师确认进入后自动到教室并发起签到，学生端同步弹出签到页面。",log:"联动触发：教师进入教室 → 学生端自动弹出签到界面。",teacher:"room",student:"sign",descT:"1. 教师确认进入教室后，系统自动进入教室并发起签到，黑板区域弹出「课堂签到」窗口。\n2. 签到名单来自于该班级的学生，姓名排序按班级昵称字母 A-Z 排列，学生信息显示头像、班级名称。\n3. 当学生在 Pad 端点击已签到后，教师端要同步显示签到状态，右上角统计当前已签到多少人/总人数。\n4. 老师可操作：当学生点击已签到后，老师可以手动点击该学生头像和姓名区域取消签到，此时学生端可以再次点击签到。但教师不可以帮助学生操作成「已签到」。\n5. 当点击「完成签到」关闭该窗口，再次进入此节课的课堂不弹出签到页面。\n6. 签到页面窗口可以通过工具栏再次调取出来。\n　* 再次打开后，要保留上一次已完成签到的状态和学生设备绑定的行为，打开后学生端也同步显示签到页面，可操作点击名单继续签到。",descS:"1. 学生端 Pad 同时取消管控状态，并弹出学生名单，学生头像、排序与教师端逻辑一致。（通过大屏与 Pad 提前绑定建立互动关系）\n2. 弹窗标题为：课堂签到，说明文案为：请点击你的名字完成签到。\n3. 学生可点击任意名字进行签到，且只能点击一个，如果已选中一个名字可以再次点击取消选中，或点击其他名字，取消上一个选中的状态。当点击名字后，状态变为「已签到」。\n4. 当有 A 设备点击了已签到，B 设备再次点击时无响应。此时只有老师端或 A 设备可取消签到。\n5. 当教师端点击「完成签到」，此时已完成签到的学生端关闭签到窗口，恢复成管控不可操作状态，同时完成学生设备与学生账号绑定关系。此后该 Pad 上发生的数据归属于当前签到的学生名下。\n6. Pad 设备没有完成签到状态下，老师取消管控后，Pad 优先弹出签到页面，完成签到后再显示其他互动窗口。\n7. <strong>特殊边界兜底说明：</strong>当 Pad 与大屏处于非绑定状态，或大屏没有进入教室时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。"}
+      {title:"步骤 3：进入教室 · 自动签到",sub:"教师确认进入后自动到教室并发起签到，学生端同步弹出签到页面。",log:"联动触发：教师进入教室 → 学生端自动弹出签到界面。",teacher:"room",student:"sign",descT:"1. 教师确认进入教室后，系统自动进入教室并发起签到，黑板区域弹出「课堂签到」窗口。\n2. 签到名单来自于该班级的学生，姓名排序按班级昵称字母 A-Z 排列，学生信息显示头像、班级名称。\n3. 当学生在 Pad 端点击已签到后，教师端要同步显示签到状态，右上角统计当前已签到多少人/总人数。\n4. 老师可操作：当学生点击已签到后，老师可以手动点击该学生头像和姓名区域取消签到，此时学生端可以再次点击签到。但教师不可以帮助学生操作成「已签到」。\n5. 当点击「完成签到」关闭该窗口，再次进入此节课的课堂不弹出签到页面。\n6. 签到页面窗口可以通过工具栏再次调取出来。\n　* 再次打开后，要保留上一次已完成签到的状态和学生设备绑定的行为，打开后学生端也同步显示签到页面，可操作点击名单继续签到。",descS:'<div class="edge-card" style="margin-top:0"><div class="edge-card-head"><span class="edge-tag"</span><h4>点名签到 · 边界兜底</h4></div><ol class="edge-list"><li class="edge-item"><div class="edge-q">学生点击名字的交互规则？</div><div class="edge-a">学生可点击<strong>任意一个名字</strong>进行签到，<span class="hl-s2">且仅能选中一个</span>。<br>· 已选中 A 时再次点击 A → <strong>取消选中</strong>；<br>· 已选中 A 时点击 B → <strong>A 自动取消，B 被选中</strong>；<br>· 被点击后，该名字状态立即变为「已签到」，在所有在线学生端实时同步。</div></li><li class="edge-item"><div class="edge-q">多设备抢点同一个名字怎么处理？</div><div class="edge-a"><strong>先到先得 + 锁定</strong>：A 设备点击后，该名字置为「已签到」并<span class="warn">加锁</span>；B 设备再点击同一个名字 <strong>无响应</strong>（灰显 + 轻提示「已被认领」）。<br>取消锁仅有两条路径：<strong>① 教师端后台手动取消</strong>；<strong>② A 设备本人再次点击取消</strong>。</div></li><li class="edge-item"><div class="edge-q">教师点击「完成签到」后会发生什么？</div><div class="edge-a">· 已完成签到的学生端<strong>关闭签到窗口</strong>，恢复成<span class="hl-s2">设备管控不可操作</span>状态。<br>· 同时建立该节课的<strong>「设备 ↔ 学生账号」绑定关系</strong>，此后该 Pad 上发生的答题 / 抢答 / 小黑板等全部数据，归属到当前签到的学生名下。<br>· 未完成签到的 Pad 依然保持已锁屏 + 待签到态。</div></li><li class="edge-item"><div class="edge-q">Pad 未签到期间老师发起互动怎么办？</div><div class="edge-a">Pad 在「未完成签到」状态下，一旦老师取消管控（如发起答题器/小黑板），Pad 端<strong>优先弹出签到页面</strong>；学生完成签到后，才会自动切入对应的互动窗口，保证<strong>数据必须有归属人</strong>。</div></li><li class="edge-item"><div class="edge-q">Pad 与大屏非绑定 / 大屏未进教室时如何兜底？</div><div class="edge-a">当 Pad 与大屏<strong>处于非绑定状态</strong>，或<strong>大屏尚未进入教室</strong>，学生端启动 App 后，默认进入缺省页面，提示：</div><div class="edge-note">💡 <strong>静候开课。你的智慧学伴已准备就绪。</strong></div></li></ol></div>'}
     ];
 
     const dLog=document.getElementById("dLog");
@@ -2322,6 +2399,7 @@
       roomOverlay="none";
       showSignPanel=true;
       signedSet=new Set();
+      studentPickedIdx=null;
       bbMonitorActive=false;
       bbRecalled=false;
       if(typeof teacherView!=="undefined") teacherView="room";
@@ -2452,6 +2530,7 @@
         finishBtn.addEventListener("click",()=>{
           showSignPanel=false;
           roomOverlay="none";
+          studentPickedIdx=null;
           refreshRoom();
           studentUI.innerHTML=renderStudentLock();
           syncExtraSign(false);
@@ -2718,9 +2797,47 @@
           const card=e.target.closest(".stu-card");
           if(!card) return;
           const idx=Number(card.dataset.si);
-          signedSet.add(idx);
-          refreshRoom();
+          studentPickedIdx=idx;
           studentUI.innerHTML=renderStudentSign();
+          dLog.textContent=`联动日志：学生点击「${students[idx].name}」→ 进入确认签到环节，等待点击「确认签到」。`;
+          bindEvents();
+        });
+      }
+
+      const signConfirmBtn=document.getElementById("signConfirmBtn");
+      if(signConfirmBtn){
+        signConfirmBtn.addEventListener("click",()=>{
+          if(studentPickedIdx==null) return;
+          const signedName=students[studentPickedIdx].name;
+          signedSet.add(studentPickedIdx);
+          studentPickedIdx=null;
+          studentUI.innerHTML=renderStudentLock();
+          refreshRoom();
+          dLog.textContent=`联动日志：学生确认签到「${signedName}」→ Pad 关闭签到页，自动进入教室并锁屏；教师端同步显示已签到状态。`;
+          bindEvents();
+        });
+      }
+
+      const signBackBtn=document.getElementById("signBackBtn");
+      if(signBackBtn){
+        signBackBtn.addEventListener("click",()=>{
+          studentPickedIdx=null;
+          studentUI.innerHTML=renderStudentSign();
+          dLog.textContent="联动日志：学生取消选择，返回名单重新选择。";
+          bindEvents();
+        });
+      }
+
+      const signCancelConfirmedBtn=document.getElementById("signCancelConfirmedBtn");
+      if(signCancelConfirmedBtn){
+        signCancelConfirmedBtn.addEventListener("click",()=>{
+          if(studentPickedIdx==null) return;
+          const name=students[studentPickedIdx].name;
+          signedSet.delete(studentPickedIdx);
+          studentPickedIdx=null;
+          studentUI.innerHTML=renderStudentSign();
+          refreshRoom();
+          dLog.textContent=`联动日志：学生取消「${name}」的签到，返回名单可再次签到。`;
           bindEvents();
         });
       }
@@ -2972,15 +3089,19 @@
     /* ===================== 大小屏设备管理 ===================== */
     const dmState={
       teacherDevices:[
-        {id:"1",sn:"TEA-262E-891",name:"张华主设备",institution:"实验小学"},
-        {id:"2",sn:"TEA-362F-123",name:"李老师主设备",institution:"实验小学"}
+        {id:"1",sn:"TEA-2026-001",name:"教师主设备一",institution:"高三理科综合组"},
+        {id:"2",sn:"TEA-2026-002",name:"教师主设备二",institution:"高三理科综合组"},
+        {id:"3",sn:"TEA-2026-003",name:"教师主设备三",institution:"高二文科综合组"},
+        {id:"4",sn:"TEA-2026-004",name:"教师主设备四",institution:"高一理科综合组"},
+        {id:"5",sn:"TEA-2026-005",name:"教师主设备五",institution:"实验教学组"}
       ],
+      selectedTeacherId:"1",
       studentDevices:[
-        {id:"1",sn:"STU-001-ABC",name:"王小设备",className:"一年级A班",associatedTeachers:["1"],isAssociated:true},
-        {id:"2",sn:"STU-002-DEF",name:"张宁设备",className:"一年级A班",associatedTeachers:["1","2"],isAssociated:true},
-        {id:"3",sn:"STU-003-GHI",name:"杨红设备",className:"一年级B班",associatedTeachers:[],isAssociated:false},
-        {id:"4",sn:"STU-004-JKL",name:"赵七设备",className:"一年级B班",associatedTeachers:[],isAssociated:false},
-        {id:"5",sn:"STU-005-MNO",name:"刘六设备",className:"二年级A班",associatedTeachers:["2"],isAssociated:true}
+        {id:"1",sn:"STU-001-ABC",name:"王小设备",className:"未来校区1教室",associatedTeachers:["1"],isAssociated:true},
+        {id:"2",sn:"STU-002-DEF",name:"张宁设备",className:"未来校区2教室",associatedTeachers:["1","2"],isAssociated:true},
+        {id:"3",sn:"STU-003-GHI",name:"杨红设备",className:"未来校区3教室",associatedTeachers:[],isAssociated:false},
+        {id:"4",sn:"STU-004-JKL",name:"赵七设备",className:"未来校区4教室",associatedTeachers:[],isAssociated:false},
+        {id:"5",sn:"STU-005-MNO",name:"刘六设备",className:"未来校区5教室",associatedTeachers:["2"],isAssociated:true}
       ],
       teacherSearch:"",
       studentSearch:"",
@@ -3008,22 +3129,54 @@
       });
     }
 
+    function dmRenderCurrentCard(){
+      const el=document.getElementById("dmCurrentCard");
+      if(!el)return;
+      const sel=dmState.teacherDevices.find(t=>t.id===dmState.selectedTeacherId);
+      if(!sel){
+        el.innerHTML=`<div class="dm-current-card"><div class="dm-current-empty">暂无选中的主设备，请从下方列表选择</div></div>`;
+        return;
+      }
+      el.innerHTML=`<div class="dm-current-card">
+        <div class="dm-current-head">
+          <div class="dm-current-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/></svg></div>
+          <div><div class="dm-current-label">当前主设备</div><div class="dm-current-status">STATUS: ACTIVE</div></div>
+        </div>
+        <div class="dm-current-fields">
+          <div><div class="dm-current-field-label">设备 SN 码</div><div class="dm-current-field-value mono">${dmEscape(sel.sn)}</div></div>
+          <div><div class="dm-current-field-label">设备名称</div><div class="dm-current-field-value">${dmEscape(sel.name)}</div></div>
+          <div><div class="dm-current-field-label">所属机构</div><div class="dm-current-field-value">${dmEscape(sel.institution)}</div></div>
+        </div>
+      </div>`;
+    }
+
     function dmRenderTeacherList(){
       const el=document.getElementById("dmTeacherList");
       if(!el)return;
+      const scrollTop=el.scrollTop;
+      const scrollParent=el.parentElement;
+      const parentScrollTop=scrollParent?scrollParent.scrollTop:0;
       const list=dmFilteredTeachers();
+      const selId=dmState.selectedTeacherId;
       if(list.length===0){el.innerHTML=`<div class="dm-empty">暂无设备数据</div>`;return}
-      el.innerHTML=`<div class="dm-teacher-list">${list.map(d=>`
-        <div class="dm-teacher-card">
-          <div class="dm-teacher-card-head">
-            <div class="dm-teacher-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/></svg></div>
-            <div style="flex:1;min-width:0">
-              <div class="dm-teacher-name">${dmEscape(d.name)}</div>
-              <div class="dm-teacher-sn">${dmEscape(d.sn)}</div>
+      const total=dmState.teacherDevices.length;
+      el.innerHTML=`<div class="dm-teacher-list">${list.map(d=>{
+        const sel=d.id===selId;
+        return `<div class="dm-teacher-row ${sel?"selected":""}" data-dm-teacher="${d.id}">
+          <div class="dm-teacher-radio"></div>
+          <div class="dm-teacher-row-main">
+            <div class="dm-teacher-row-top">
+              <span class="dm-teacher-row-sn">${dmEscape(d.sn)}</span>
+              ${sel?'<span class="dm-teacher-badge">当前设备</span>':""}
             </div>
+            <div class="dm-teacher-row-name">${dmEscape(d.name)}</div>
+            <div class="dm-teacher-row-inst">${dmEscape(d.institution)}</div>
           </div>
-          <div class="dm-teacher-meta">所属机构：<span>${dmEscape(d.institution)}</span></div>
-        </div>`).join("")}</div>`;
+        </div>`;
+      }).join("")}</div>
+      <div class="dm-teacher-count">共 ${total} 条设备</div>`;
+      el.scrollTop=scrollTop;
+      if(scrollParent)scrollParent.scrollTop=parentScrollTop;
     }
 
     function dmRenderStudentTabs(){
@@ -3101,6 +3254,7 @@
     }
 
     function dmRender(){
+      dmRenderCurrentCard();
       dmRenderTeacherList();
       dmRenderStudentTabs();
       dmRenderStudentList();
@@ -3125,6 +3279,14 @@
           const cls=classToggle.dataset.dmClassToggle;
           if(dmState.expandedClasses.has(cls))dmState.expandedClasses.delete(cls);else dmState.expandedClasses.add(cls);
           dmRenderStudentList();
+          return;
+        }
+
+        const teacherRow=e.target.closest("[data-dm-teacher]");
+        if(teacherRow){
+          dmState.selectedTeacherId=teacherRow.dataset.dmTeacher;
+          dmRenderCurrentCard();
+          dmRenderTeacherList();
           return;
         }
       });
