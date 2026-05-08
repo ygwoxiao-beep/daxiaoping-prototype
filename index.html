@@ -1086,6 +1086,10 @@
 
     /* ===== 大小屏设备管理 ===== */
     #devicemgmt.tab-panel{padding:0;border:none;box-shadow:none;background:transparent;overflow:hidden}
+    .dm-info-banner{display:flex;align-items:flex-start;gap:10px;background:linear-gradient(135deg,#eef4ff 0%,#fff 80%);border:1px solid #c7d2fe;border-left:4px solid #4f46e5;border-radius:10px;padding:12px 16px;margin-bottom:14px}
+    .dm-info-banner-icon{flex-shrink:0;font-size:16px;margin-top:1px}
+    .dm-info-banner-text{font-size:13px;color:#1e3a8a;line-height:1.7}
+    .dm-info-banner-text strong{color:#4338ca;font-weight:700}
     .dm-layout{display:grid;grid-template-columns:360px 1fr;gap:16px;min-height:720px}
     .dm-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);display:flex;flex-direction:column;overflow:hidden}
     .dm-card-head{padding:20px;border-bottom:1px solid #e5e7eb}
@@ -1296,7 +1300,7 @@
         </ul></div>
         <div class="flow-column future"><h3>改造后流程</h3><ul class="flow-list">
           <li class="flow-step">登录账号</li><li class="flow-arrow">↓</li>
-          <li class="flow-step">上课 · 直接进入教室</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">上课 · 选择上课模式（Pad 班 / 在线教室）</li><li class="flow-arrow">↓</li>
           <li class="flow-step">课件讲授</li><li class="flow-arrow">↓</li>
           <li class="flow-step">发起互动（小黑板、答题器）</li><li class="flow-arrow">↓</li>
           <li class="flow-step">查看互动结果</li><li class="flow-arrow">↓</li>
@@ -1304,6 +1308,36 @@
         </ul></div>
       </div>
       <p class="flow-legend"><span class="dot red"></span>红色为新增或变更步骤。</p>
+
+      <div class="module-block">
+        <h3 class="module-title">🛡️ 白名单灰度策略</h3>
+        <p class="section-sub" style="margin-top:-2px">为控制功能上线节奏与风险，<strong>「选择上课模式」</strong>采用<strong>按用户账号开启的白名单灰度</strong>。</p>
+        <div class="edge-card s1" style="margin-top:0">
+          <div class="edge-card-head">
+            <span class="edge-tag">白名单灰度</span>
+            <h4>教师端「上课」按钮 · 行为分流</h4>
+          </div>
+          <ol class="edge-list">
+            <li class="edge-item">
+              <div class="edge-q">默认行为</div>
+              <div class="edge-a">系统<strong>默认按用户账号开启白名单模式</strong>，所有教师账号都需要在<strong>白名单内</strong>才能体验「选择上课模式」能力。</div>
+            </li>
+            <li class="edge-item">
+              <div class="edge-q">命中白名单</div>
+              <div class="edge-a">教师点击「<strong>上课</strong>」 → <strong>弹出「选择上课模式」</strong>弹窗 →（选择 Pad 班 / 在线教室）→ 点击「确认进入」推进到教室。</div>
+            </li>
+            <li class="edge-item">
+              <div class="edge-q">未命中白名单</div>
+              <div class="edge-a">教师点击「<strong>上课</strong>」 → 沿用 ClassInX 现有体验，<strong>不弹出</strong>选择模式弹窗，直接进入对应教室。</div>
+            </li>
+            <li class="edge-item">
+              <div class="edge-q">本期产品演示场景</div>
+              <div class="edge-a">「<strong>4. 产品演示</strong>」中所演示的教师账号默认<strong>已加入白名单</strong>，因此第 ④ 步会弹出「选择上课模式」弹窗。</div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
       <!-- 第二模块：产品原型说明（暂时注释，详见「4. 产品演示」交互式步骤）
       <div class="module-block">
         <h3 class="module-title">第二模块：产品原型说明</h3>
@@ -1342,7 +1376,7 @@
           <li class="flow-step">默认设备解锁 → 始终显示登录界面</li><li class="flow-arrow">↓</li>
           <li class="flow-step changed">输入手机号后四位</li><li class="flow-arrow">↓</li>
           <li class="flow-step changed">登录成功 → 停留在成功页可切换账号</li><li class="flow-arrow">↓</li>
-          <li class="flow-step changed">老师点击上课 → 大屏直接进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">老师点击上课 · 选择 Pad 班模式 → 进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
           <li class="flow-step">课中参与教师发起的互动</li><li class="flow-arrow">↓</li>
           <li class="flow-step">下课后设备自动解锁并退出登录</li>
         </ul></div>
@@ -1400,7 +1434,7 @@
             <li class="flow-step">默认设备解锁 → 始终显示登录界面</li><li class="flow-arrow">↓</li>
             <li class="flow-step changed">输入手机号后四位</li><li class="flow-arrow">↓</li>
             <li class="flow-step changed">右侧自动弹出匹配账号 → 确认登录</li><li class="flow-arrow">↓</li>
-            <li class="flow-step changed">老师点击上课 → 大屏直接进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
+            <li class="flow-step changed">老师点击上课 · 选择 Pad 班模式 → 进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
             <li class="flow-step">课中参与教师发起的互动</li><li class="flow-arrow">↓</li>
             <li class="flow-step">下课后设备自动解锁并退出登录</li>
           </ul></div>
@@ -1568,8 +1602,8 @@
         <div class="demo-step" data-pstep="0"><div class="demo-step-num">1</div><div class="demo-step-label">默认解锁<br>显示登录页</div></div>
         <div class="demo-step" data-pstep="1"><div class="demo-step-num">2</div><div class="demo-step-label">撞号兜底<br>身份二次确认</div></div>
         <div class="demo-step" data-pstep="2"><div class="demo-step-num">3</div><div class="demo-step-label">登录成功<br>等候上课</div></div>
-        <div class="demo-step" data-pstep="3"><div class="demo-step-num">4</div><div class="demo-step-label">老师点击上课<br>直接进入教室</div></div>
-        <div class="demo-step" data-pstep="4"><div class="demo-step-num">5</div><div class="demo-step-label">课中参与互动</div></div>
+        <div class="demo-step" data-pstep="3"><div class="demo-step-num">4</div><div class="demo-step-label">老师点击上课<br>选择 Pad班 模式</div></div>
+        <div class="demo-step" data-pstep="4"><div class="demo-step-num">5</div><div class="demo-step-label">进入教室<br>课中参与互动</div></div>
         <div class="demo-step" data-pstep="5"><div class="demo-step-num">6</div><div class="demo-step-label">下课<br>自动解锁并退出登录</div></div>
       </div>
       <div class="demo-shell">
@@ -1686,18 +1720,31 @@
     </section>
 
     <section id="devicemgmt" class="tab-panel">
+      <div class="dm-info-banner">
+        <span class="dm-info-banner-icon">ℹ️</span>
+        <div class="dm-info-banner-text">
+          <p style="margin:0 0 6px">该页面放在<strong>大后台管理系统</strong> → <strong>用户运营平台</strong>模块，命名为「<strong>大小屏设备管理</strong>」。</p>
+          <ol style="margin:6px 0 0;padding-left:20px;line-height:1.85">
+            <li><strong>左侧</strong>为机构列表查询；点击左侧机构后，<strong>右侧默认显示该机构下已关联的学生设备</strong>。</li>
+            <li>页面打开时<strong>默认选中一个机构</strong>，右侧立即按其范围加载设备列表。</li>
+            <li><strong>右侧</strong>学生设备管理：支持<strong>批量导入</strong>，导入后的设备需显示<strong>设备 ID（SN 号）/ 所属机构 ID / 所属机构</strong>；支持<strong>多选</strong>，选中后可一键<strong>绑定到当前机构</strong>，也可以<strong>解除绑定</strong>。</li>
+            <li>当右侧无设备时提示：暂无学生设备</li>
+
+          </ol>
+        </div>
+      </div>
       <div class="dm-layout">
-        <!-- 左侧：教师主设备 -->
+        <!-- 左侧：机构查询（仅查询，不支持新增） -->
         <div class="dm-card">
           <div class="dm-card-head">
-            <div class="dm-title" style="margin-bottom:16px">教师主设备 (MASTER)</div>
+            <div class="dm-title" style="margin-bottom:6px">机构查询</div>
+            <div class="dm-sub" style="margin-bottom:14px"></div>
             <div id="dmCurrentCard"></div>
-            <div class="dm-manage-title">设备管理</div>
+            <div class="dm-manage-title">机构列表</div>
             <div class="dm-manage-toolbar">
-              <button class="dm-btn dm-btn-emerald dm-btn-sm" id="dmOpenAddTeacher">＋ 添加设备</button>
               <div class="dm-input-wrap" style="flex:1">
                 <span class="dm-input-icon">🔍</span>
-                <input class="dm-input" id="dmTeacherSearch" placeholder="搜索 SN 码或设备名称..." />
+                <input class="dm-input" id="dmTeacherSearch" placeholder="搜索机构名称 / 手机号 / 机构 ID..." />
               </div>
             </div>
           </div>
@@ -1710,13 +1757,13 @@
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;flex-wrap:wrap">
               <div>
                 <div class="dm-title">学生设备管理</div>
-                <div class="dm-sub">管理学生设备信息及关联教师主设备</div>
+                <div class="dm-sub">管理学生设备 SN 与所属机构绑定关系</div>
               </div>
-              <button class="dm-btn dm-btn-blue" id="dmOpenBatchImport">⬆ 批量导入</button>
+              <button class="dm-btn dm-btn-blue" id="dmOpenBatchImport">⬆ 批量录入</button>
             </div>
             <div class="dm-input-wrap">
               <span class="dm-input-icon">🔍</span>
-              <input class="dm-input blue" id="dmStudentSearch" placeholder="搜索设备名称、SN号或班级" />
+              <input class="dm-input blue" id="dmStudentSearch" placeholder="搜索 SN 号或所属机构" />
             </div>
             <div class="dm-tabs" id="dmStudentTabs"></div>
           </div>
@@ -1727,64 +1774,13 @@
         </div>
       </div>
 
-      <!-- 添加教师设备 Modal -->
-      <div class="dm-modal-backdrop" id="dmAddTeacherModal">
-        <div class="dm-modal">
-          <div class="dm-modal-head">
-            <div>
-              <div class="dm-title">添加教师主设备</div>
-              <div class="dm-sub">支持单个添加或批量导入设备信息</div>
-            </div>
-            <button class="dm-modal-close" data-close-modal="dmAddTeacherModal">✕</button>
-          </div>
-          <div class="dm-modal-tabs">
-            <button class="dm-modal-tab active" data-teacher-mode="single">单个添加</button>
-            <button class="dm-modal-tab" data-teacher-mode="batch">批量导入</button>
-          </div>
-          <div id="dmAddTeacherSingle" class="dm-modal-body single">
-            <div class="dm-field">
-              <label class="dm-label">SN 号 <span class="req">*</span></label>
-              <input class="dm-input-text" id="dmTSn" placeholder="请输入设备SN号" />
-            </div>
-            <div class="dm-field">
-              <label class="dm-label">设备名称 <span class="req">*</span></label>
-              <input class="dm-input-text" id="dmTName" placeholder="请输入设备名称" />
-            </div>
-            <div class="dm-field">
-              <label class="dm-label">所属机构 <span class="req">*</span></label>
-              <input class="dm-input-text" id="dmTInst" placeholder="请输入所属机构" />
-            </div>
-          </div>
-          <div id="dmAddTeacherBatch" class="dm-modal-body" style="display:none">
-            <div class="dm-batch-pane">
-              <div class="dm-batch-tip">
-                <strong>输入格式：</strong>SN号;设备名称;所属机构<br>
-                <span style="color:#6b7280">示例：TEA-262E-891;张华主设备;实验小学</span>
-              </div>
-              <textarea class="dm-textarea" id="dmTBatchText" placeholder="TEA-262E-891;张华主设备;实验小学&#10;TEA-362F-123;李老师主设备;实验小学"></textarea>
-              <button class="dm-btn dm-btn-emerald" id="dmTBatchParse" style="margin-top:12px">解析数据</button>
-            </div>
-            <div class="dm-batch-pane">
-              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                <div style="font-size:13px;color:#374151">预览结果 (<span id="dmTPreviewCount">0</span> 条)</div>
-              </div>
-              <div class="dm-preview-wrap" id="dmTPreviewWrap"><div class="dm-preview-empty">请先输入数据并点击"解析数据"</div></div>
-            </div>
-          </div>
-          <div class="dm-modal-foot">
-            <button class="dm-btn dm-btn-ghost" data-close-modal="dmAddTeacherModal">取消</button>
-            <button class="dm-btn dm-btn-emerald" id="dmAddTeacherConfirm">确认添加</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 批量导入学生设备 Modal -->
+      <!-- 批量录入学生设备 Modal -->
       <div class="dm-modal-backdrop" id="dmBatchImportModal">
         <div class="dm-modal wide">
           <div class="dm-modal-head">
             <div>
-              <div class="dm-title">批量导入学生设备</div>
-              <div class="dm-sub">按照固定格式输入设备信息，系统将自动解析</div>
+              <div class="dm-title">批量录入学生设备</div>
+              <div class="dm-sub">仅需提供 SN 号和所属机构，系统将自动解析</div>
             </div>
             <button class="dm-modal-close" data-close-modal="dmBatchImportModal">✕</button>
           </div>
@@ -1795,10 +1791,10 @@
                 <button class="dm-btn-text" id="dmSBatchReset">清空</button>
               </div>
               <div class="dm-batch-tip">
-                <strong>输入格式：</strong>SN号;设备名称;所属班级<br>
-                <span style="color:#6b7280">示例：STU-001-ABC;王小设备;一年级A班<br>每行一个设备，使用中文或英文分号分隔</span>
+                <strong>输入格式：</strong>SN号;所属机构ID<br>
+                <span style="color:#6b7280">示例：STU-001-ABC;2838848483<br>每行一个设备，使用中文或英文分号分隔</span>
               </div>
-              <textarea class="dm-textarea" id="dmSBatchText" placeholder="STU-001-ABC;王小设备;未来校区1教室&#10;STU-002-DEF;张宁设备;一年级A班&#10;STU-003-GHI;杨红设备;一年级B班"></textarea>
+              <textarea class="dm-textarea" id="dmSBatchText" placeholder="STU-001-ABC;未来培优&#10;STU-002-DEF;火光教育&#10;STU-003-GHI;状元 100"></textarea>
               <button class="dm-btn dm-btn-blue" id="dmSBatchParse" style="margin-top:12px">解析数据</button>
             </div>
             <div class="dm-batch-pane">
@@ -3076,22 +3072,21 @@
         teacher:"list",student:"login",
         descT:`<div style="line-height:1.85"><strong>教师端：课堂列表（无需操作）</strong>
 <ol style="padding-left:20px;margin:6px 0 0">
-<li>基于 <strong>ClassInX 版本无需做任何改造，使用当前版本即可</strong>。</li>
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮后<strong>直接进入教室</strong>，<strong>不再弹出</strong>「选择上课模式」弹窗。</li>
+<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
 <li>本阶段教师端<strong>不需要任何操作</strong>，学生 Pad 端独立运行登录，老师按既定时间点击「上课」即可。</li>
 </ol></div>`,
         descS:`<div style="line-height:1.85"><strong>一、产品形态</strong>
 <ol style="padding-left:20px;margin:6px 0 10px">
 <li>学生端 Demo 版本基于<strong>安卓 Pad 开发独立 App</strong>，App 中只有教室上课页面（线下课模式进入教室；教室内<strong>隐藏聊天、花名册、举手</strong>功能）。</li>
 <li>学生端 APP 名称为「<strong>ClassIn Focus</strong>」。</li>
-<li><strong>Pad 与教师端大屏绑定关系</strong>：<strong>无需额外绑定</strong>，只需通过学生登录账号判断。</li>
+<li><strong>Pad 与教师端大屏绑定关系</strong>：<strong>pad设备需要与机构提前绑定</strong></li>
 </ol>
 
 <strong>二、登录验证</strong>
 <ol style="padding-left:20px;margin:6px 0 10px">
 <li>学生输入<strong>手机号后四位</strong>作为登录凭证。</li>
 <li>验证方式为<strong>机构账号验证</strong>：默认在<strong>当前机构学员名单</strong>内做匹配，不再做 ClassIn 全用户库或额外的班级名单收窄。</li>
-<li>当同一时间、相同机构下有多个课程时，需要学生<strong>选择进入哪个教室</strong>。</li>
+<li>当同一时间、相同机构下有多个课程时，优先匹配开课早的课程</li>
 </ol>
 
 <strong>三、按命中数分流</strong>
@@ -3111,8 +3106,7 @@
         teacher:"list",student:"login-confirm",
         descT:`<div style="line-height:1.85"><strong>教师端：仍在课堂列表（无需介入）</strong>
 <ol style="padding-left:20px;margin:6px 0 0">
-<li>基于 <strong>ClassInX 版本无需做任何改造，使用当前版本即可</strong>。</li>
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮后<strong>直接进入教室</strong>，<strong>不再弹出</strong>「选择上课模式」弹窗。</li>
+<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
 <li>撞号属于<strong>学生侧自助处理</strong>的兜底，老师不可代选——身份必须由学生本人在 Pad 上点选确认，避免误绑。</li>
 </ol></div>`,
         descS:"当手机号在 <strong>ClassIn 用户库</strong>中<strong>命中 ≥ 2 个学生账号</strong>时（演示输入 <strong>13800008888</strong>，模拟同一手机号绑定多孩家庭），Pad 自动弹出「确认您的身份」二次选择，展示<strong>姓名 + 班级昵称 + 头像</strong>等信息，避免直接登错账号。\n\n在 Pad 上点击任一候选卡片完成本人确认。"
@@ -3124,20 +3118,31 @@
         loggedSub:"等待上课中…",
         descT:`<div style="line-height:1.85"><strong>教师端：仍在课堂列表</strong>
 <ol style="padding-left:20px;margin:6px 0 0">
-<li>基于 <strong>ClassInX 版本无需做任何改造，使用当前版本即可</strong>。</li>
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮后<strong>直接进入教室</strong>，<strong>不再弹出</strong>「选择上课模式」弹窗。</li>
+<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
 <li>学生自助登录全程<strong>不占用</strong>教师操作，老师按既定时间点击「上课」即可；签到状态记录在每个学生账号下，便于课后报表与 LMS 归档。</li>
 </ol></div>`,
-        descS:"校验通过 → 绑定学生账号「张小明」。\n\n<strong>与上课衔接：</strong>若老师<strong>尚未进入课堂</strong>，学生可停留在登录成功页；若<strong>老师已进入教室</strong>而学生后登录，点击登录后可<strong>直接进入「教室」页</strong>。\n\n支持点击<strong>切换账号</strong>返回登录页，便于 Pad 在不同学生间轮换使用。"
+        descS:"校验通过 → 绑定学生账号「张小明」。\n\n<strong>与上课衔接：</strong>若老师<strong>尚未进入课堂</strong>，学生可停留在登录成功页；若<strong>老师已进入教室</strong>而学生后登录，点击登录后可<strong>直接进入「教室」+管控页</strong>。\n\n支持点击<strong>切换账号</strong>返回登录页，便于 Pad 在不同学生间轮换使用。"
       },
       {
-        title:"④ 老师点击上课 · 直接进入教室",
-        log:"[方案 1] 老师在课堂列表点击「上课」→ 直接进入教室；学生 Pad 端同步切换为「设备管控中（锁屏）」。",
+        title:"④ 老师点击上课 · 选择上课模式",
+        log:"[方案 1] 老师在课堂列表点击「上课」→ 弹出「选择上课模式」弹窗，老师选择「Pad 班」后点击「确认进入」。",
+        teacher:"list-modal",student:"logged",
+        descT:`<div style="line-height:1.85"><strong>教师端：上课模式选择弹窗</strong>
+<ol style="padding-left:20px;margin:6px 0 0">
+<li>系统<strong>默认按用户账号开启白名单模式</strong>：仅<strong>命中白名单</strong>的教师在点击「<strong>上课</strong>」时弹出「<strong>选择上课模式</strong>」弹窗；未命中白名单的教师沿用 ClassInX 现有体验，<strong>不弹出</strong>该弹窗，直接进入对应教室。</li>
+<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗。</li>
+<li>老师选择「<strong>Pad 班</strong>」后点击「<strong>确认进入</strong>」，推进至下一步进入教室。</li>
+<li><strong>本阶段大屏尚未真正进班</strong>，因此学生 Pad 端不会触发任何状态变更，仍停留在登录成功页。</li>
+</ol></div>`,
+        descS:"与「先点上课、后进教室」的链路对齐：<strong>仅当大屏端真正进入教室</strong>后，已登录 Pad 才切换为「设备管控中」（锁屏）。\n\n本阶段如果有同班级学生<strong>新登录</strong>，会跳过等候页，<strong>直接进入教室 + 管控页</strong>。仍可点击<strong>切换账号</strong>纠错。"
+      },
+      {
+        title:"⑤ 进入教室 · 课中参与互动",
+        log:"[方案 1] 老师选择 Pad 班并确认进入教室 → Pad 进入管控锁屏；发起互动时临时解锁，互动结束恢复锁屏。",
         teacher:"room",student:"lock-bound",
-        descT:`<div style="line-height:1.85"><strong>教师端</strong>
+        descT:`<div style="line-height:1.85"><strong>教师端：已进入教室（课中互动）</strong>
 <ol style="padding-left:20px;margin:6px 0 10px">
-<li>基于 <strong>ClassInX 版本无需做任何改造，使用当前版本即可</strong>。</li>
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮后<strong>直接进入教室</strong>，<strong>不再弹出</strong>「选择上课模式」弹窗。</li>
+<li>大屏端真正进入教室后，已登录 Pad 同步切换为<strong>设备管控中（锁屏）</strong>。</li>
 <li>教室内支持互动的工具包括：<strong>答题器、小黑板、抢答器</strong>。</li>
 <li>教师分发后，学生端<strong>自动弹出</strong>互动工具（仅限于显示互动工具），支持操作。</li>
 </ol>
@@ -3158,14 +3163,7 @@
 <div style="padding-left:24px;margin:2px 0 0">学生解除管控时机：教师点击「<strong>开始</strong>」后即为解除管控；进入管控时机：教师点击「<strong>关闭</strong>」。</div>
 </div>
 </div>`,
-        descS:"老师点击「上课」后大屏直接进入教室。已登录 Pad 同步切换为<strong>设备管控中（锁屏）</strong>，顶部徽标显示「张小明 已绑定 · 上课中」；课中互动数据自动归属当前绑定账号，无需再次认领身份。"
-      },
-      {
-        title:"⑤ 老师进入教室 · 课中参与互动",
-        log:"[方案 1] 老师进入教室后 Pad 进入管控锁屏；发起互动时临时解锁，互动结束恢复锁屏。",
-        teacher:"room",student:"lock-bound",
-        descT:"老师端已进入教室。此后 Pad 处于「设备管控中」；老师发起小黑板、答题器、随堂测等互动时 Pad 短暂解锁，结束后回到锁屏。",
-        descS:"上一步进班完成后，学生端已进入<strong>设备管控中</strong>。互动数据自动归属于登录账号「张小明」，无需再次认领身份。"
+        descS:"学生端已进入<strong>设备管控中</strong>。课中互动数据自动归属于登录账号「陈子和」，无需再次认领身份。仅在老师发起互动时 Pad 临时解锁，结束后立即回到锁屏。"
       },
       {
         title:"⑥ 下课 · 自动解锁并退出登录",
@@ -3899,45 +3897,58 @@
     showSignPanel=true;
     render();
 
-    /* ===================== 大小屏设备管理 ===================== */
+    /* ===================== 大小屏设备管理（机构 + 学生设备绑定） ===================== */
     const dmState={
-      teacherDevices:[
-        {id:"1",sn:"TEA-2026-001",name:"教师主设备一",institution:"高三理科综合组"},
-        {id:"2",sn:"TEA-2026-002",name:"教师主设备二",institution:"高三理科综合组"},
-        {id:"3",sn:"TEA-2026-003",name:"教师主设备三",institution:"高二文科综合组"},
-        {id:"4",sn:"TEA-2026-004",name:"教师主设备四",institution:"高一理科综合组"},
-        {id:"5",sn:"TEA-2026-005",name:"教师主设备五",institution:"实验教学组"}
+      institutions:[
+        {id:"1",name:"未来培优",phone:"13800001001",instId:"SID:238492839"},
+        {id:"2",name:"火光教育",phone:"13800001002",instId:"SID:238492833"},
+        {id:"3",name:"状元 100",phone:"13800001003",instId:"SID:238492834"},
+        {id:"4",name:"榆树教育",phone:"13800001004",instId:"SID:238492832"},
+        {id:"5",name:"实验小学",phone:"13800001005",instId:"SID:238492835"}
       ],
-      selectedTeacherId:"1",
+      selectedInstitutionId:"1",
       studentDevices:[
-        {id:"1",sn:"STU-001-ABC",name:"王小设备",className:"未来校区1教室",associatedTeachers:["1"],isAssociated:true},
-        {id:"2",sn:"STU-002-DEF",name:"张宁设备",className:"未来校区2教室",associatedTeachers:["1","2"],isAssociated:true},
-        {id:"3",sn:"STU-003-GHI",name:"杨红设备",className:"未来校区3教室",associatedTeachers:[],isAssociated:false},
-        {id:"4",sn:"STU-004-JKL",name:"赵七设备",className:"未来校区4教室",associatedTeachers:[],isAssociated:false},
-        {id:"5",sn:"STU-005-MNO",name:"刘六设备",className:"未来校区5教室",associatedTeachers:["2"],isAssociated:true}
+        {id:"1",sn:"STU-001-ABC",institutionId:"1",isAssociated:true},
+        {id:"2",sn:"STU-002-DEF",institutionId:"1",isAssociated:true},
+        {id:"3",sn:"STU-003-GHI",institutionId:"1",isAssociated:true},
+        {id:"4",sn:"STU-004-JKL",institutionId:"2",isAssociated:true},
+        {id:"5",sn:"STU-005-MNO",institutionId:"3",isAssociated:true},
+        {id:"6",sn:"STU-006-PQR",institutionId:"",isAssociated:false},
+        {id:"7",sn:"STU-007-STU",institutionId:"",isAssociated:false}
       ],
       teacherSearch:"",
       studentSearch:"",
-      activeTab:"all",
+      activeTab:"associated",
       selected:new Set(),
-      expandedClasses:new Set(),
-      teacherAddMode:"single",
-      teacherPreview:[],
       studentPreview:[]
     };
 
     const dmEscape=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 
-    function dmFilteredTeachers(){
-      const q=dmState.teacherSearch.toLowerCase();
-      return dmState.teacherDevices.filter(d=>!q||d.name.toLowerCase().includes(q)||d.sn.toLowerCase().includes(q)||d.institution.toLowerCase().includes(q));
+    function dmFilteredInstitutions(){
+      const q=dmState.teacherSearch.toLowerCase().trim();
+      return dmState.institutions.filter(d=>!q||d.name.toLowerCase().includes(q)||d.phone.toLowerCase().includes(q)||d.instId.toLowerCase().includes(q));
     }
 
+    function dmGetInstitutionName(id){const t=dmState.institutions.find(x=>x.id===id);return t?t.name:""}
+    function dmGetInstitution(id){return dmState.institutions.find(x=>x.id===id)||null}
+
+    function dmStudentsInScope(){
+      // 当前机构作用域 = 已绑定到当前机构 + 暂未绑定任何机构（待关联池）
+      const curId=dmState.selectedInstitutionId;
+      return dmState.studentDevices.filter(d=>(d.isAssociated&&d.institutionId===curId)||!d.isAssociated);
+    }
     function dmFilteredStudents(){
-      const q=dmState.studentSearch.toLowerCase();
-      return dmState.studentDevices.filter(d=>{
-        const mSearch=!q||d.name.toLowerCase().includes(q)||d.sn.toLowerCase().includes(q)||d.className.toLowerCase().includes(q);
-        const mTab=dmState.activeTab==="all"||(dmState.activeTab==="pending"&&!d.isAssociated)||(dmState.activeTab==="associated"&&d.isAssociated);
+      const q=dmState.studentSearch.toLowerCase().trim();
+      const curId=dmState.selectedInstitutionId;
+      return dmStudentsInScope().filter(d=>{
+        const instName=dmGetInstitutionName(d.institutionId);
+        const mSearch=!q||d.sn.toLowerCase().includes(q)||instName.toLowerCase().includes(q);
+        const isCurInst=d.isAssociated&&d.institutionId===curId;
+        const isPending=!d.isAssociated;
+        let mTab=true;
+        if(dmState.activeTab==="associated") mTab=isCurInst;
+        else if(dmState.activeTab==="pending") mTab=isPending;
         return mSearch&&mTab;
       });
     }
@@ -3945,20 +3956,20 @@
     function dmRenderCurrentCard(){
       const el=document.getElementById("dmCurrentCard");
       if(!el)return;
-      const sel=dmState.teacherDevices.find(t=>t.id===dmState.selectedTeacherId);
+      const sel=dmGetInstitution(dmState.selectedInstitutionId);
       if(!sel){
-        el.innerHTML=`<div class="dm-current-card"><div class="dm-current-empty">暂无选中的主设备，请从下方列表选择</div></div>`;
+        el.innerHTML=`<div class="dm-current-card"><div class="dm-current-empty">暂无选中的机构，请从下方列表选择</div></div>`;
         return;
       }
       el.innerHTML=`<div class="dm-current-card">
         <div class="dm-current-head">
-          <div class="dm-current-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/></svg></div>
-          <div><div class="dm-current-label">当前主设备</div><div class="dm-current-status">STATUS: ACTIVE</div></div>
+          <div class="dm-current-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg></div>
+          <div><div class="dm-current-label">当前机构</div><div class="dm-current-status">STATUS: ACTIVE</div></div>
         </div>
         <div class="dm-current-fields">
-          <div><div class="dm-current-field-label">设备 SN 码</div><div class="dm-current-field-value mono">${dmEscape(sel.sn)}</div></div>
-          <div><div class="dm-current-field-label">设备名称</div><div class="dm-current-field-value">${dmEscape(sel.name)}</div></div>
-          <div><div class="dm-current-field-label">所属机构</div><div class="dm-current-field-value">${dmEscape(sel.institution)}</div></div>
+          <div><div class="dm-current-field-label">机构 ID</div><div class="dm-current-field-value mono">${dmEscape(sel.instId)}</div></div>
+          <div><div class="dm-current-field-label">机构名称</div><div class="dm-current-field-value">${dmEscape(sel.name)}</div></div>
+          <div><div class="dm-current-field-label">联系手机</div><div class="dm-current-field-value mono">${dmEscape(sel.phone)}</div></div>
         </div>
       </div>`;
     }
@@ -3969,25 +3980,25 @@
       const scrollTop=el.scrollTop;
       const scrollParent=el.parentElement;
       const parentScrollTop=scrollParent?scrollParent.scrollTop:0;
-      const list=dmFilteredTeachers();
-      const selId=dmState.selectedTeacherId;
-      if(list.length===0){el.innerHTML=`<div class="dm-empty">暂无设备数据</div>`;return}
-      const total=dmState.teacherDevices.length;
+      const list=dmFilteredInstitutions();
+      const selId=dmState.selectedInstitutionId;
+      const total=dmState.institutions.length;
+      if(list.length===0){el.innerHTML=`<div class="dm-empty">未查询到机构</div>`;return}
       el.innerHTML=`<div class="dm-teacher-list">${list.map(d=>{
         const sel=d.id===selId;
         return `<div class="dm-teacher-row ${sel?"selected":""}" data-dm-teacher="${d.id}">
           <div class="dm-teacher-radio"></div>
           <div class="dm-teacher-row-main">
             <div class="dm-teacher-row-top">
-              <span class="dm-teacher-row-sn">${dmEscape(d.sn)}</span>
-              ${sel?'<span class="dm-teacher-badge">当前设备</span>':""}
+              <span class="dm-teacher-row-sn">${dmEscape(d.instId)}</span>
+              ${sel?'<span class="dm-teacher-badge">当前机构</span>':""}
             </div>
             <div class="dm-teacher-row-name">${dmEscape(d.name)}</div>
-            <div class="dm-teacher-row-inst">${dmEscape(d.institution)}</div>
+            <div class="dm-teacher-row-inst">📱 ${dmEscape(d.phone)}</div>
           </div>
         </div>`;
       }).join("")}</div>
-      <div class="dm-teacher-count">共 ${total} 条设备</div>`;
+      <div class="dm-teacher-count">共 ${total} 个机构</div>`;
       el.scrollTop=scrollTop;
       if(scrollParent)scrollParent.scrollTop=parentScrollTop;
     }
@@ -3995,60 +4006,41 @@
     function dmRenderStudentTabs(){
       const el=document.getElementById("dmStudentTabs");
       if(!el)return;
-      const all=dmState.studentDevices.length;
+      const curId=dmState.selectedInstitutionId;
+      const associated=dmState.studentDevices.filter(d=>d.isAssociated&&d.institutionId===curId).length;
       const pending=dmState.studentDevices.filter(d=>!d.isAssociated).length;
-      const associated=dmState.studentDevices.filter(d=>d.isAssociated).length;
-      const tabs=[["all","全部设备",all],["pending","待关联设备",pending],["associated","已关联设备",associated]];
+      const all=associated+pending;
+      const tabs=[["associated","当前机构已关联",associated],["pending","待关联设备",pending],["all","全部",all]];
       el.innerHTML=tabs.map(([k,l,c])=>`<button class="dm-tab ${dmState.activeTab===k?"active":""}" data-dm-tab="${k}">${l} (${c})</button>`).join("");
     }
-
-    function dmGetTeacherName(id){const t=dmState.teacherDevices.find(x=>x.id===id);return t?t.name:""}
 
     function dmRenderStudentList(){
       const wrap=document.getElementById("dmStudentList");
       if(!wrap)return;
       const list=dmFilteredStudents();
       if(list.length===0){wrap.innerHTML=`<div class="dm-empty">暂无设备数据</div>`;return}
-      const byClass={};
-      list.forEach(d=>{(byClass[d.className]=byClass[d.className]||[]).push(d)});
-      wrap.innerHTML=`<div class="dm-class-list">${Object.entries(byClass).map(([cls,items])=>{
-        const expanded=dmState.expandedClasses.has(cls);
-        const ids=items.map(d=>d.id);
-        const allSel=ids.every(i=>dmState.selected.has(i));
-        const someSel=!allSel&&ids.some(i=>dmState.selected.has(i));
-        return `<div class="dm-class ${expanded?"expanded":""}" data-cls="${dmEscape(cls)}">
-          <div class="dm-class-head">
-            <input type="checkbox" data-dm-class-check="${dmEscape(cls)}" ${allSel?"checked":""} ${someSel?'data-indeterminate="1"':""}>
-            <button class="dm-class-toggle" data-dm-class-toggle="${dmEscape(cls)}">
-              <span class="dm-chev">▶</span>
-              <span class="dm-class-name">${dmEscape(cls)}</span>
-              <span class="dm-class-count">(${items.length} 台设备)</span>
-            </button>
-          </div>
-          <div class="dm-class-body">${items.map(d=>{
-            const sel=dmState.selected.has(d.id);
-            const teachers=d.associatedTeachers.map(dmGetTeacherName).filter(Boolean).join(", ")||"未关联";
-            return `<div class="dm-device-row ${sel?"selected":""}">
-              <input type="checkbox" data-dm-device="${d.id}" ${sel?"checked":""}>
-              <div class="dm-device-main">
-                <div class="dm-device-top">
-                  <div class="dm-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                  <div class="dm-device-info">
-                    <div class="dm-device-name">${dmEscape(d.name)}</div>
-                    <div class="dm-device-sn">SN: ${dmEscape(d.sn)}</div>
-                  </div>
-                  <div class="dm-badge ${d.isAssociated?"dm-badge-ok":"dm-badge-pending"}">${d.isAssociated?"已关联":"待关联"}</div>
-                </div>
-                <div class="dm-device-meta">
-                  <div>所属班级：<span>${dmEscape(d.className)}</span></div>
-                  <div>关联教师：<span>${dmEscape(teachers)}</span></div>
-                </div>
+      wrap.innerHTML=`<div class="dm-class-list">${list.map(d=>{
+        const sel=dmState.selected.has(d.id);
+        const instName=dmGetInstitutionName(d.institutionId)||"未关联";
+        const inst=dmGetInstitution(d.institutionId);
+        return `<div class="dm-device-row ${sel?"selected":""}" style="border:1px solid #e5e7eb;border-radius:10px;margin-bottom:6px">
+          <input type="checkbox" data-dm-device="${d.id}" ${sel?"checked":""}>
+          <div class="dm-device-main">
+            <div class="dm-device-top">
+              <div class="dm-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div class="dm-device-info">
+                <div class="dm-device-name">${dmEscape(d.sn)}</div>
+                <div class="dm-device-sn">设备 ID：${dmEscape(d.sn)}</div>
               </div>
-            </div>`;
-          }).join("")}</div>
+              <div class="dm-badge ${d.isAssociated?"dm-badge-ok":"dm-badge-pending"}">${d.isAssociated?"已关联":"待关联"}</div>
+            </div>
+            <div class="dm-device-meta">
+              <div>所属机构 ID：<span>${inst?dmEscape(inst.instId):"—"}</span></div>
+              <div>所属机构：<span>${dmEscape(instName)}</span></div>
+            </div>
+          </div>
         </div>`;
       }).join("")}</div>`;
-      wrap.querySelectorAll('input[type=checkbox][data-indeterminate="1"]').forEach(cb=>{cb.indeterminate=true});
     }
 
     function dmRenderSelectedBar(){
@@ -4056,13 +4048,14 @@
       if(!bar)return;
       if(dmState.selected.size===0){bar.style.display="none";return}
       bar.style.display="flex";
-      const opts=dmState.teacherDevices.map(t=>`<option value="${t.id}">${dmEscape(t.name)}</option>`).join("");
+      const curInst=dmGetInstitution(dmState.selectedInstitutionId);
+      const curName=curInst?curInst.name:"当前机构";
       bar.innerHTML=`
         <span class="dm-sel-text">已选择 ${dmState.selected.size} 个设备</span>
         <div class="dm-selected-actions">
           <button class="dm-btn dm-btn-ghost" id="dmClearSel">取消选择</button>
-          <button class="dm-btn dm-btn-orange" id="dmDisassociate">解除关联</button>
-          <select class="dm-select" id="dmAssociateSelect"><option value="">关联到教师设备...</option>${opts}</select>
+          <button class="dm-btn dm-btn-orange" id="dmDisassociate">解除绑定</button>
+          <button class="dm-btn dm-btn-emerald" id="dmBindCurrent">绑定到当前机构「${dmEscape(curName)}」</button>
         </div>`;
     }
 
@@ -4087,19 +4080,11 @@
         const closeBtn=e.target.closest("[data-close-modal]");
         if(closeBtn){document.getElementById(closeBtn.dataset.closeModal).classList.remove("show");return}
 
-        const classToggle=e.target.closest("[data-dm-class-toggle]");
-        if(classToggle){
-          const cls=classToggle.dataset.dmClassToggle;
-          if(dmState.expandedClasses.has(cls))dmState.expandedClasses.delete(cls);else dmState.expandedClasses.add(cls);
-          dmRenderStudentList();
-          return;
-        }
-
         const teacherRow=e.target.closest("[data-dm-teacher]");
         if(teacherRow){
-          dmState.selectedTeacherId=teacherRow.dataset.dmTeacher;
-          dmRenderCurrentCard();
-          dmRenderTeacherList();
+          dmState.selectedInstitutionId=teacherRow.dataset.dmTeacher;
+          dmState.selected=new Set();
+          dmRender();
           return;
         }
       });
@@ -4112,95 +4097,29 @@
           dmRender();
           return;
         }
-        const classCb=e.target.closest("input[type=checkbox][data-dm-class-check]");
-        if(classCb){
-          const cls=classCb.dataset.dmClassCheck;
-          const ids=dmFilteredStudents().filter(d=>d.className===cls).map(d=>d.id);
-          const allSel=ids.every(i=>dmState.selected.has(i));
-          if(allSel)ids.forEach(i=>dmState.selected.delete(i));else ids.forEach(i=>dmState.selected.add(i));
+      });
+
+      // 清空 / 绑定到当前机构 / 解除绑定
+      dmRoot.addEventListener("click",e=>{
+        if(e.target.closest("#dmClearSel")){dmState.selected=new Set();dmRender();return}
+        if(e.target.closest("#dmBindCurrent")){
+          const tid=dmState.selectedInstitutionId;
+          if(!tid){alert("请先在左侧选择一个机构");return}
+          const ids=dmState.selected;
+          dmState.studentDevices=dmState.studentDevices.map(d=>ids.has(d.id)?{...d,institutionId:tid,isAssociated:true}:d);
+          dmState.selected=new Set();
           dmRender();
           return;
         }
-        const assocSel=e.target.closest("#dmAssociateSelect");
-        if(assocSel){
-          const tid=assocSel.value;
-          if(tid&&dmState.selected.size>0){
-            dmState.studentDevices=dmState.studentDevices.map(d=>{
-              if(!dmState.selected.has(d.id))return d;
-              const at=d.associatedTeachers.includes(tid)?d.associatedTeachers:[...d.associatedTeachers,tid];
-              return {...d,associatedTeachers:at,isAssociated:true};
-            });
-            dmState.selected=new Set();
-            dmRender();
-          }
-        }
-      });
-
-      // 清空 / 解除关联
-      dmRoot.addEventListener("click",e=>{
-        if(e.target.closest("#dmClearSel")){dmState.selected=new Set();dmRender();return}
         if(e.target.closest("#dmDisassociate")){
           const ids=dmState.selected;
-          dmState.studentDevices=dmState.studentDevices.map(d=>ids.has(d.id)?{...d,associatedTeachers:[],isAssociated:false}:d);
+          dmState.studentDevices=dmState.studentDevices.map(d=>ids.has(d.id)?{...d,institutionId:"",isAssociated:false}:d);
           dmState.selected=new Set();
           dmRender();
         }
       });
 
-      // 添加教师设备 Modal
-      document.getElementById("dmOpenAddTeacher").addEventListener("click",()=>{
-        document.getElementById("dmAddTeacherModal").classList.add("show");
-      });
-
-      // 切换模式（单个/批量）
-      document.querySelectorAll('[data-teacher-mode]').forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          const mode=btn.dataset.teacherMode;
-          dmState.teacherAddMode=mode;
-          document.querySelectorAll('[data-teacher-mode]').forEach(b=>b.classList.toggle("active",b.dataset.teacherMode===mode));
-          document.getElementById("dmAddTeacherSingle").style.display=mode==="single"?"block":"none";
-          document.getElementById("dmAddTeacherBatch").style.display=mode==="batch"?"flex":"none";
-          document.getElementById("dmAddTeacherConfirm").textContent=mode==="single"?"确认添加":`确认导入 (${dmState.teacherPreview.length})`;
-        });
-      });
-
-      document.getElementById("dmTBatchParse").addEventListener("click",()=>{
-        const text=document.getElementById("dmTBatchText").value;
-        const lines=text.split("\n").map(l=>l.trim()).filter(Boolean);
-        const arr=[];
-        lines.forEach(l=>{const p=l.split(/[;；]/).map(x=>x.trim());if(p.length>=3)arr.push({sn:p[0],name:p[1],institution:p[2]})});
-        dmState.teacherPreview=arr;
-        document.getElementById("dmTPreviewCount").textContent=arr.length;
-        const wrap=document.getElementById("dmTPreviewWrap");
-        if(arr.length===0){wrap.innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`}
-        else{wrap.innerHTML=`<table class="dm-preview-table"><thead><tr><th>序号</th><th>SN号</th><th>设备名称</th><th>所属机构</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td>${i+1}</td><td>${dmEscape(d.sn)}</td><td>${dmEscape(d.name)}</td><td>${dmEscape(d.institution)}</td></tr>`).join("")}</tbody></table>`}
-        document.getElementById("dmAddTeacherConfirm").textContent=`确认导入 (${arr.length})`;
-      });
-
-      document.getElementById("dmAddTeacherConfirm").addEventListener("click",()=>{
-        if(dmState.teacherAddMode==="single"){
-          const sn=document.getElementById("dmTSn").value.trim();
-          const name=document.getElementById("dmTName").value.trim();
-          const inst=document.getElementById("dmTInst").value.trim();
-          if(!sn||!name||!inst){alert("请填写完整信息");return}
-          dmState.teacherDevices=[...dmState.teacherDevices,{id:"t"+Date.now(),sn,name,institution:inst}];
-          document.getElementById("dmTSn").value="";
-          document.getElementById("dmTName").value="";
-          document.getElementById("dmTInst").value="";
-        }else{
-          if(dmState.teacherPreview.length===0)return;
-          const add=dmState.teacherPreview.map((d,i)=>({id:"t"+Date.now()+"_"+i,...d}));
-          dmState.teacherDevices=[...dmState.teacherDevices,...add];
-          dmState.teacherPreview=[];
-          document.getElementById("dmTBatchText").value="";
-          document.getElementById("dmTPreviewCount").textContent=0;
-          document.getElementById("dmTPreviewWrap").innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`;
-        }
-        document.getElementById("dmAddTeacherModal").classList.remove("show");
-        dmRender();
-      });
-
-      // 批量导入学生设备
+      // 批量录入学生设备
       document.getElementById("dmOpenBatchImport").addEventListener("click",()=>{
         document.getElementById("dmBatchImportModal").classList.add("show");
       });
@@ -4217,18 +4136,25 @@
         const text=document.getElementById("dmSBatchText").value;
         const lines=text.split("\n").map(l=>l.trim()).filter(Boolean);
         const arr=[];
-        lines.forEach(l=>{const p=l.split(/[;；]/).map(x=>x.trim());if(p.length>=3)arr.push({sn:p[0],name:p[1],className:p[2],associatedTeachers:[],isAssociated:false})});
+        lines.forEach(l=>{
+          const p=l.split(/[;；]/).map(x=>x.trim());
+          if(p.length>=2&&p[0]){
+            const instName=p[1]||"";
+            const inst=dmState.institutions.find(x=>x.name===instName);
+            arr.push({sn:p[0],institutionName:instName,institutionId:inst?inst.id:"",isAssociated:!!inst});
+          }
+        });
         dmState.studentPreview=arr;
         document.getElementById("dmSPreviewCount").textContent=arr.length;
         const wrap=document.getElementById("dmSPreviewWrap");
         if(arr.length===0){wrap.innerHTML=`<div class="dm-preview-empty">请先输入数据并点击"解析数据"</div>`}
-        else{wrap.innerHTML=`<table class="dm-preview-table"><thead><tr><th>序号</th><th>SN号</th><th>设备名称</th><th>所属班级</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td>${i+1}</td><td>${dmEscape(d.sn)}</td><td>${dmEscape(d.name)}</td><td>${dmEscape(d.className)}</td></tr>`).join("")}</tbody></table>`}
+        else{wrap.innerHTML=`<table class="dm-preview-table"><thead><tr><th>序号</th><th>SN 号</th><th>所属机构ID</th><th>状态</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td>${i+1}</td><td>${dmEscape(d.sn)}</td><td>${dmEscape(d.institutionName)}</td><td>${d.isAssociated?'<span style="color:#10b981">机构已存在 ✓</span>':'<span style="color:#f97316">机构未匹配 · 待关联</span>'}</td></tr>`).join("")}</tbody></table>`}
         document.getElementById("dmSBatchConfirm").textContent=`确认导入 (${arr.length})`;
       });
 
       document.getElementById("dmSBatchConfirm").addEventListener("click",()=>{
         if(dmState.studentPreview.length===0)return;
-        const add=dmState.studentPreview.map((d,i)=>({id:"s"+Date.now()+"_"+i,...d}));
+        const add=dmState.studentPreview.map((d,i)=>({id:"s"+Date.now()+"_"+i,sn:d.sn,institutionId:d.institutionId,isAssociated:d.isAssociated}));
         dmState.studentDevices=[...dmState.studentDevices,...add];
         dmState.studentPreview=[];
         document.getElementById("dmSBatchText").value="";
