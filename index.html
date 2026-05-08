@@ -142,6 +142,111 @@
     }
     #demo.tab-panel{border:none;box-shadow:none;background:transparent;padding:18px 0}
 
+    /* ===== 方案 1：手机号后四位签到 · 学生端样式 ===== */
+    .scheme-intro{display:grid;grid-template-columns:1fr;gap:16px;margin:8px 0 18px}
+    .scheme-intro-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;position:relative}
+    .scheme-intro-card.s1{border-top:4px solid #4f46e5}
+    .scheme-intro-tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;margin-bottom:8px}
+    .scheme-intro-card.s1 .scheme-intro-tag{background:#eef2ff;color:#4f46e5}
+    .scheme-intro-card h4{font-size:16px;font-weight:700;color:#0f172a;margin-bottom:4px}
+    .scheme-intro-card p{font-size:13px;color:#64748b;line-height:1.7}
+
+    /* 方案 1 · 边界兜底覆盖（覆盖原有绿色 edge-card 主题为靛紫色） */
+    .edge-card.s1{margin-top:0;background:#fff;border:1px solid #e2e8f0;border-left:none;border-top:4px solid #4f46e5;border-radius:12px;padding:16px 18px;background:linear-gradient(135deg,#eef2ff 0%,#fff 70%)}
+    .edge-card.s1 .edge-tag{background:#eef2ff;color:#4f46e5}
+    .edge-card.s1 .edge-item::before{background:#4f46e5}
+    .edge-card.s1 .edge-a .hl-s1{color:#4338ca;font-weight:600}
+    .edge-card.s1 .edge-note{background:#fef9c3;border:1px dashed #f59e0b;color:#713f12}
+    .edge-card.s1 .edge-note strong{color:#b45309}
+
+    /* 方案 1 · 流程列高亮颜色 */
+    .flow-column.s1{border:1px solid #c7d2fe;background:#eef2ff}
+    .flow-column.s1 h3{color:#4338ca}
+    .flow-column.s1 .flow-step.changed{color:#4338ca;border-color:#a5b4fc;background:#e0e7ff}
+
+    /* ===== 学生端 Pad 登录页（方案 1）===== */
+    .stu-login{height:100%;display:flex;flex-direction:column;background:#eef0ff;position:relative;overflow:hidden}
+    .stu-login-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:22px 22px 10px;min-height:0;overflow-y:auto}
+    .stu-login-logo{font-size:16px;font-weight:700;color:#4f46e5;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .stu-login-logo .logo-icon{width:28px;height:28px;border-radius:8px;background:#4f46e5;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+    .stu-login-welcome{font-size:22px;font-weight:800;color:#0f172a;text-align:center;margin-bottom:6px;letter-spacing:.5px}
+    .stu-login-welcome-bar{width:28px;height:2px;background:#6366f1;border-radius:2px;margin:0 auto 18px}
+    .stu-login-card{background:#fff;border-radius:18px;padding:22px 22px 18px;box-shadow:0 12px 32px rgba(79,70,229,.10);width:100%;max-width:380px;z-index:1}
+    .stu-login-title{font-size:15px;font-weight:700;color:#0f172a;text-align:center;margin:0 0 16px;line-height:1.5}
+    .stu-login-title .hl{color:#4f46e5}
+    .stu-login-dots{display:flex;gap:12px;justify-content:center;margin-bottom:14px}
+    .stu-login-dot{width:56px;height:60px;border:2px solid #c7d2fe;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#1e293b;background:#fff;transition:all .15s;position:relative}
+    .stu-login-dot.filled{border-color:#4f46e5;color:#1e293b}
+    .stu-login-dot.active::after{content:"";position:absolute;width:2px;height:26px;background:#4f46e5;animation:loginCaret 1s steps(2,start) infinite}
+    @keyframes loginCaret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+    .stu-login-safe{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;color:#94a3b8;margin-bottom:16px}
+    .stu-login-safe svg{width:12px;height:12px}
+    .stu-login-btn{width:100%;padding:13px;border:none;border-radius:12px;background:#c4c8ff;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:2px}
+    .stu-login-btn.enabled{background:#4f46e5;box-shadow:0 6px 14px rgba(79,70,229,.25)}
+    .stu-login-btn.enabled:hover{background:#4338ca}
+    .stu-login-btn:active{transform:scale(.98)}
+    .stu-login-msg{margin:10px 0 0;font-size:12px;color:#dc2626;text-align:center;line-height:1.55;min-height:1.2em}
+    .stu-login-demos{margin-top:8px;text-align:center}
+    .stu-login-demobtn{font-size:10px;color:#6366f1;background:transparent;border:none;cursor:pointer;text-decoration:underline;padding:4px}
+    .stu-login-keypad{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:6px;padding:8px;background:#d1d4db;flex-shrink:0;height:224px}
+    .stu-login-key{border:none;border-radius:6px;background:#fff;color:#111827;cursor:pointer;transition:all .1s;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 0;box-shadow:0 1px 0 rgba(0,0,0,.15);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif}
+    .stu-login-key:hover{background:#f8fafc}
+    .stu-login-key:active{background:#e5e7eb;transform:scale(.98)}
+    .stu-login-key-num{font-size:22px;font-weight:500;line-height:1.05}
+    .stu-login-key-sub{font-size:9px;color:#6b7280;letter-spacing:1.5px;margin-top:2px;text-transform:uppercase;font-weight:500}
+    .stu-login-key.k-back{background:#b1b6c1;color:#111827;font-size:18px}
+    .stu-login-key.k-back:hover{background:#9ca3af}
+    .stu-login-key.k-done{grid-column:4;grid-row:2 / span 3;background:#2678ff;color:#fff;font-size:18px;font-weight:600;letter-spacing:2px}
+    .stu-login-key.k-done.disabled{background:#a9c9ff;cursor:not-allowed}
+    .stu-login-key.k-done:hover{background:#1d6be5}
+    .stu-login-key.k-done.disabled:hover{background:#a9c9ff}
+    .stu-login-key.k-zero{grid-column:2;grid-row:4}
+    .stu-login-key.k-empty{background:transparent;box-shadow:none;cursor:default;pointer-events:none}
+
+    /* ===== 学生端身份二次确认页 ===== */
+    .stu-confirm{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 50%,#fed7aa 100%);position:relative;overflow:hidden}
+    .stu-confirm-shape{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);z-index:0}
+    .stu-confirm-shape.s1{width:120px;height:120px;top:-30px;right:-20px}
+    .stu-confirm-shape.s2{width:70px;height:70px;bottom:20px;left:-10px}
+    .stu-confirm-alert{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:#fef3c7;color:#b45309;font-size:11.5px;font-weight:700;margin-bottom:10px;z-index:1}
+    .stu-confirm-alert .dot{width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .stu-confirm-card{background:#fff;border-radius:14px;padding:20px 18px;box-shadow:0 10px 30px rgba(249,115,22,.18);width:100%;max-width:320px;z-index:1}
+    .stu-confirm-title{font-size:15px;font-weight:700;color:#0f172a;text-align:center;margin-bottom:14px}
+    .stu-confirm-list{display:flex;flex-direction:column;gap:10px}
+    .stu-confirm-item{display:flex;align-items:center;gap:12px;padding:12px;border:1.5px solid #e2e8f0;border-radius:10px;background:#fff;cursor:pointer;transition:all .2s;text-align:left}
+    .stu-confirm-item:hover{border-color:#fb923c;background:#fff7ed;transform:translateY(-1px);box-shadow:0 4px 12px rgba(249,115,22,.12)}
+    .stu-confirm-avatar{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
+    .stu-confirm-avatar.a1{background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+    .stu-confirm-avatar.a2{background:linear-gradient(135deg,#10b981,#0ea5e9)}
+    .stu-confirm-info{flex:1;min-width:0}
+    .stu-confirm-name{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px}
+    .stu-confirm-arrow{color:#cbd5e1;font-size:18px;transition:color .2s}
+    .stu-confirm-item:hover .stu-confirm-arrow{color:#f97316}
+    .stu-confirm-tip{margin-top:12px;padding:8px 10px;background:#fef9c3;border-radius:6px;font-size:11px;color:#854d0e;line-height:1.5;text-align:center}
+    .stu-confirm-tip strong{color:#b45309}
+
+    /* ===== 学生端登录成功页 ===== */
+    .stu-logged{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 50%,#bbf7d0 100%);position:relative;overflow:hidden}
+    .stu-logged-shape{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);z-index:0}
+    .stu-logged-shape.s1{width:100px;height:100px;top:30px;right:-20px}
+    .stu-logged-shape.s2{width:70px;height:70px;bottom:40px;left:10px}
+    .stu-logged-card{background:#fff;border-radius:14px;padding:24px 20px;box-shadow:0 10px 30px rgba(16,185,129,.15);width:100%;max-width:300px;z-index:1;text-align:center}
+    .stu-logged-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin:0 auto 10px}
+    .stu-logged-name{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:4px}
+    .stu-logged-phone{font-size:12.5px;color:#64748b;margin-bottom:12px}
+    .stu-logged-tag{display:inline-block;padding:4px 12px;border-radius:999px;background:#dcfce7;color:#15803d;font-size:12px;font-weight:700;margin-bottom:16px}
+    .stu-logged-divider{height:1px;background:#e2e8f0;margin:8px 0 14px}
+    .stu-logged-actions{display:flex;gap:8px;margin-bottom:10px;justify-content:center}
+    .stu-logged-actions button{flex:1;padding:10px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-size:12.5px;font-weight:600;color:#475569;cursor:pointer;transition:all .2s;max-width:160px}
+    .stu-logged-actions button:hover{border-color:#c7d2fe;color:#4338ca;background:#eef2ff}
+    .stu-logged-note{font-size:11.5px;color:#94a3b8;line-height:1.6;margin-top:8px}
+
+    /* ===== 学生端 锁屏（已绑定账号顶部徽标）===== */
+    .stu-lock-badge{position:absolute;top:16px;left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.95);font-size:11.5px;font-weight:700;color:#4338ca;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:10;display:flex;align-items:center;gap:6px;white-space:nowrap}
+    .stu-lock-badge.s1{color:#4f46e5}
+    .stu-lock-badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1.5s infinite}
+
     /* 教师端：课堂列表页 */
     .ci-app{border:1px solid #d5dbe8;border-radius:10px;overflow:hidden;background:#fff;display:flex;height:100%}
     .ci-sidebar{width:140px;flex:0 0 140px;background:#fafbfd;border-right:1px solid #e5e9f0;padding:10px 0;font-size:12px;color:#475569;overflow:hidden}
@@ -1076,8 +1181,7 @@
         </ul></div>
         <div class="flow-column future"><h3>改造后流程</h3><ul class="flow-list">
           <li class="flow-step">登录账号</li><li class="flow-arrow">↓</li>
-          <li class="flow-step changed">上课-选择上课模式（在线教室、Pad班）</li><li class="flow-arrow">↓</li>
-          <li class="flow-step changed">自动发起签到</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">上课 · 直接进入教室</li><li class="flow-arrow">↓</li>
           <li class="flow-step">课件讲授</li><li class="flow-arrow">↓</li>
           <li class="flow-step">发起互动（小黑板、答题器）</li><li class="flow-arrow">↓</li>
           <li class="flow-step">查看互动结果</li><li class="flow-arrow">↓</li>
@@ -1085,6 +1189,7 @@
         </ul></div>
       </div>
       <p class="flow-legend"><span class="dot red"></span>红色为新增或变更步骤。</p>
+      <!-- 第二模块：产品原型说明（暂时注释，详见「4. 产品演示」交互式步骤）
       <div class="module-block">
         <h3 class="module-title">第二模块：产品原型说明</h3>
         <div class="prototype-steps">
@@ -1094,49 +1199,97 @@
             <div class=""></div><br>></p></article>
         </div>
       </div>
+      -->
     </section>
 
     <section id="student" class="tab-panel">
-      <h2 class="section-title">学生端</h2>
-      <p class="section-sub">操作流程对比：现有流程 vs 改造后流程。</p>
+      <h2 class="section-title">学生端 · 手机号后四位签到</h2>
+      <p class="section-sub">基于「方案 1：手机号后四位签到」展开学生端登录、上课、互动、下课的完整体验流程。</p>
+
+      <div class="scheme-intro">
+        <div class="scheme-intro-card s1">
+          <span class="scheme-intro-tag">方案 1 · 当前选定方案</span>
+          <h4>手机号后四位签到</h4>
+          <p>设备默认处于解锁状态，始终显示登录页；学生用<strong>家长手机号后四位</strong>主动登录；老师点击上课后 Pad 仍停留在登录成功页，<strong>待老师真正进入教室后</strong>才进入设备管控（锁屏）；下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
+        </div>
+      </div>
+
+      <p class="section-sub">操作流程对比：现有流程 vs 方案 1 改造后流程。</p>
       <div class="flow-compare">
         <div class="flow-column existing"><h3>现有流程</h3><ul class="flow-list">
           <li class="flow-step deleted">登录账号</li><li class="flow-arrow">↓</li>
           <li class="flow-step deleted">点击上课进入教室</li><li class="flow-arrow">↓</li>
-          <li class="flow-step deleted">Pad同步观看教师画面</li><li class="flow-arrow">↓</li>
+          <li class="flow-step deleted">Pad 同步观看教师画面</li><li class="flow-arrow">↓</li>
           <li class="flow-step">参与教师发起的互动</li><li class="flow-arrow">↓</li>
           <li class="flow-step deleted">下课</li>
         </ul></div>
-        <div class="flow-column future"><h3>改造后流程</h3><ul class="flow-list">
-          <li class="flow-step changed">签到</li><li class="flow-arrow">↓</li>
-          <li class="flow-step">参与教师发起的互动</li>
+        <div class="flow-column s1"><h3>方案 1：手机号后四位签到 · 操作流程</h3><ul class="flow-list">
+          <li class="flow-step">默认设备解锁 → 始终显示登录界面</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">输入手机号后四位</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">登录成功 → 停留在成功页可切换账号</li><li class="flow-arrow">↓</li>
+          <li class="flow-step changed">老师点击上课 → 大屏直接进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">课中参与教师发起的互动</li><li class="flow-arrow">↓</li>
+          <li class="flow-step">下课后设备自动解锁并退出登录</li>
         </ul></div>
       </div>
       <p class="flow-legend"><span class="dot red"></span>红色为新增或变更。<span class="dot gray"></span>灰色为删除步骤。</p>
+
+      <!-- 第二模块：特殊边界兜底问题（暂时注释，详见「4. 产品演示」交互式步骤的描述）
       <div class="module-block">
-        <h3 class="module-title">第二模块：产品原型说明</h3>
-        <div class="prototype-steps">
-          <article class="prototype-card"><span class="prototype-label">第一步</span><div class="image-stage"><img src="images/image-759face5-6ee8-4593-acfb-1b03beb8e0ec.png" alt="学生端步骤1"></div><p class="prototype-desc">默认不可操作，只有老师发起互动后才可操作。
-            <br>1. 该 Demo 版本，基于安卓 Pad 开发一个单独的 App，且 App 中只有教室上课页面。
-            <br>2. 学生端 APP 名称为「ClassIn Focus」。
-            <br>3. 学生端的安卓 Pad 与教师端大屏通过某种方式建立关联关系，当教师进入教室后发起签到，学生的 Pad 端自动弹出签到页面。
-            <br>4. 大屏没有进入课堂时，学生端启动 App 后，默认进入教室上课页面（线下模式，关闭麦克风摄像头）。提示：静候开课。你的智慧学伴已准备就绪。
-          </p></article>
-          <article class="prototype-card"><span class="prototype-label">第二步</span><div class="image-stage"><img src="images/image-efebcb50-eeee-4392-b74b-11b7f757e681.png" alt="学生端步骤2"></div><p class="prototype-desc">老师进入教室后学生端显示名单，点击完成签到并绑定设备账号。老师关闭签到后回到静默状态。<br>学生签到状态要记录到每个学生账号下，</p></article>
+        <h3 class="module-title">特殊边界兜底问题</h3>
+        <p class="section-sub" style="margin-top:-2px">方案 1 在极端场景下的业务兜底说明，产研须对齐以下边界规则后再进入开发。</p>
+        <div class="edge-card s1">
+          <div class="edge-card-head">
+            <span class="edge-tag">方案 1</span>
+            <h4>手机号后四位签到 · 边界兜底</h4>
+          </div>
+          <ol class="edge-list">
+            <li class="edge-item">
+              <div class="edge-q">登录验证的范围与优先级（原则）</div>
+              <div class="edge-a">
+                采用<strong>手机号后 4 位</strong>为主凭证，并在<strong>机构学生范围</strong>内校验；在此基础上，尽可能叠加<strong>班级名单收窄</strong>，优先使用与当前课堂相关的名单：<br>
+                <strong>收窄顺序</strong>：优先「与本 Pad 绑定大屏的<strong>当前课节</strong>对应的班级」→ 若无明确课节，将范围放开至「将开课班级（开课前 1 小时 + 上课中的群体）」→ 仍无法命中时进入机构名单验证。
+              </div>
+            </li>
+            <li class="edge-item">
+              <div class="edge-q">撞号概率如何收敛？事中如何避免登错？</div>
+              <div class="edge-a">
+                <strong>课前（数据与策略）</strong><br>
+                · 机构导入名单时<strong>预检后 4 位冲突</strong>：对命中多条的学生标记「高风险」，可配置默认升级为<strong>后 6 位</strong>或<strong>备用凭证</strong>。<br>
+                · 与教务同步：保证「即将上课 / 已上课」班级学员名单<strong>相对实时</strong>（含插班、旁听生）。<br><br>
+                <strong>课中 · 撞号解决流程</strong><br>
+                学生提交后 4 位后，服务端在<strong>当前生效收窄域</strong>（机构 + 可选班级名单）内检索，并按命中数分流：<br>
+                　① <strong>唯一匹配</strong>（1 条）→ 直接进入<strong>登录成功态</strong>；<br>
+                　② <strong>命中 ≥ 2 条</strong> → Pad 弹出<strong>「确认您的身份」</strong>二次确认页，展示该 4 位下全部候选学生的 <strong>班级昵称 + 头像</strong>，由学生本人点选完成登录；<br>
+                　③ <strong>0 条匹配</strong> → 提示「未检测到账号，请核对报名手机号尾号」，不自动登录。<br>
+                · 若收窄后仍有多条（极端情况）→ 支持<strong>升级为后 6 位校验</strong>或引导联系老师核验身份。
+              </div>
+            </li>
+            <li class="edge-item">
+              <div class="edge-q">若没有「即将上课」班级，只能用后 4 位 + 机构范围时怎么办？</div>
+              <div class="edge-a">
+                当<strong>暂无排课命中</strong>、大屏未选课、或仅有机构域可用时：<strong>不得仅用后 4 位 + 机构全集自动唯一认定身份</strong>。<br>
+                · <strong>撞号（≥ 2 人）</strong>：必须弹出二次确认（班级昵称 + 头像）；<br>
+                · <strong>策略分支</strong>：无上课名单时，用户登录成功后提示「静候开课」状态，Pad 可停留在缺省页。
+              </div>
+              <div class="edge-note">💡 <strong>静候开课。你的智慧学伴已准备就绪。</strong></div>
+            </li>
+          </ol>
         </div>
       </div>
+      -->
     </section>
 
     <section id="demo" class="tab-panel">
       <h2 class="section-title">产品演示</h2>
       <p class="section-sub">左侧教师端界面 · 右侧学生 Pad 端 · 教师动作驱动学生端自动联动。</p>
       <div class="demo-stepper" id="demoStepper">
-        <div class="demo-step" data-pstep="0"><div class="demo-step-num">1</div><div class="demo-step-label">默认解锁<br>静候开课</div></div>
-        <div class="demo-step" data-pstep="1"><div class="demo-step-num">2</div><div class="demo-step-label">老师点击上课<br>选择 Pad 班模式</div></div>
-        <div class="demo-step" data-pstep="2"><div class="demo-step-num">3</div><div class="demo-step-label">进入教室<br>自动发起点名签到</div></div>
-        <div class="demo-step" data-pstep="3"><div class="demo-step-num">4</div><div class="demo-step-label">签到完成<br>设备自动锁定</div></div>
+        <div class="demo-step" data-pstep="0"><div class="demo-step-num">1</div><div class="demo-step-label">默认解锁<br>显示登录页</div></div>
+        <div class="demo-step" data-pstep="1"><div class="demo-step-num">2</div><div class="demo-step-label">撞号兜底<br>身份二次确认</div></div>
+        <div class="demo-step" data-pstep="2"><div class="demo-step-num">3</div><div class="demo-step-label">登录成功<br>等候上课</div></div>
+        <div class="demo-step" data-pstep="3"><div class="demo-step-num">4</div><div class="demo-step-label">老师点击上课<br>直接进入教室</div></div>
         <div class="demo-step" data-pstep="4"><div class="demo-step-num">5</div><div class="demo-step-label">课中参与互动</div></div>
-        <div class="demo-step" data-pstep="5"><div class="demo-step-num">6</div><div class="demo-step-label">下课 · 自动退出登录<br>设备保持锁定</div></div>
+        <div class="demo-step" data-pstep="5"><div class="demo-step-num">6</div><div class="demo-step-label">下课<br>自动解锁并退出登录</div></div>
       </div>
       <div class="demo-shell">
         <div class="demo-split">
@@ -1446,12 +1599,12 @@
     let studentAnswerSubmitted=false;
 
     const toolboxItems=[
-      {icon:"✅",name:"签到",key:"sign"},{icon:"📂",name:"打开文件"},{icon:"💾",name:"保存/分享板书"},{icon:"🔄",name:"屏幕共享"},
-      {icon:"🎲",name:"骰子"},{icon:"🅰",name:"答题器",key:"answer"},{icon:"📋",name:"小黑板",key:"blackboard"},{icon:"⏱",name:"计时器"},
-      {icon:"⏳",name:"定时器"},{icon:"👥",name:"分组讨论"},{icon:"👏",name:"抢答器"},{icon:"🖥",name:"随机选人"},
-      {icon:"📡",name:"投屏"},{icon:"🧲",name:"物理实验"},{icon:"🧪",name:"化学实验"},{icon:"🏆",name:"奖励排行榜"},
-      {icon:"📚",name:"教学素材库"},{icon:"🖧",name:"VNC"},{icon:"📝",name:"协作"},{icon:"🌐",name:"浏览器"},
-      {icon:"📖",name:"作业"},{icon:"📹",name:"辅助摄像头"},{icon:"🅰+",name:"测验"},{icon:"⊞",name:"视频墙"}
+      {icon:"📂",name:"打开文件"},{icon:"💾",name:"保存/分享板书"},{icon:"🔄",name:"屏幕共享"},{icon:"🎲",name:"骰子"},
+      {icon:"🅰",name:"答题器",key:"answer"},{icon:"📋",name:"小黑板",key:"blackboard"},{icon:"⏱",name:"计时器"},{icon:"⏳",name:"定时器"},
+      {icon:"👥",name:"分组讨论"},{icon:"👏",name:"抢答器"},{icon:"🖥",name:"随机选人"},{icon:"📡",name:"投屏"},
+      {icon:"🧲",name:"物理实验"},{icon:"🧪",name:"化学实验"},{icon:"🏆",name:"奖励排行榜"},{icon:"📚",name:"教学素材库"},
+      {icon:"🖧",name:"VNC"},{icon:"📝",name:"协作"},{icon:"🌐",name:"浏览器"},{icon:"📖",name:"作业"},
+      {icon:"📹",name:"辅助摄像头"},{icon:"🅰+",name:"测验"},{icon:"⊞",name:"视频墙"}
     ];
 
     function renderTeacherRoom(){
@@ -2216,6 +2369,200 @@
       canvas.addEventListener('pointerleave',()=>{drawing=false});
     }
 
+    /* ===== 方案 1：手机号后四位签到 · 学生端登录态 ===== */
+    let loginDigits="";
+    let loginHintMsg="";
+    let prevLoginRenderKey=null;
+    /** 演示用：机构学员库尾号匹配（3688 唯一；8888 撞号；其它 4 位纯数字视为无匹配） */
+    const DEMO_INSTITUTION_LAST4={ "3688":"single", "8888":"multi" };
+
+    function renderStudentLogin(){
+      const d=loginDigits.padEnd(4,"").split("");
+      const dotsHtml=[0,1,2,3].map(i=>{
+        const ch=d[i]||"";
+        const filled=ch?"filled":"";
+        const active=(loginDigits.length===i)?"active":"";
+        return `<div class="stu-login-dot ${filled} ${active}">${ch||""}</div>`;
+      }).join("");
+      const keySubs={1:"",2:"ABC",3:"DEF",4:"GHI",5:"JKL",6:"MNO",7:"PQRS",8:"TUV",9:"WXYZ"};
+      const makeNumKey=(n,extraCls="")=>{
+        const sub=keySubs[n]||"";
+        return `<button class="stu-login-key ${extraCls}" data-k="${n}">
+          <span class="stu-login-key-num">${n}</span>
+          ${sub?`<span class="stu-login-key-sub">${sub}</span>`:""}
+        </button>`;
+      };
+      const btnEnabled=loginDigits.length===4;
+      const doneDisabled=btnEnabled?"":"disabled";
+      const hintHtml=loginHintMsg?`<div class="stu-login-msg" id="stuLoginMsg" role="alert">${loginHintMsg}</div>`:`<div class="stu-login-msg" id="stuLoginMsg" role="alert"></div>`;
+      const keypad=`
+        ${makeNumKey(1)}${makeNumKey(2)}${makeNumKey(3)}
+        <button class="stu-login-key k-back" data-k="back" aria-label="删除">⌫</button>
+        ${makeNumKey(4)}${makeNumKey(5)}${makeNumKey(6)}
+        <button class="stu-login-key k-done ${doneDisabled}" id="stuKeypadDone" data-k="done" ${btnEnabled?"":"aria-disabled=\"true\""}>完成</button>
+        ${makeNumKey(7)}${makeNumKey(8)}${makeNumKey(9)}
+        <span class="stu-login-key k-empty" aria-hidden="true"></span>
+        ${makeNumKey(0,"k-zero")}
+        <span class="stu-login-key k-empty" aria-hidden="true"></span>
+      `;
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-login">
+          <div class="stu-login-top">
+            <div class="stu-login-logo"><span class="logo-icon">C</span>ClassIn</div>
+            <div class="stu-login-welcome">欢迎使用智慧学伴</div>
+            <div class="stu-login-welcome-bar"></div>
+            <div class="stu-login-card">
+              <div class="stu-login-title">输入家长<span class="hl">手机号后 4 位</span>完成登录</div>
+              <div class="stu-login-dots">${dotsHtml}</div>
+              <div class="stu-login-safe">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                我们将保护您的信息安全
+              </div>
+              <button class="stu-login-btn ${btnEnabled?"enabled":""}" id="stuLoginBtn">登录</button>
+              ${hintHtml}
+              <div class="stu-login-demos"><button type="button" class="stu-login-demobtn" id="stuDemoBadChar">演示：含非数字</button></div>
+            </div>
+          </div>
+          <div class="stu-login-keypad">${keypad}</div>
+        </div>
+      </div></div>`;
+    }
+
+    function handleS1LoginSubmit(){
+      loginHintMsg="";
+      const raw=loginDigits.trim();
+      if(raw.length<4||!/^\d{4}$/.test(raw)){
+        loginHintMsg="请输入家长手机号后 4 位完成登录";
+        studentUI.innerHTML=renderStudentLogin();
+        bindLoginEvents();
+        dLog.textContent="联动日志：登录校验未通过（需 4 位数字，且不可含其它字符）。";
+        return;
+      }
+      const hit=DEMO_INSTITUTION_LAST4[raw];
+      if(!hit){
+        loginHintMsg="未检测到账号，请核对报名手机号尾号。";
+        studentUI.innerHTML=renderStudentLogin();
+        bindLoginEvents();
+        dLog.textContent="联动日志：尾号与当前机构学员名单无匹配。";
+        return;
+      }
+      loginHintMsg="";
+      if(hit==="single"){
+        dLog.textContent="联动日志：尾号在机构学员范围内唯一匹配 → 进入登录成功页。";
+        cur=2;
+        render();
+      } else if(hit==="multi"){
+        dLog.textContent="联动日志：尾号命中多条记录 → 进入「确认您的身份」页。";
+        cur=1;
+        render();
+      }
+    }
+
+    function renderStudentLoginConfirm(){
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-confirm">
+          <div class="stu-confirm-shape s1"></div>
+          <div class="stu-confirm-shape s2"></div>
+          <div class="stu-confirm-card">
+            <div class="stu-confirm-title">请确认您的身份</div>
+            <div class="stu-confirm-list">
+              <button class="stu-confirm-item" data-stu="1">
+                <div class="stu-confirm-avatar a1">张</div>
+                <div class="stu-confirm-info">
+                  <div class="stu-confirm-name">张小明</div>
+                </div>
+                <div class="stu-confirm-arrow">›</div>
+              </button>
+              <button class="stu-confirm-item" data-stu="2">
+                <div class="stu-confirm-avatar a2">李</div>
+                <div class="stu-confirm-info">
+                  <div class="stu-confirm-name">李思彤</div>
+                </div>
+                <div class="stu-confirm-arrow">›</div>
+              </button>
+            </div>
+            <div class="stu-confirm-tip">⚠️ 选错身份将导致<strong>本节课数据归属错误</strong>，请仔细核对</div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    function renderStudentLoggedIn(noteText){
+      const note=noteText||"等候上课中…";
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-logged">
+          <div class="stu-logged-shape s1"></div>
+          <div class="stu-logged-shape s2"></div>
+          <div class="stu-logged-card">
+            <div class="stu-logged-avatar">张</div>
+            <div class="stu-logged-name">张小明</div>
+            <div class="stu-logged-phone">手机号 138****3688</div>
+            <div class="stu-logged-tag">✓ 登录成功</div>
+            <div class="stu-logged-divider"></div>
+            <div class="stu-logged-actions">
+              <button id="stuSwitchBtn">切换账号</button>
+            </div>
+            <p class="stu-logged-note">${note}</p>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    function renderStudentLockBound(badgeText){
+      return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
+        <div class="stu-lock">
+          <div class="stu-lock-badge s1"><span class="dot"></span>${badgeText||"张小明 已绑定 · 上课中"}</div>
+          <div class="stu-lock-shape" style="width:90px;height:90px;top:10%;left:8%"></div>
+          <div class="stu-lock-shape" style="width:60px;height:60px;bottom:12%;left:22%"></div>
+          <div class="stu-lock-sq" style="width:36px;height:36px;top:15%;right:12%"></div>
+          <div class="stu-lock-sq" style="width:48px;height:48px;bottom:18%;right:8%"></div>
+          <div style="position:relative;z-index:1">
+            <div class="stu-lock-icon">🔒</div>
+            <h3>设备管控中</h3>
+            <div class="stu-lock-btn">课中请专注</div>
+          </div>
+        </div>
+      </div></div>`;
+    }
+
+    function bindLoginEvents(){
+      document.querySelectorAll(".stu-login-key").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          const k=btn.dataset&&btn.dataset.k;
+          if(!k) return;
+          if(k==="done"){ handleS1LoginSubmit(); return; }
+          loginHintMsg="";
+          if(k==="back") loginDigits=loginDigits.slice(0,-1);
+          else if(k==="clear") loginDigits="";
+          else if(loginDigits.length<4&&/^\d*$/.test(loginDigits)) loginDigits+=k;
+          studentUI.innerHTML=renderStudentLogin();
+          bindLoginEvents();
+        });
+      });
+      const stuDemoBadChar=document.getElementById("stuDemoBadChar");
+      if(stuDemoBadChar) stuDemoBadChar.addEventListener("click",()=>{
+        loginDigits="12a4";
+        loginHintMsg="";
+        studentUI.innerHTML=renderStudentLogin();
+        bindLoginEvents();
+        dLog.textContent="联动日志：已注入含字母的演示输入，请点击「登录」查看校验提示。";
+      });
+      const stuLoginBtn=document.getElementById("stuLoginBtn");
+      if(stuLoginBtn) stuLoginBtn.addEventListener("click",handleS1LoginSubmit);
+      document.querySelectorAll(".stu-confirm-item").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          dLog.textContent="联动日志：学生在二次确认页选择本人 → 进入登录成功页。";
+          cur=2; render();
+        });
+      });
+      const stuSwitchBtn=document.getElementById("stuSwitchBtn");
+      if(stuSwitchBtn) stuSwitchBtn.addEventListener("click",()=>{
+        dLog.textContent="联动日志：学生点击切换账号 → 回到登录页。";
+        loginDigits=""; loginHintMsg=""; prevLoginRenderKey=null;
+        cur=0; render();
+      });
+    }
+
     function renderStudentLock(mode){
       const isPre=mode==="preclass";
       const icon=isPre?"📘":"🔒";
@@ -2367,10 +2714,97 @@
       </div></div>`;
     }
 
+    /* ===== 方案 1：手机号后四位签到 · 步骤流 ===== */
     const steps=[
-      {title:"步骤 1：教师点击上课",sub:"教师在课堂列表点击「上课」按钮，学生端处于默认解锁空页面状态。",log:"学生端：默认解锁，暂无课堂数据，显示空页面。",teacher:"list",student:"empty",descT:"老师点击上课，进入模式选择前置流程。",descS:"默认设备为解锁状态。\n1. 无签到数据时，Pad 显示空页面，提示「静候开课。你的智慧学伴已准备就绪」。\n2. 有签到数据时，学生点击自己名字完成签到并进入教室，设备自动进入锁屏状态（被教师端接管）。\n3. 该 Demo 版本基于安卓 Pad 开发独立 App，App 中只有教室上课页面（线下课模式进入教室；教室内隐藏、聊天、花名册、举手功能）。\n4. 学生端 APP 名称为「ClassIn Focus」。\n5. Pad 与教师端大屏通过后台建立绑定关系。一个 Pad 可同时绑定多个大屏设备；A、B 两个设备同时开课时，Pad 优先联动最早进入教室的设备（如 A），签到完成后只与 A 保持联动。"},
-      {title:"步骤 2：弹出模式选择",sub:"弹出「选择上课模式」弹窗，教师选择 Pad班。学生端仍为默认解锁空页。",log:"教师端弹出模式选择弹窗，学生端默认解锁，暂无课堂数据。",teacher:"list-modal",student:"empty",descT:"ClassInX 灰度版本弹出模式选择弹窗，老师选择「Pad班」后点击确认进入。",descS:"默认设备为解锁状态，暂未收到签到数据，显示空页面，等待老师发起签到。"},
-      {title:"步骤 3：进入教室 · 自动签到",sub:"教师确认进入后自动到教室并发起签到，学生端同步弹出签到页面。",log:"联动触发：教师进入教室 → 学生端自动弹出签到界面。",teacher:"room",student:"sign",descT:"1. 教师确认进入教室后，系统自动进入教室并发起签到，黑板区域弹出「课堂签到」窗口。\n2. 签到名单来自于该班级的学生，姓名排序按班级昵称字母 A-Z 排列，学生信息显示头像、班级名称。\n3. 当学生在 Pad 端点击已签到后，教师端要同步显示签到状态，右上角统计当前已签到多少人/总人数。\n4. 老师可操作：当学生点击已签到后，老师可以手动点击该学生头像和姓名区域取消签到，此时学生端可以再次点击签到。但教师不可以帮助学生操作成「已签到」。\n5. 当点击「完成签到」关闭该窗口，再次进入此节课的课堂不弹出签到页面。\n6. 签到页面窗口可以通过工具栏再次调取出来。\n　* 再次打开后，要保留上一次已完成签到的状态和学生设备绑定的行为，打开后学生端也同步显示签到页面，可操作点击名单继续签到。",descS:'<div class="edge-card" style="margin-top:0"><div class="edge-card-head"><span class="edge-tag"</span><h4>点名签到 · 边界兜底</h4></div><ol class="edge-list"><li class="edge-item"><div class="edge-q">学生点击名字的交互规则？</div><div class="edge-a">学生可点击<strong>任意一个名字</strong>进行签到，<span class="hl-s2">且仅能选中一个</span>。<br>· 已选中 A 时再次点击 A → <strong>取消选中</strong>；<br>· 已选中 A 时点击 B → <strong>A 自动取消，B 被选中</strong>；<br>· 被点击后，该名字状态立即变为「已签到」，在所有在线学生端实时同步。</div></li><li class="edge-item"><div class="edge-q">多设备抢点同一个名字怎么处理？</div><div class="edge-a"><strong>先到先得 + 锁定</strong>：A 设备点击后，该名字置为「已签到」并<span class="warn">加锁</span>；B 设备再点击同一个名字 <strong>无响应</strong>（灰显 + 轻提示「已被认领」）。<br>取消锁仅有两条路径：<strong>① 教师端后台手动取消</strong>；<strong>② A 设备本人再次点击取消</strong>。</div></li><li class="edge-item"><div class="edge-q">教师点击「完成签到」后会发生什么？</div><div class="edge-a">· 已完成签到的学生端<strong>关闭签到窗口</strong>，恢复成<span class="hl-s2">设备管控不可操作</span>状态。<br>· 同时建立该节课的<strong>「设备 ↔ 学生账号」绑定关系</strong>，此后该 Pad 上发生的答题 / 抢答 / 小黑板等全部数据，归属到当前签到的学生名下。<br>· 未完成签到的 Pad 依然保持已锁屏 + 待签到态。</div></li><li class="edge-item"><div class="edge-q">Pad 未签到期间老师发起互动怎么办？</div><div class="edge-a">Pad 在「未完成签到」状态下，一旦老师取消管控（如发起答题器/小黑板），Pad 端<strong>优先弹出签到页面</strong>；学生完成签到后，才会自动切入对应的互动窗口，保证<strong>数据必须有归属人</strong>。</div></li><li class="edge-item"><div class="edge-q">Pad 与大屏非绑定 / 大屏未进教室时如何兜底？</div><div class="edge-a">当 Pad 与大屏<strong>处于非绑定状态</strong>，或<strong>大屏尚未进入教室</strong>，学生端启动 App 后，默认进入缺省页面，提示：</div><div class="edge-note">💡 <strong>静候开课。你的智慧学伴已准备就绪。</strong></div></li></ol></div>'}
+      {
+        title:"① 默认解锁 · 显示登录页",
+        log:"[方案 1] 设备解锁，Pad 始终展示登录界面，等待学生输入手机号后四位。",
+        teacher:"list",student:"login",
+        descT:"教师端处于课堂列表，尚未开课。学生的 Pad 无需老师操作即可自行登录。",
+        descS:`<div style="line-height:1.85"><strong>一、产品形态</strong>
+<ol style="padding-left:20px;margin:6px 0 10px">
+<li>学生端 Demo 版本基于<strong>安卓 Pad 开发独立 App</strong>，App 中只有教室上课页面（线下课模式进入教室；教室内<strong>隐藏聊天、花名册、举手</strong>功能）。</li>
+<li>学生端 APP 名称为「<strong>ClassIn Focus</strong>」。</li>
+<li><strong>Pad 与教师端大屏绑定关系</strong>：<strong>无需额外绑定</strong>，只需通过学生登录账号判断；当同一时间、相同机构下有多个课程时，需要学生<strong>选择进入哪个教室</strong>。</li>
+</ol>
+
+<strong>二、登录验证的范围与优先级</strong>
+<ol style="padding-left:20px;margin:6px 0 10px">
+<li>采用<strong>手机号后 4 位</strong>为主凭证，并在<strong>机构学生范围</strong>内校验；在此基础上，尽可能叠加<strong>班级名单收窄</strong>。</li>
+<li><strong>收窄顺序</strong>：优先「<strong>将开课班级</strong>（开课前 20 分钟 + 上课中的群体）」→ 仍无法命中时进入<strong>机构名单</strong>验证。</li>
+</ol>
+
+<strong>三、撞号概率如何收敛？</strong>
+<ol style="padding-left:20px;margin:6px 0 10px">
+<li>学生提交后 4 位后，服务端在<strong>当前生效收窄域</strong>（机构 + 可选班级名单）内检索，并按命中数分流：<br>
+　· <strong>唯一匹配</strong>（1 条）→ 直接进入<strong>登录成功态</strong>；<br>
+　· <strong>命中 ≥ 2 条</strong> → Pad 弹出「<strong>确认您的身份</strong>」二次确认页，展示该 4 位下全部候选学生的 <strong>班级昵称 + 头像</strong>，由学生本人点选完成登录；<br>
+　· 若输入内容包含<strong>数字以外</strong>的字符，点击「登录」提示：<strong>请输入家长手机号后 4 位完成登录</strong>；<br>
+　· <strong>0 条匹配</strong> → 提示「<strong>未检测到账号，请核对报名手机号尾号</strong>」，不自动登录。</li>
+<li><strong>说明</strong>：班级名单收窄的作用是将撞号从「全机构」压缩到「<strong>正在上课相关人员</strong>」，显著降低多人同后 4 位同时合理的概率。</li>
+</ol>
+
+<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">▶ Pad 演示：输入 4 位后点「登录」——<strong>3688</strong> 唯一匹配进成功页；<strong>8888</strong> 模拟撞号进确认页；其它 4 位纯数字为无匹配。点「演示：含非数字」可注入非法字符以触发非数字校验提示。</p></div>`
+      },
+      {
+        title:"② 检测到撞号 · 弹出身份二次确认",
+        log:"[方案 1] 后四位命中 ≥ 2 条匹配记录 → 触发撞号兜底 → Pad 弹出「确认您的身份」二次选择。",
+        teacher:"list",student:"login-confirm",
+        descT:"教师端无需介入。学生自助完成身份确认，老师仅需准时上课。",
+        descS:"当尾号在机构学员范围内<strong>命中 ≥ 2 人</strong>时（演示输入 <strong>8888</strong>），Pad 自动弹出「确认您的身份」二次选择，展示<strong>姓名 + 头像</strong>等信息，避免直接登错账号。\n\n在 Pad 上点击任一候选卡片完成本人确认。"
+      },
+      {
+        title:"③ 选择本人 · 登录成功",
+        log:"[方案 1] 学生点击本人卡片 → 身份校验通过 → 绑定账号 → 进入登录成功页。",
+        teacher:"list",student:"logged",
+        loggedSub:"等待上课中…",
+        descT:"教师端仍处于课堂列表。学生自助登录不占用教师操作，老师只需准时上课。",
+        descS:"校验通过 → 绑定学生账号「张小明」。\n\n<strong>与上课衔接：</strong>若老师<strong>尚未进入课堂</strong>，学生可停留在登录成功页；若<strong>老师已进入教室</strong>而学生后登录，点击登录后可<strong>直接进入「教室」页</strong>。\n\n支持点击<strong>切换账号</strong>返回登录页，便于 Pad 在不同学生间轮换使用。"
+      },
+      {
+        title:"④ 老师点击上课 · 直接进入教室",
+        log:"[方案 1] 老师在课堂列表点击「上课」→ 直接进入教室；学生 Pad 端同步切换为「设备管控中（锁屏）」。",
+        teacher:"room",student:"lock-bound",
+        descT:`<div style="line-height:1.85"><strong>教师端</strong>
+<ol style="padding-left:20px;margin:6px 0 10px">
+<li>基于 <strong>ClassInX 版本无需做任何改造，使用当前版本即可</strong>。</li>
+<li>老师在课堂列表点击「<strong>上课</strong>」按钮后<strong>直接进入教室</strong>，<strong>不再弹出</strong>「选择上课模式」弹窗。</li>
+<li>教室内支持互动的工具包括：<strong>答题器、小黑板、抢答器</strong>。</li>
+<li>教师分发后，学生端<strong>自动弹出</strong>互动工具（仅限于显示互动工具），支持操作。</li>
+</ol>
+
+<strong>解除管控与进入管控时机说明：</strong>
+<div style="padding-left:6px;margin-top:6px">
+<strong>· 答题器</strong>
+<ol style="padding-left:24px;margin:2px 0 6px">
+<li>学生解除管控时机：教师点击「<strong>开始答题</strong>」即为解除管控；</li>
+<li>进入管控时机：教师点击「<strong>结束答题</strong>」。</li>
+</ol>
+<strong>· 小黑板</strong>
+<ol style="padding-left:24px;margin:2px 0 6px">
+<li>学生解除管控时机：教师点击「<strong>分发</strong>」/「<strong>再次分发</strong>」后即为解除管控；</li>
+<li>进入管控时机：教师点击「<strong>收回</strong>」。</li>
+</ol>
+<strong>· 抢答器</strong>
+<div style="padding-left:24px;margin:2px 0 0">学生解除管控时机：教师点击「<strong>开始答题</strong>」后即为解除管控；进入管控时机：教师点击「<strong>结束答题</strong>」。</div>
+</div>
+</div>`,
+        descS:"老师点击「上课」后大屏直接进入教室。已登录 Pad 同步切换为<strong>设备管控中（锁屏）</strong>，顶部徽标显示「张小明 已绑定 · 上课中」；课中互动数据自动归属当前绑定账号，无需再次认领身份。"
+      },
+      {
+        title:"⑤ 老师进入教室 · 课中参与互动",
+        log:"[方案 1] 老师进入教室后 Pad 进入管控锁屏；发起互动时临时解锁，互动结束恢复锁屏。",
+        teacher:"room",student:"lock-bound",
+        descT:"老师端已进入教室。此后 Pad 处于「设备管控中」；老师发起小黑板、答题器、随堂测等互动时 Pad 短暂解锁，结束后回到锁屏。",
+        descS:"上一步进班完成后，学生端已进入<strong>设备管控中</strong>。互动数据自动归属于登录账号「张小明」，无需再次认领身份。"
+      },
+      {
+        title:"⑥ 下课 · 自动解锁并退出登录",
+        log:"[方案 1] 下课指令下发 → Pad 自动解锁 → 自动退出登录 → 回到登录页，等待下一位学生。",
+        teacher:"list",student:"login",
+        descT:"老师点击下课，教室关闭。学生端设备状态自动回到起始态。",
+        descS:"Pad <strong>自动解锁并退出登录</strong>，回到登录页（设备解锁 + 显示登录界面）；方便下一位学生立即使用。"
+      }
     ];
 
     const dLog=document.getElementById("dLog");
@@ -2417,19 +2851,11 @@
         if(!step) return;
         const i=Number(step.dataset.pstep);
         resetDemoState();
-        if(i<=2){
-          cur=i;
-          render();
-        }else if(i===3){
-          cur=2;
-          render();
-          const finishBtn=document.getElementById("finishSignBtn");
-          if(finishBtn) finishBtn.click();
-        }else if(i===4){
-          cur=2;
-          render();
-          const finishBtn=document.getElementById("finishSignBtn");
-          if(finishBtn) finishBtn.click();
+        loginDigits=""; loginHintMsg=""; prevLoginRenderKey=null;
+        cur=i;
+        render();
+        if(i===4){
+          // 进入课中：自动打开工具箱并选中小黑板，让用户立刻看到互动工具效果
           setTimeout(()=>{
             const openTB=document.getElementById("openToolbox");
             if(openTB) openTB.click();
@@ -2438,39 +2864,51 @@
               if(blackboardItem) blackboardItem.click();
             },30);
           },30);
-        }else if(i===5){
-          cur=2;
-          render();
-          const finishBtn=document.getElementById("finishSignBtn");
-          if(finishBtn) finishBtn.click();
-          setProgressStep(5);
-          dLog.textContent="联动日志：下课 → 学生端自动退出登录，设备保持锁定状态。";
-          dDescTeacher.innerHTML="下课后系统自动退出教室，学生端 App 自动退出登录。";
-          dDescStudent.innerHTML="学生端自动退出登录，Pad 保持锁定状态，等待下一节课开始时由老师再次激活。";
         }
       });
     }
 
     function render(){
+      if(cur<0) cur=0;
+      if(cur>=steps.length) cur=steps.length-1;
       const s=steps[cur];
       dLog.textContent="联动日志："+s.log;
-      dDescTeacher.innerHTML=(s.descT||"").replace(/\n/g,"<br>");
-      dDescStudent.innerHTML=(s.descS||"").replace(/\n/g,"<br>");
-      syncExtraSign(s.student==="sign");
+      const descRender=(t)=>{
+        if(!t) return "";
+        // 若内容已是 HTML 块（以 < 开头），保留原样；否则把换行转换为 <br>
+        if(/^\s*</.test(t)) return t;
+        return t.replace(/\n/g,"<br>");
+      };
+      dDescTeacher.innerHTML=descRender(s.descT);
+      dDescStudent.innerHTML=descRender(s.descS);
+      syncExtraSign(false);
 
       if(s.teacher==="list") teacherUI.innerHTML=renderTeacherList(false);
       else if(s.teacher==="list-modal") teacherUI.innerHTML=renderTeacherList(true);
-      else if(s.teacher==="room") teacherUI.innerHTML=renderTeacherRoom();
+      else if(s.teacher==="room"){
+        showSignPanel=false;
+        roomOverlay="none";
+        if(typeof teacherView!=="undefined") teacherView="room";
+        teacherUI.innerHTML=renderTeacherRoom();
+      }
 
-      if(s.student==="empty") studentUI.innerHTML=renderStudentEmpty();
-      else if(s.student==="lock") studentUI.innerHTML=renderStudentLock("preclass");
-      else if(s.student==="sign") studentUI.innerHTML=renderStudentSign();
+      if(s.student==="empty"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentEmpty(); }
+      else if(s.student==="lock"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentLock("preclass"); }
+      else if(s.student==="sign"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentSign(); }
+      else if(s.student==="login"){
+        const lk=`s1|${cur}|login`;
+        if(prevLoginRenderKey!==lk){ loginDigits=""; loginHintMsg=""; }
+        prevLoginRenderKey=lk;
+        studentUI.innerHTML=renderStudentLogin();
+      }
+      else if(s.student==="login-confirm"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentLoginConfirm(); }
+      else if(s.student==="logged"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentLoggedIn(s.loggedSub); }
+      else if(s.student==="lock-bound"){ prevLoginRenderKey=null; studentUI.innerHTML=renderStudentLockBound(); }
 
-      if(cur===0) setProgressStep(0);
-      else if(cur===1) setProgressStep(1);
-      else if(cur===2) setProgressStep(showSignPanel?2:3);
+      setProgressStep(cur);
 
       bindEvents();
+      bindLoginEvents();
     }
 
     function refreshRoom(){
@@ -2513,10 +2951,10 @@
 
     function bindEvents(){
       const startBtn=document.getElementById("startClassBtn");
-      if(startBtn) startBtn.addEventListener("click",()=>{cur=1;render()});
+      if(startBtn) startBtn.addEventListener("click",()=>{cur=Math.min(cur+1,steps.length-1);render()});
 
       const confirmBtn=document.getElementById("confirmModeBtn");
-      if(confirmBtn) confirmBtn.addEventListener("click",()=>{showSignPanel=true;cur=2;render()});
+      if(confirmBtn) confirmBtn.addEventListener("click",()=>{cur=Math.min(cur+1,steps.length-1);render()});
 
       document.querySelectorAll(".ci-modal-opt").forEach(o=>{
         o.addEventListener("click",()=>{
