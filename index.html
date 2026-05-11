@@ -1359,7 +1359,7 @@
         <div class="scheme-intro-card s1">
           <span class="scheme-intro-tag">方案 1 · 当前选定方案</span>
           <h4>手机号后四位登录</h4>
-          <p>设备默认处于解锁状态，始终显示登录页；学生输入<strong>手机号后四位</strong>主动登录，默认在<strong>当前机构学员名单</strong>内做账号验证；老师点击上课后 Pad 仍停留在登录成功页，<strong>待老师真正进入教室后</strong>才进入设备管控（锁屏）；下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
+          <p>设备默认处于解锁状态，始终显示登录页；学生输入<strong>手机号后四位</strong>主动登录；检索仅在<strong>Pad 绑定机构</strong>学员库内，<strong>先即将开课/正在开课（阶段 A）后全机构兜底（阶段 B）</strong>；候选展示<strong>班级昵称 + 头像</strong>。老师点击上课后 Pad 仍停留在登录成功页，<strong>待老师真正进入教室后</strong>才进入设备管控（锁屏）；下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
         </div>
       </div>
 
@@ -1415,7 +1415,7 @@
           <div class="scheme-intro-card s1">
             <span class="scheme-intro-tag">方案 1 · 当前选定方案</span>
             <h4>手机号后四位登录</h4>
-            <p>设备默认处于解锁状态，始终显示登录页；学生输入手机号后四位主动登录，默认在<strong>当前机构学员名单</strong>内做账号验证；匹配到账号后确认登录。上课后自动进入锁屏管控，下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
+            <p>设备默认处于解锁状态，始终显示登录页；学生输入手机号后四位主动登录；仅在<strong>Pad 绑定机构</strong>内检索（<strong>阶段 A → 阶段 B</strong>），候选为<strong>班级昵称 + 头像</strong>。匹配到账号后确认登录。上课后自动进入锁屏管控，下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
           </div>
           <div class="scheme-intro-card s2">
             <span class="scheme-intro-tag">方案 2</span>
@@ -1433,7 +1433,7 @@
           <div class="flow-column s1"><h3>方案 1：手机号后四位登录 · 操作流程</h3><ul class="flow-list">
             <li class="flow-step">默认设备解锁 → 始终显示登录界面</li><li class="flow-arrow">↓</li>
             <li class="flow-step changed">输入手机号后四位</li><li class="flow-arrow">↓</li>
-            <li class="flow-step changed">右侧自动弹出匹配账号 → 确认登录</li><li class="flow-arrow">↓</li>
+            <li class="flow-step changed">右侧自动弹出班级昵称 + 头像 → 确认登录</li><li class="flow-arrow">↓</li>
             <li class="flow-step changed">老师点击上课 · 选择 Pad 班模式 → 进入教室 · 设备自动进入管控（锁屏）</li><li class="flow-arrow">↓</li>
             <li class="flow-step">课中参与教师发起的互动</li><li class="flow-arrow">↓</li>
             <li class="flow-step">下课后设备自动解锁并退出登录</li>
@@ -1470,7 +1470,7 @@
             </thead>
             <tbody>
               <tr><td>默认设备状态</td><td><span class="cmp-hl-s1">解锁</span>：显示登录页面</td><td><span class="cmp-hl-s2">解锁</span>：静默等待老师发起签到</td><td><span class="cmp-hl-s3">解锁</span>：显示面容登录入口</td></tr>
-              <tr><td>身份确认方式</td><td>学生主动输入手机号后四位，系统在<strong>当前机构学员名单</strong>内做账号验证并展示匹配账号</td><td>老师发起签到后，学生在名单中点击本人</td><td>摄像头自动扫脸匹配云端底片</td></tr>
+              <tr><td>身份确认方式</td><td>学生主动输入手机号后四位；系统在<strong>Pad 绑定机构</strong>内<strong>先 A 后 B</strong>检索，右侧展示<strong>班级昵称 + 头像</strong>并确认登录</td><td>老师发起签到后，学生在名单中点击本人</td><td>摄像头自动扫脸匹配云端底片</td></tr>
               <tr><td>解锁时机</td><td>开机即解锁至登录页；老师进入教室后 Pad 进入锁屏管控</td><td>开机即解锁等待老师发起签到；互动时临时解锁，其它时间锁定</td><td>开机即解锁显示扫描界面；老师进班后进入锁屏管控</td></tr>
               <tr><td>设备-账号绑定</td><td>确认登录后即建立绑定，支持退出登录 / 切换账号</td><td>签到完成后自动建立绑定</td><td>识别成功自动建立绑定</td></tr>
               <tr><td>防代签 / 防误点</td><td>手机号匹配账号后确认；若同一手机号绑定多个学生账号 → Pad 弹出「确认您的身份」二次选择</td><td>依赖老师监督、支持手动取消代签</td><td><strong>防代签能力最强</strong>：生物特征唯一，难以冒用</td></tr>
@@ -1493,15 +1493,15 @@
               <ol class="edge-list">
                 <li class="edge-item">
                   <div class="edge-q">登录验证范围是什么？</div>
-                  <div class="edge-a">学生输入<strong>手机号后四位</strong>后，默认在<strong>当前机构学员名单</strong>内做账号验证；不再按 ClassIn 全用户库或额外的班级名单做收窄。</div>
+                  <div class="edge-a">学生输入<strong>手机号后四位</strong>后，仅在<strong>Pad 绑定机构</strong>学员库内检索；<strong>先阶段 A</strong>（即将开课 ∪ 正在开课，开课前 1 小时至上课中，且排除公开课/双师试点范围）<strong>后阶段 B</strong>（机构学员全集兜底）；不得跨机构。阶段 A 有任意命中时不再合并阶段 B 结果。</div>
                 </li>
                 <li class="edge-item">
                   <div class="edge-q">同一手机号绑定多个学生账号怎么办？</div>
-                  <div class="edge-a">Pad 右侧自动弹出「确认您的身份」账号列表，展示候选学生的<strong>姓名 + 班级昵称 + 头像</strong>，由学生本人点选后确认登录。</div>
+                  <div class="edge-a">Pad 右侧自动弹出「确认您的身份」账号列表，展示候选学生的<strong>班级昵称 + 头像</strong>，由学生本人点选后确认登录。</div>
                 </li>
                 <li class="edge-item">
                   <div class="edge-q">手机号无匹配或格式错误怎么办？</div>
-                  <div class="edge-a">包含非数字、位数不足 4 位时提示「请输入手机号后四位完成登录」；当前机构内 0 条匹配时提示「未在当前机构学员名单中检测到账号，请核对手机号尾号」。</div>
+                  <div class="edge-a">包含非数字、位数不足 4 位时提示「请输入手机号后四位」；当前检索范围内 0 条匹配时提示「请核对手机号尾号」。多设备同账号后进教室踢前者，提示与线上一致。</div>
                 </li>
               </ol>
             </div>
@@ -2652,16 +2652,16 @@
     let loginHintMsg="";
     let prevLoginRenderKey=null;
     let selectedMatchId=null;
-    /** 演示用：当前机构学员名单后四位匹配（9841 唯一；8888 同号多账号；其它 4 位数字视为无匹配） */
+    /** 演示用：Pad 绑定机构学员库后四位匹配（9841 唯一；8888 同号多账号；其它 4 位数字视为无匹配；右侧展示班级昵称+头像） */
     const DEMO_PHONE_LIB={
       "9841":[
-        { id:"a", name:"陈子和", initial:"陈", color:"a1",
+        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"六年级数学·周六班",
           classInfo:["wlsy 六年级数学邹承锦周六 19:30–21:00","授课老师 — 邹秉锦"] }
       ],
       "8888":[
-        { id:"a", name:"陈子和", initial:"陈", color:"a1",
+        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"六年级数学·周六班",
           classInfo:["wlsy 六年级数学邹承锦周六 19:30–21:00","授课老师 — 邹秉锦"] },
-        { id:"b", name:"陈子语", initial:"陈", color:"a2",
+        { id:"b", name:"陈子语", initial:"陈", color:"a2", nick:"六年级语文·周六班",
           classInfo:["wlsy 六年级语文张老师周六 14:00–15:30","授课老师 — 张明"] }
       ]
     };
@@ -2700,23 +2700,21 @@
     function renderMatchPanel(matches){
       // matches: null = 输入未完成；[]  = 0 匹配；[一个或多个] = 命中
       if(matches===null){
-        return `<div class="stu-match-panel placeholder">输入手机号后四位后，右侧自动显示匹配账号</div>`;
+        return `<div class="stu-match-panel placeholder">输入手机号后四位后，在 Pad 绑定机构学员库内检索，右侧显示班级昵称与头像</div>`;
       }
       if(matches.length===0){
-        return `<div class="stu-match-panel placeholder">未匹配到账号</div>`;
+        return `<div class="stu-match-panel placeholder">未在 Pad 绑定机构学员库中匹配到账号</div>`;
       }
       const isMulti=matches.length>1;
       const items=matches.map(m=>{
         const sel=selectedMatchId===m.id||matches.length===1;
         const cls=`stu-match-item ${sel?"selected":""} ${isMulti?"compact":""}`;
         const av=`stu-match-avatar ${m.color==="a2"?"a2":""}`;
-        // 多账号场景仅显示头像 + 昵称；单账号场景显示班级 + 授课老师等详细信息
-        const infoLines=(!isMulti&&m.classInfo)?m.classInfo.map(t=>`<span class="row">${t}</span>`).join(""):"";
-        return `<button class="${cls}" data-match="${m.id}">
+        const nick=(m.nick||(m.classInfo&&m.classInfo[0])||m.name||"");
+        return `<button class="${cls}" data-match="${m.id}" title="学生：${m.name||""}">
           <div class="${av}">${m.initial}</div>
           <div class="stu-match-info">
-            <div class="stu-match-name">${m.name}</div>
-            ${infoLines?`<div class="stu-match-class">${infoLines}</div>`:""}
+            <div class="stu-match-name">${nick}</div>
           </div>
           <span class="stu-match-check">✓</span>
         </button>`;
@@ -2745,13 +2743,13 @@
       const matches=getCurrentMatches();
       const matchPanel=renderMatchPanel(matches);
       const showZeroHint=matches!==null&&matches.length===0&&!loginHintMsg;
-      const msg=loginHintMsg||(showZeroHint?"未在当前机构学员名单中检测到账号，请核对手机号尾号。":"");
+      const msg=loginHintMsg||(showZeroHint?"未在 Pad 绑定机构学员库中检测到账号，请核对手机号尾号。":"");
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-login-v2">
           <div class="stu-loginv2-left">
             <div class="stu-loginv2-head">
               <h3>手机号登录</h3>
-              <div class="stu-loginv2-sub">输入手机号后四位，快速匹配</div>
+              <div class="stu-loginv2-sub">输入手机号后四位 · 仅 Pad 绑定机构内检索（即将开课/上课中优先）</div>
             </div>
             ${renderPhoneInput()}
             ${renderNumpad()}
@@ -2837,9 +2835,9 @@
           // 联动日志同步
           const matches=getCurrentMatches();
           if(matches===null) return;
-          if(matches.length===1) dLog.textContent="联动日志：手机号尾号在当前机构学员名单中唯一匹配，右侧自动展示候选账号。";
-          else if(matches.length>=2) dLog.textContent="联动日志：手机号尾号在当前机构内命中多个学生账号，右侧展示候选列表，等待学生本人选择。";
-          else dLog.textContent="联动日志：手机号尾号在当前机构学员名单中无匹配。";
+          if(matches.length===1) dLog.textContent="联动日志：手机号尾号在 Pad 绑定机构学员库内唯一匹配，右侧展示班级昵称 + 头像。";
+          else if(matches.length>=2) dLog.textContent="联动日志：手机号尾号命中多个学生账号，右侧展示二次确认列表（班级昵称 + 头像），等待学生本人选择。";
+          else dLog.textContent="联动日志：手机号尾号在 Pad 绑定机构学员库中无匹配（演示未区分阶段 A/B）。";
         });
       });
       // 含非数字演示按钮
@@ -3070,58 +3068,50 @@
         title:"① 默认解锁 · 显示登录页",
         log:"[方案 1] 设备解锁，Pad 始终展示登录界面，等待学生输入手机号后四位。",
         teacher:"list",student:"login",
-        descT:`<div style="line-height:1.85"><strong>教师端：课堂列表（无需操作）</strong>
-<ol style="padding-left:20px;margin:6px 0 0">
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
-<li>本阶段教师端<strong>不需要任何操作</strong>，学生 Pad 端独立运行登录，老师按既定时间点击「上课」即可。</li>
-</ol></div>`,
+        descT:"",
         descS:`<div style="line-height:1.85"><strong>一、产品形态</strong>
 <ol style="padding-left:20px;margin:6px 0 10px">
 <li>学生端 Demo 版本基于<strong>安卓 Pad 开发独立 App</strong>，App 中只有教室上课页面（线下课模式进入教室；教室内<strong>隐藏聊天、花名册、举手</strong>功能）。</li>
 <li>学生端 APP 名称为「<strong>ClassIn Focus</strong>」。</li>
-<li><strong>Pad 与教师端大屏绑定关系</strong>：<strong>pad设备需要与机构提前绑定</strong></li>
+<li><strong>Pad 必须先绑定唯一机构</strong>；未绑定时登录提示：<strong>设备未完成机构绑定</strong>。</li>
 </ol>
 
 <strong>二、登录验证</strong>
 <ol style="padding-left:20px;margin:6px 0 10px">
 <li>学生输入<strong>手机号后四位</strong>作为登录凭证。</li>
-<li>验证方式为<strong>机构账号验证</strong>：默认在<strong>当前机构学员名单</strong>内做匹配，不再做 ClassIn 全用户库或额外的班级名单收窄。</li>
-<li>当同一时间、相同机构下有多个课程时，优先匹配开课早的课程</li>
+<li>任意手机号后四位检索，只能在「<strong>Pad 绑定机构</strong>」对应学员库内进行；<strong>不得跨机构匹配</strong>，即使其它机构存在相同尾号。</li>
+<li>学生输入尾号后，展示给学生的候选账号（含二次确认列表）中的每一条，必须属于该机构；展示字段为<strong>班级昵称 + 头像</strong>。</li>
+<li><strong>检索优先级（阶段 A → 阶段 B）</strong>：在学生已输入合法 4 位数字的前提下，服务端按两阶段检索同一尾号。<br>
+　<strong>阶段 A（优先）</strong><br>
+　　· 优先检索属于<strong>即将开课</strong>和<strong>正在开课</strong>的课节学员（开课前 1 小时至正在上课的课节）；<br>
+　　· 且学员账号归属 Pad 绑定机构。<br>
+　　<strong>命中结果：</strong>0 条 → 进入阶段 B；1 条 → 按现有规则进入「唯一匹配」路径；≥2 条 → 「撞号二次确认」，候选列表<strong>仅含阶段 A 命中账号</strong>展示字段为班级昵称 + 头像。。<br>
+　<strong>阶段 B（兜底）</strong><br>
+　　· 在<strong>机构学员全集</strong>内检索同一尾号（仍仅限 Pad 绑定机构）。<br>
+　　· 如命中结果0条，则提示「请核对手机号尾号」。<br>
+
+　<strong>说明：</strong>先 A 后 B；阶段 A 只要有任意命中（1 条或多条），<strong>不再叠加</strong>阶段 B 结果合并进「唯一匹配」；仅在阶段 A <strong>未匹配到任何账号</strong>时再走阶段 B。</li>
+同一账号下，同一时间、相同机构内有多个开课课节时，<strong>优先匹配开课早</strong>的课程。</li>
+<li>多个设备同时登录<strong>同一账号</strong>时，<strong>后进入教室</strong>的一方会<strong>踢掉前者</strong>并使其返回登录界面；后进入方按<strong>线上版本</strong>提示「已有设备在教室」类文案。</li>
+<li><strong>公开课、双师课</strong>不参与本次 Demo 试点（检索与课节范围均排除）。</li>
 </ol>
 
-<strong>三、按命中数分流</strong>
-<ol style="padding-left:20px;margin:6px 0 10px">
-<li>学生提交手机号后四位后，服务端在<strong>当前机构学员名单</strong>内检索，并按命中数分流：<br>
-　· <strong>唯一匹配</strong>（1 条）→ 右侧展示匹配账号 + 班级 / 教师信息，点击「确认登录」进入登录成功态；<br>
-　· <strong>命中 ≥ 2 条</strong>（同一尾号在机构内对应多个学生账号）→ Pad 弹出「<strong>确认您的身份</strong>」二次确认页，展示候选学生的<strong>姓名 + 班级 + 授课老师</strong>，由学生本人点选后再次「确认登录」；<br>
-　· 若输入内容包含<strong>数字以外</strong>的字符，或不足 4 位 → 提示：<strong>请输入手机号后四位完成登录</strong>；<br>
-　· <strong>0 条匹配</strong> → 提示「<strong>未在当前机构学员名单中检测到账号，请核对手机号尾号</strong>」，不自动登录。</li>
-</ol>
-
-<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">▶ Pad 演示：输入 4 位后右侧自动弹出匹配账号，点击「确认登录」进入登录成功页。<strong>9841</strong> 唯一匹配；<strong>8888</strong> 模拟同号多账号；其它 4 位纯数字为无匹配。点「演示：含非数字」可注入非法字符以触发校验提示。</p></div>`
+<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">▶ Pad 演示：输入 4 位后右侧展示<strong>班级昵称 + 头像</strong>，点击「确认登录」进入登录成功页。<strong>9841</strong> 唯一匹配；<strong>8888</strong> 模拟同号多账号；其它 4 位纯数字为无匹配。点「演示：含非数字」可注入非法字符以触发校验提示。（演示数据未区分阶段 A/B。）</p></div>`
       },
       {
         title:"② 检测到撞号 · 弹出身份二次确认",
-        log:"[方案 1] 手机号尾号在当前机构内命中 ≥ 2 条记录 → Pad 展示候选账号列表，等待学生本人选择。",
+        log:"[方案 1] 手机号尾号命中 ≥ 2 条记录 → Pad 展示二次确认列表（班级昵称 + 头像），等待学生本人选择。",
         teacher:"list",student:"login-confirm",
-        descT:`<div style="line-height:1.85"><strong>教师端：仍在课堂列表（无需介入）</strong>
-<ol style="padding-left:20px;margin:6px 0 0">
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
-<li>撞号属于<strong>学生侧自助处理</strong>的兜底，老师不可代选——身份必须由学生本人在 Pad 上点选确认，避免误绑。</li>
-</ol></div>`,
-        descS:"当手机号在 <strong>ClassIn 用户库</strong>中<strong>命中 ≥ 2 个学生账号</strong>时（演示输入 <strong>13800008888</strong>，模拟同一手机号绑定多孩家庭），Pad 自动弹出「确认您的身份」二次选择，展示<strong>姓名 + 班级昵称 + 头像</strong>等信息，避免直接登错账号。\n\n在 Pad 上点击任一候选卡片完成本人确认。"
+        descT:"",
+        descS:"当手机号在<strong>当前检索范围</strong>内<strong>命中 ≥ 2 个学生账号</strong>时（演示输入 <strong>8888</strong>，模拟同一尾号在机构内对应多个学生），Pad 展示二次确认列表，每条为<strong>班级昵称 + 头像</strong>，避免直接登错账号。\n\n在 Pad 上点击任一候选卡片完成本人确认。"
       },
       {
         title:"③ 选择本人 · 登录成功",
         log:"[方案 1] 学生点击本人卡片 → 身份校验通过 → 绑定账号 → 进入登录成功页。",
         teacher:"list",student:"logged",
         loggedSub:"等待上课中…",
-        descT:`<div style="line-height:1.85"><strong>教师端：仍在课堂列表</strong>
-<ol style="padding-left:20px;margin:6px 0 0">
-<li>老师在课堂列表点击「<strong>上课</strong>」按钮 → 弹出「<strong>选择上课模式</strong>」弹窗，选择「<strong>Pad 班</strong>」后点击「确认进入」。</li>
-<li>学生自助登录全程<strong>不占用</strong>教师操作，老师按既定时间点击「上课」即可；签到状态记录在每个学生账号下，便于课后报表与 LMS 归档。</li>
-</ol></div>`,
-        descS:"校验通过 → 绑定学生账号「张小明」。\n\n<strong>与上课衔接：</strong>若老师<strong>尚未进入课堂</strong>，学生可停留在登录成功页；若<strong>老师已进入教室</strong>而学生后登录，点击登录后可<strong>直接进入「教室」+管控页</strong>。\n\n支持点击<strong>切换账号</strong>返回登录页，便于 Pad 在不同学生间轮换使用。"
+        descT:"",
+        descS:"校验通过 → 绑定学生账号「陈子和」。\n\n<strong>与上课衔接：</strong>若老师<strong>尚未进入课堂</strong>，学生可停留在登录成功页；若<strong>老师已进入教室</strong>而学生后登录，点击登录后可<strong>直接进入「教室」+管控页</strong>。\n\n<strong>同账号多设备：</strong>若另一设备以同一账号后进入教室，当前 Pad 会被<strong>踢下线并返回登录页</strong>，提示与线上一致（本演示未模拟双端并发）。\n\n支持点击<strong>切换账号</strong>返回登录页，便于 Pad 在不同学生间轮换使用。"
       },
       {
         title:"④ 老师点击上课 · 选择上课模式",
@@ -3134,7 +3124,7 @@
 <li>老师选择「<strong>Pad 班</strong>」后点击「<strong>确认进入</strong>」，推进至下一步进入教室。</li>
 <li><strong>本阶段大屏尚未真正进班</strong>，因此学生 Pad 端不会触发任何状态变更，仍停留在登录成功页。</li>
 </ol></div>`,
-        descS:"与「先点上课、后进教室」的链路对齐：<strong>仅当大屏端真正进入教室</strong>后，已登录 Pad 才切换为「设备管控中」（锁屏）。\n\n本阶段如果有同班级学生<strong>新登录</strong>，会跳过等候页，<strong>直接进入教室 + 管控页</strong>。仍可点击<strong>切换账号</strong>纠错。"
+        descS:"与「先点上课、后进教室」的链路对齐：<strong>仅当大屏端真正进入教室</strong>后，已登录 Pad 才切换为「设备管控中」（锁屏）。\n\n本阶段如果有同班级学生<strong>新登录</strong>，会跳过等候页，<strong>直接进入教室 + 管控页</strong>。仍可点击<strong>切换账号</strong>纠错。\n\n<strong>试点范围：</strong>公开课、双师课不参与本次 Demo；多设备同账号后进教室踢前者规则见步骤①。"
       },
       {
         title:"⑤ 进入教室 · 课中参与互动",
