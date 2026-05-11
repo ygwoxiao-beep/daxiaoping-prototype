@@ -1,0 +1,58 @@
+{
+  "lesson": {
+    "subtitle": "五年级数学 · 第 3 讲",
+    "date": "2026/4/13",
+    "teacher": "张老师",
+    "durationMinutes": 88
+  },
+  "students": [
+    {
+      "name": "陈思琪",
+      "stats": {
+        "interactionsParticipated": "6/6",
+        "choiceAccuracyPercent": 75,
+        "attendanceMinutes": 88,
+        "trophies": 3
+      },
+      "interactions": [
+        {
+          "type": "blackboard",
+          "index": 1,
+          "time": "19:35",
+          "image": "images/bb-student-work.png",
+          "caption": ""
+        },
+        {
+          "type": "choice",
+          "index": 2,
+          "time": "19:42",
+          "studentChoice": "B",
+          "correctAnswer": "B"
+        },
+        {
+          "type": "blackboard",
+          "index": 3,
+          "time": "19:55",
+          "image": "images/bb-student-work.png",
+          "caption": ""
+        },
+        {
+          "type": "more",
+          "text": "… 第 4-6 次互动 …"
+        }
+      ],
+      "systemComment": "本节课参与全部 6 次互动，选择题正确率 75%，小黑板书写完整。",
+      "teacherComment": "（可选补充）"
+    },
+    {
+      "name": "王浩然",
+      "stats": {
+        "interactionsParticipated": "5/6",
+        "choiceAccuracyPercent": 82,
+        "attendanceMinutes": 76,
+        "trophies": 1
+      },
+      "teacherComment": "运算步骤再细心一些会更稳。"
+    }
+  ]
+}

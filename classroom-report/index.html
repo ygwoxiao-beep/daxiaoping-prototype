@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课堂报告 · 学习记录生成</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --line: #e2e8f0;
+      --primary: #10b981;
+      --text: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #f8fbff, #f4f7fb 45%, #f8fbff);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .app {
+      width: min(1280px, 98vw);
+      margin: 0 auto;
+      padding: 20px 12px 48px;
+    }
+    .top {
+      margin-bottom: 18px;
+    }
+    .top h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .top p {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 380px) 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(25, 45, 95, 0.08);
+      padding: 16px;
+    }
+    .panel h2 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1e293b;
+    }
+    details {
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      background: #f8fafc;
+      font-size: 12.5px;
+      color: #475569;
+    }
+    details summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    details pre {
+      margin-top: 10px;
+      padding: 10px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .ta-wrap { margin-bottom: 10px; }
+    .ta-wrap label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    #dataInput {
+      width: 100%;
+      min-height: 220px;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 12px;
+      resize: vertical;
+      outline: none;
+    }
+    #dataInput:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-ghost {
+      background: #fff;
+      color: #334155;
+      border: 1px solid #d1d5db;
+    }
+    .btn-ghost:hover { background: #f8fafc; }
+    .err {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-size: 12.5px;
+      border: 1px solid #fecaca;
+    }
+    .err.show { display: block; }
+    .stu-nav {
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+    .stu-nav button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border: none;
+      border-bottom: 1px solid #f1f5f9;
+      background: transparent;
+      cursor: pointer;
+      font-size: 13px;
+      color: #334155;
+    }
+    .stu-nav button:last-child { border-bottom: none; }
+    .stu-nav button:hover { background: #f1f5f9; }
+    .stu-nav button.active {
+      background: #ecfdf5;
+      color: #065f46;
+      font-weight: 700;
+    }
+    .meta-line {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .preview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .preview-head span {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .card-anchor {
+      scroll-margin-top: 16px;
+    }
+
+    /* ===== MVP 课堂学习记录（与原原型一致） ===== */
+    #reportShell.tab-panel {
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      justify-content: center;
+    }
+    .mvp-report {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid #10b981;
+      border-radius: 24px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(16, 185, 129, 0.12);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    .mvp-banner {
+      background: #10b981;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+    .mvp-banner span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mvp-header {
+      padding: 28px 28px 20px;
+      text-align: center;
+    }
+    .mvp-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .mvp-sub {
+      font-size: 13.5px;
+      color: #475569;
+      margin-bottom: 4px;
+    }
+    .mvp-meta {
+      font-size: 12.5px;
+      color: #94a3b8;
+    }
+    .mvp-divider {
+      height: 3px;
+      background: linear-gradient(to right, #ef4444, #f97316);
+      margin: 20px 28px 0;
+      border-radius: 2px;
+    }
+    .mvp-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 22px 18px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .mvp-stat {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 12px;
+      padding: 14px 8px;
+      text-align: center;
+    }
+    .mvp-stat.amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    .mvp-stat.blue {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    .mvp-stat.rose {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .mvp-stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+    }
+    .mvp-stat-val small {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .mvp-stat-label {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .mvp-body {
+      padding: 4px 22px 20px;
+    }
+    .mvp-inter {
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .mvp-inter:last-of-type {
+      border-bottom: none;
+    }
+    .mvp-inter-head {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mvp-inter-head .mvp-dot {
+      width: 6px;
+      height: 6px;
+      background: #94a3b8;
+      border-radius: 50%;
+      margin-right: 4px;
+      display: inline-block;
+    }
+    .mvp-bb-img {
+      background: #1f1f1f;
+      border: 1px solid #1f1f1f;
+      border-radius: 10px;
+      padding: 0;
+      overflow: hidden;
+    }
+    .mvp-bb-img img {
+      width: 100%;
+      display: block;
+      background: #1f1f1f;
+    }
+    .mvp-bb-cap {
+      background: #fffbeb;
+      color: #92400e;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-top: 1.5px solid #fde68a;
+      text-align: center;
+    }
+    .mvp-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .mvp-slot {
+      border: 1.5px dashed #e2e8f0;
+      border-radius: 10px;
+      padding: 22px 12px;
+      text-align: center;
+      font-size: 12.5px;
+      color: #64748b;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+    .mvp-slot.amber {
+      background: #fffbeb;
+      border-color: #fcd34d;
+      color: #92400e;
+      border-style: solid;
+      border-width: 1.5px;
+    }
+    .mvp-slot .mvp-slot-icon {
+      font-size: 18px;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .mvp-choice {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .mvp-choice strong {
+      color: #059669;
+      font-weight: 800;
+      margin: 0 2px;
+    }
+    .mvp-more {
+      text-align: center;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 12.5px;
+      color: #94a3b8;
+      margin: 6px 0 12px;
+    }
+    .mvp-comment {
+      border-top: 1px dashed #e2e8f0;
+      margin-top: 14px;
+      padding-top: 16px;
+    }
+    .mvp-comment-title {
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .mvp-comment-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #0f172a;
+    }
+    .mvp-comment-box .row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .mvp-comment-box .row:last-child {
+      margin-bottom: 0;
+    }
+    .mvp-comment-box .row .lbl {
+      color: #64748b;
+      flex-shrink: 0;
+    }
+    .mvp-comment-box .row .lbl.teacher {
+      color: #d97706;
+    }
+    .mvp-comment-box .row .val.muted {
+      color: #94a3b8;
+      font-style: italic;
+    }
+    .mvp-tag {
+      margin: 14px 22px 20px;
+      padding: 12px 16px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      text-align: center;
+      color: #065f46;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .mvp-footer {
+      border-top: 1px solid #f1f5f9;
+      padding: 14px;
+      text-align: center;
+      color: #10b981;
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 520px) {
+      .mvp-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .mvp-stat-val {
+        font-size: 20px;
+      }
+    }
+
+    /* 卡片外的小工具栏（不会被截入图片） */
+    .card-toolbar {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto 8px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .card-toolbar .btn {
+      padding: 7px 12px;
+      font-size: 12.5px;
+      border-radius: 8px;
+      border: 1px solid #d1fae5;
+      background: #ecfdf5;
+      color: #065f46;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .card-toolbar .btn:hover {
+      background: #d1fae5;
+    }
+    .card-toolbar .btn:active {
+      transform: scale(0.97);
+    }
+    .card-toolbar .btn.alt {
+      background: #fff;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    .card-toolbar .btn.alt:hover {
+      background: #f1f5f9;
+    }
+    .card-toolbar .btn[disabled] {
+      opacity: 0.6;
+      cursor: progress;
+    }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 32px;
+      transform: translateX(-50%) translateY(20px);
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast.error {
+      background: #b91c1c;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <h1>课堂报告服务</h1>
+      <p>粘贴本节课 JSON 数据，一键生成每位学生的「课堂学习记录」卡片（样式与主原型第 5 模块一致）。</p>
+    </header>
+
+    <div class="layout">
+      <aside class="panel">
+        <h2>数据输入</h2>
+        <details open>
+          <summary>数据格式说明</summary>
+          <p style="margin-top:8px;line-height:1.65">
+            顶层包含 <code>lesson</code>（课程信息）与 <code>students</code>（学生数组）。每位学生可写完整
+            <code>interactions</code>；若省略，将根据参与次数与正确率<strong>自动生成</strong>交替的「小黑板 / 选择题」记录。
+          </p>
+          <pre>{
+  "lesson": {
+    "subtitle": "五年级数学 · 第 3 讲",
+    "date": "2026/4/13",
+    "teacher": "张老师",
+    "durationMinutes": 88
+  },
+  "students": [
+    {
+      "name": "陈思琪",
+      "stats": {
+        "interactionsParticipated": "6/6",
+        "choiceAccuracyPercent": 75,
+        "attendanceMinutes": 88,
+        "trophies": 3
+      },
+      "interactions": [ ... ],
+      "systemComment": "可选；省略则自动摘要",
+      "teacherComment": "（可选补充）"
+    }
+  ]
+}</pre>
+        </details>
+        <div class="ta-wrap">
+          <label for="dataInput">JSON</label>
+          <textarea id="dataInput" spellcheck="false"></textarea>
+        </div>
+        <div class="btns">
+          <button type="button" class="btn btn-primary" id="btnRender">生成学习记录</button>
+          <button type="button" class="btn btn-ghost" id="btnSample">加载示例</button>
+          <button type="button" class="btn btn-ghost" id="btnClear">清空</button>
+        </div>
+        <div class="err" id="errBox"></div>
+        <h2 style="margin-top:8px">学生列表</h2>
+        <div class="stu-nav" id="stuNav">
+          <button type="button" disabled>生成后在此快速跳转</button>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="preview-head">
+          <h2>预览</h2>
+          <span id="previewMeta">尚未生成</span>
+        </div>
+        <div class="cards" id="cards"></div>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script id="sample-data" type="application/json">
+{
+  "lesson": {
+    "subtitle": "五年级数学 · 第 3 讲",
+    "date": "2026/4/13",
+    "teacher": "张老师",
+    "durationMinutes": 88
+  },
+  "students": [
+    {
+      "name": "陈思琪",
+      "stats": {
+        "interactionsParticipated": "6/6",
+        "choiceAccuracyPercent": 75,
+        "attendanceMinutes": 88,
+        "trophies": 3
+      },
+      "interactions": [
+        { "type": "blackboard", "index": 1, "time": "19:35", "image": "images/bb-student-work.png", "caption": "" },
+        { "type": "choice",     "index": 2, "time": "19:42", "studentChoice": "B", "correctAnswer": "B" },
+        { "type": "blackboard", "index": 3, "time": "19:55", "image": "images/bb-student-work.png", "caption": "" },
+        { "type": "more", "text": "… 第 4-6 次互动 …" }
+      ],
+      "systemComment": "本节课参与全部 6 次互动，选择题正确率 75%，小黑板书写完整。",
+      "teacherComment": "（可选补充）"
+    },
+    {
+      "name": "王浩然",
+      "stats": {
+        "interactionsParticipated": "5/6",
+        "choiceAccuracyPercent": 82,
+        "attendanceMinutes": 76,
+        "trophies": 1
+      },
+      "teacherComment": "运算步骤再细心一些会更稳。"
+    }
+  ]
+}
+  </script>
+
+  <script>
+    (function () {
+      const DEFAULT_IMG = "images/bb-student-work.png";
+      const $ = (sel) => document.querySelector(sel);
+
+      function readEmbeddedSample() {
+        const el = document.getElementById("sample-data");
+        if (!el) return null;
+        const raw = (el.textContent || "").trim();
+        if (!raw) return null;
+        return raw;
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function hashInt(str) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
+        return Math.abs(h);
+      }
+
+      function parseParticipation(str, fallbackJoin, fallbackTotal) {
+        if (!str || typeof str !== "string") {
+          return { joined: fallbackJoin, total: fallbackTotal };
+        }
+        const m = str.trim().match(/^(\d+)\s*\/\s*(\d+)$/);
+        if (m) return { joined: +m[1], total: +m[2] };
+        return { joined: fallbackJoin, total: fallbackTotal };
+      }
+
+      function pickWrong(correct) {
+        const opts = ["A", "B", "C", "D"];
+        const i = opts.indexOf(correct);
+        return opts[(i + 1) % opts.length];
+      }
+
+      /** @returns {Array<object>} */
+      function synthesizeInteractions(student) {
+        const stats = student.stats || {};
+        const frac = parseParticipation(
+          stats.interactionsParticipated,
+          6,
+          6
+        );
+        const total = frac.total || 6;
+        const joined = Math.min(frac.joined, total);
+        const acc = Number(stats.choiceAccuracyPercent);
+        const accuracy = Number.isFinite(acc) ? Math.max(0, Math.min(100, acc)) : 75;
+        const name = student.name || "学生";
+
+        const answerKey = ["B", "B", "A", "C", "B", "A", "D", "B", "A", "C"];
+        const types = ["blackboard", "choice"];
+        const list = [];
+        let minute = 34;
+        for (let i = 1; i <= total; i++) {
+          const isBb = types[(i - 1) % 2] === "blackboard";
+          const time = `19:${String(minute).padStart(2, "0")}`;
+          minute += i % 3 === 0 ? 9 : 7;
+
+          if (i > joined) {
+            list.push({
+              type: "slot_miss",
+              index: i,
+              time,
+              label: "未参与",
+            });
+            continue;
+          }
+
+          if (isBb) {
+            list.push({
+              type: "blackboard",
+              index: i,
+              time,
+              image: student.blackboardImage || DEFAULT_IMG,
+              caption: student.blackboardCaption || "",
+            });
+          } else {
+            const correct = answerKey[(i + hashInt(name)) % answerKey.length];
+            const roll = ((i * 17 + hashInt(name)) % 100) / 100;
+            const studentChoice =
+              roll < accuracy / 100 ? correct : pickWrong(correct);
+            list.push({
+              type: "choice",
+              index: i,
+              time,
+              studentChoice,
+              correctAnswer: correct,
+            });
+          }
+        }
+
+        return list;
+      }
+
+      function ensureInteractions(student) {
+        if (Array.isArray(student.interactions) && student.interactions.length) {
+          return student.interactions.map((x, idx) => ({
+            ...x,
+            index: x.index != null ? x.index : idx + 1,
+          }));
+        }
+        return synthesizeInteractions(student);
+      }
+
+      function autoSystemComment(student, lesson) {
+        if (student.systemComment) return student.systemComment;
+        const stats = student.stats || {};
+        const frac = parseParticipation(stats.interactionsParticipated, 6, 6);
+        const acc = stats.choiceAccuracyPercent;
+        const parts = [];
+        parts.push(
+          `本节课参与 ${frac.joined}/${frac.total} 次互动` +
+            (acc != null ? `，选择题正确率 ${acc}%` : "")
+        );
+        const bb = ensureInteractions(student).filter(
+          (x) => x.type === "blackboard"
+        ).length;
+        if (bb > 0) parts.push(`小黑板 ${bb} 次`);
+        parts.push("学习轨迹已归档。");
+        return parts.join("；") + "。";
+      }
+
+      function typeLabel(type) {
+        if (type === "blackboard") return "小黑板";
+        if (type === "choice") return "选择题";
+        return "互动";
+      }
+
+      function renderInteraction(it) {
+        if (it.type === "more") {
+          return `<div class="mvp-more">${escapeHtml(it.text)}</div>`;
+        }
+        if (it.type === "slot_miss") {
+          return `
+            <div class="mvp-inter">
+              <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 ${it.index} 次 · 未参与 · ${escapeHtml(it.time)}</div>
+              <div class="mvp-slot amber"><span class="mvp-slot-icon">⏸</span>本环节未参与 / 无提交记录</div>
+            </div>`;
+        }
+        if (it.type === "blackboard") {
+          const cap = it.caption
+            ? `<div class="mvp-bb-cap">${escapeHtml(it.caption)}</div>`
+            : "";
+          const src = escapeHtml(it.image || DEFAULT_IMG);
+          return `
+            <div class="mvp-inter">
+              <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 ${it.index} 次 · ${escapeHtml(typeLabel("blackboard"))} · ${escapeHtml(it.time)}</div>
+              <div class="mvp-bb-img"><img src="${src}" alt="小黑板作答"></div>${cap}
+            </div>`;
+        }
+        if (it.type === "choice") {
+          const ok = it.studentChoice === it.correctAnswer;
+          const mark = ok ? " ✅" : " ❌";
+          return `
+            <div class="mvp-inter">
+              <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 ${it.index} 次 · ${escapeHtml(typeLabel("choice"))} · ${escapeHtml(it.time)}</div>
+              <div class="mvp-choice">我的选择：<strong>${escapeHtml(it.studentChoice)}</strong> · 正确答案：<strong>${escapeHtml(it.correctAnswer)}</strong>${mark}</div>
+            </div>`;
+        }
+        return "";
+      }
+
+      function renderCard(student, lesson) {
+        const stats = student.stats || {};
+        const interactions = ensureInteractions(student);
+        const sub =
+          student.subtitle ||
+          lesson.subtitle ||
+          "课堂学习记录";
+        const date = lesson.date || "—";
+        const teacher = lesson.teacher || "—";
+        const dur =
+          stats.attendanceMinutes != null
+            ? stats.attendanceMinutes
+            : lesson.durationMinutes != null
+              ? lesson.durationMinutes
+              : "—";
+        let part = stats.interactionsParticipated;
+        if (!part) {
+          const countable = interactions.filter((x) => x.type !== "more");
+          const joined = countable.filter((x) => x.type !== "slot_miss").length;
+          part = `${joined}/${countable.length || 1}`;
+        }
+        const acc = stats.choiceAccuracyPercent;
+        const accDisp = acc != null ? `${acc}%` : "—";
+        const tro = stats.trophies != null ? stats.trophies : "—";
+        const troDisp = tro !== "—" ? `${tro} 🏆` : "—";
+
+        const bodyBlocks = interactions.map((it) => renderInteraction(it));
+
+        const sys = autoSystemComment(student, lesson);
+        const tea =
+          student.teacherComment != null
+            ? student.teacherComment
+            : "（可选补充）";
+
+        return `
+          <div class="mvp-report" data-student="${escapeHtml(student.name || "")}">
+            <div class="mvp-banner"><span>✅ MVP 新报告</span></div>
+            <div class="mvp-header">
+              <div class="mvp-title">📊 课堂学习记录</div>
+              <div class="mvp-sub">${escapeHtml(student.name || "学生")} · ${escapeHtml(sub)}</div>
+              <div class="mvp-meta">${escapeHtml(date)} · ${escapeHtml(teacher)} · 出勤 ${escapeHtml(String(dur))} 分钟</div>
+            </div>
+            <div class="mvp-divider"></div>
+            <div class="mvp-stats">
+              <div class="mvp-stat"><div class="mvp-stat-val">${escapeHtml(String(part))}</div><div class="mvp-stat-label">互动参与</div></div>
+              <div class="mvp-stat amber"><div class="mvp-stat-val">${escapeHtml(String(accDisp))}</div><div class="mvp-stat-label">选择正确率</div></div>
+              <div class="mvp-stat blue"><div class="mvp-stat-val">${dur === "—" ? "—" : `${escapeHtml(String(dur))}<small>min</small>`}</div><div class="mvp-stat-label">出勤时长</div></div>
+              <div class="mvp-stat rose"><div class="mvp-stat-val">${escapeHtml(String(troDisp))}</div><div class="mvp-stat-label">获得奖杯</div></div>
+            </div>
+            <div class="mvp-body">
+              ${bodyBlocks.join("")}
+              <div class="mvp-comment">
+                <div class="mvp-comment-title">💬 老师点评</div>
+                <div class="mvp-comment-box">
+                  <div class="row"><span class="lbl">🖥 系统：</span><span class="val">${escapeHtml(sys)}</span></div>
+                  <div class="row"><span class="lbl teacher">✏️ 老师：</span><span class="val muted">${escapeHtml(tea)}</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="mvp-footer">MVP 新报告 — 学习过程可视化</div>
+          </div>`;
+      }
+
+      function normalizePayload(raw) {
+        if (!raw || typeof raw !== "object") throw new Error("根节点必须是 JSON 对象");
+        const lesson = raw.lesson || {};
+        const students = raw.students;
+        if (!Array.isArray(students) || students.length === 0) {
+          throw new Error("需要非空数组 students");
+        }
+        return { lesson, students };
+      }
+
+      function renderAll(payload) {
+        const { lesson, students } = normalizePayload(payload);
+        const cards = $("#cards");
+        cards.innerHTML = students
+          .map((s, i) => {
+            const id = `stu-${i}`;
+            const safeName = escapeHtml(s.name || `学生${i + 1}`);
+            return `<div class="card-anchor" id="${id}">
+              <div class="card-toolbar" data-html2canvas-ignore="true">
+                <button type="button" class="btn alt" data-act="download" data-name="${safeName}">⬇ 下载 PNG</button>
+                <button type="button" class="btn" data-act="copy" data-name="${safeName}">📋 复制为图片</button>
+              </div>
+              ${renderCard(s, lesson)}
+            </div>`;
+          })
+          .join("");
+
+        const nav = $("#stuNav");
+        nav.innerHTML = students
+          .map((s, i) => {
+            const id = `stu-${i}`;
+            const sub = s.subtitle || lesson.subtitle || "";
+            return `<button type="button" data-target="${id}" class="stu-btn">
+              ${escapeHtml(s.name || `学生 ${i + 1}`)}
+              <div class="meta-line">${escapeHtml(sub)}</div>
+            </button>`;
+          })
+          .join("");
+
+        nav.querySelectorAll(".stu-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-target");
+            nav.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+
+        $("#previewMeta").textContent = `共 ${students.length} 人 · ${lesson.subtitle || ""}`;
+      }
+
+      function showErr(msg) {
+        const box = $("#errBox");
+        if (!msg) {
+          box.textContent = "";
+          box.classList.remove("show");
+          return;
+        }
+        box.textContent = msg;
+        box.classList.add("show");
+      }
+
+      let toastTimer = null;
+      function toast(msg, type) {
+        const el = $("#toast");
+        el.textContent = msg;
+        el.classList.toggle("error", type === "error");
+        el.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+      }
+
+      async function captureCard(reportEl) {
+        if (typeof html2canvas !== "function") {
+          throw new Error("html2canvas 加载失败，请联网后刷新页面");
+        }
+        return html2canvas(reportEl, {
+          backgroundColor: "#ffffff",
+          useCORS: true,
+          allowTaint: true,
+          scale: Math.min(window.devicePixelRatio || 1, 2) * 2,
+          logging: false,
+          imageTimeout: 8000,
+        });
+      }
+
+      function canvasToBlob(canvas) {
+        return new Promise((resolve, reject) => {
+          canvas.toBlob(
+            (b) => (b ? resolve(b) : reject(new Error("生成图片失败"))),
+            "image/png"
+          );
+        });
+      }
+
+      async function copyCardAsImage(reportEl) {
+        const canvas = await captureCard(reportEl);
+        const blob = await canvasToBlob(canvas);
+        if (!navigator.clipboard || !window.ClipboardItem) {
+          throw new Error(
+            "当前浏览器不支持复制图片，请使用「下载 PNG」"
+          );
+        }
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+      }
+
+      async function downloadCardAsImage(reportEl, name) {
+        const canvas = await captureCard(reportEl);
+        const blob = await canvasToBlob(canvas);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const safe = (name || "课堂学习记录").replace(/[\\/:*?"<>|]/g, "_");
+        a.download = `${safe}-课堂学习记录.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+      }
+
+      $("#cards").addEventListener("click", async (ev) => {
+        const btn = ev.target.closest("button[data-act]");
+        if (!btn) return;
+        const act = btn.getAttribute("data-act");
+        const name = btn.getAttribute("data-name") || "";
+        const anchor = btn.closest(".card-anchor");
+        const reportEl = anchor && anchor.querySelector(".mvp-report");
+        if (!reportEl) return;
+        const original = btn.textContent;
+        btn.disabled = true;
+        try {
+          if (act === "copy") {
+            btn.textContent = "正在复制…";
+            await copyCardAsImage(reportEl);
+            toast(`已复制 ${name} 的报告到剪贴板`);
+          } else if (act === "download") {
+            btn.textContent = "正在生成…";
+            await downloadCardAsImage(reportEl, name);
+            toast(`已下载 ${name} 的报告`);
+          }
+        } catch (e) {
+          if (act === "copy") {
+            try {
+              await downloadCardAsImage(reportEl, name);
+              toast("已自动改为下载 PNG（剪贴板不可用）", "error");
+            } catch (e2) {
+              toast(e2.message || String(e2), "error");
+            }
+          } else {
+            toast(e.message || String(e), "error");
+          }
+        } finally {
+          btn.disabled = false;
+          btn.textContent = original;
+        }
+      });
+
+      $("#btnRender").addEventListener("click", () => {
+        showErr("");
+        try {
+          const raw = JSON.parse($("#dataInput").value);
+          renderAll(raw);
+        } catch (e) {
+          showErr(e.message || String(e));
+        }
+      });
+
+      $("#btnClear").addEventListener("click", () => {
+        $("#dataInput").value = "";
+        showErr("");
+      });
+
+      async function loadSampleText() {
+        const embedded = readEmbeddedSample();
+        if (embedded) return embedded;
+        try {
+          const res = await fetch("sample-data.json", { cache: "no-store" });
+          if (res.ok) return await res.text();
+        } catch (e) { /* file:// 下会失败，忽略 */ }
+        return null;
+      }
+
+      $("#btnSample").addEventListener("click", async () => {
+        showErr("");
+        try {
+          const txt = await loadSampleText();
+          if (!txt) throw new Error("没有可用的示例数据");
+          $("#dataInput").value = txt;
+          renderAll(JSON.parse(txt));
+        } catch (e) {
+          showErr(e.message || String(e));
+        }
+      });
+
+      /* 首次进入：自动用内嵌示例渲染一次 */
+      (async () => {
+        const txt = await loadSampleText();
+        if (!txt) return;
+        $("#dataInput").value = txt;
+        try { renderAll(JSON.parse(txt)); } catch (e) { /* ignore */ }
+      })();
+    })();
+  </script>
+</body>
+</html>

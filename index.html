@@ -2655,14 +2655,14 @@
     /** 演示用：Pad 绑定机构学员库后四位匹配（9841 唯一；8888 同号多账号；其它 4 位数字视为无匹配；右侧展示班级昵称+头像） */
     const DEMO_PHONE_LIB={
       "9841":[
-        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"六年级数学·周六班",
-          classInfo:["wlsy 六年级数学邹承锦周六 19:30–21:00","授课老师 — 邹秉锦"] }
+        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"陈三",
+          classInfo:["wlsy 张武 19:30–21:00","授课老师 — 邹秉锦"] }
       ],
       "8888":[
-        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"六年级数学·周六班",
+        { id:"a", name:"陈子和", initial:"陈", color:"a1", nick:"陈三",
           classInfo:["wlsy 六年级数学邹承锦周六 19:30–21:00","授课老师 — 邹秉锦"] },
-        { id:"b", name:"陈子语", initial:"陈", color:"a2", nick:"六年级语文·周六班",
-          classInfo:["wlsy 六年级语文张老师周六 14:00–15:30","授课老师 — 张明"] }
+        { id:"b", name:"陈子语", initial:"陈", color:"a2", nick:"张武",
+          classInfo:["wlsy  14:00–15:30","授课老师 — 张明"] }
       ]
     };
 
@@ -2700,10 +2700,10 @@
     function renderMatchPanel(matches){
       // matches: null = 输入未完成；[]  = 0 匹配；[一个或多个] = 命中
       if(matches===null){
-        return `<div class="stu-match-panel placeholder">输入手机号后四位后，在 Pad 绑定机构学员库内检索，右侧显示班级昵称与头像</div>`;
+        return `<div class="stu-match-panel placeholder"></div>`;
       }
       if(matches.length===0){
-        return `<div class="stu-match-panel placeholder">未在 Pad 绑定机构学员库中匹配到账号</div>`;
+        return `<div class="stu-match-panel placeholder"></div>`;
       }
       const isMulti=matches.length>1;
       const items=matches.map(m=>{
@@ -2743,13 +2743,13 @@
       const matches=getCurrentMatches();
       const matchPanel=renderMatchPanel(matches);
       const showZeroHint=matches!==null&&matches.length===0&&!loginHintMsg;
-      const msg=loginHintMsg||(showZeroHint?"未在 Pad 绑定机构学员库中检测到账号，请核对手机号尾号。":"");
+      const msg=loginHintMsg||(showZeroHint?"请核对手机号尾号":"");
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-login-v2">
           <div class="stu-loginv2-left">
             <div class="stu-loginv2-head">
               <h3>手机号登录</h3>
-              <div class="stu-loginv2-sub">输入手机号后四位 · 仅 Pad 绑定机构内检索（即将开课/上课中优先）</div>
+              <div class="stu-loginv2-sub">输入手机号后四位</div>
             </div>
             ${renderPhoneInput()}
             ${renderNumpad()}
