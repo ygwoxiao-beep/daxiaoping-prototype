@@ -1359,7 +1359,32 @@
         <div class="scheme-intro-card s1">
           <span class="scheme-intro-tag">方案 1 · 当前选定方案</span>
           <h4>手机号后四位登录</h4>
-          <p>设备默认处于解锁状态，始终显示登录页；学生输入<strong>手机号后四位</strong>主动登录；检索仅在<strong>Pad 绑定机构</strong>学员库内，<strong>先即将开课/正在开课（阶段 A）后全机构兜底（阶段 B）</strong>；候选展示<strong>班级昵称 + 头像</strong>。老师点击上课后 Pad 仍停留在登录成功页，<strong>待老师真正进入教室后</strong>才进入设备管控（锁屏）；下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
+          <div style="font-size:14px;color:#475569;line-height:1.85;margin-top:8px">
+            <p style="margin-bottom:10px"><strong>一、产品形态</strong></p>
+            <ol style="padding-left:20px;margin:0 0 14px">
+              <li>学生端 Demo 版本基于安卓 Pad 开发独立 App，App 中只有教室上课页面（线下课模式进入教室；教室内隐藏聊天、花名册、举手功能）。</li>
+              <li>学生端 APP 名称为「ClassIn Focus」。</li>
+              <li>Pad 必须先绑定唯一机构；未绑定时登录提示：<strong>设备未完成机构绑定</strong>。</li>
+            </ol>
+            <p style="margin-bottom:10px"><strong>二、登录验证</strong></p>
+            <ol style="padding-left:20px;margin:0 0 14px">
+              <li>学生输入手机号后四位作为登录凭证。</li>
+              <li>任意手机号后四位检索，只能在「Pad 绑定机构」对应学员库内进行；不得跨机构匹配，即使其它机构存在相同尾号。</li>
+              <li>学生输入尾号后，展示给学生的候选账号（含二次确认列表）中的每一条，必须属于该机构；展示字段为<strong>班级昵称 + 头像</strong>。</li>
+              <li><strong>检索优先级</strong>：在学生已输入合法 4 位数字的前提下，服务端优先检索属于<strong>即将开课</strong>和<strong>正在开课</strong>的课节学员（开课前 1 小时至正在上课的课节）；<br>
+              　· 且学员账号归属 Pad 绑定机构。<br>
+              　<strong>命中结果：</strong><br>
+              　· <strong>1 条</strong> → 按现有规则进入「唯一匹配」路径；<br>
+              　· <strong>命中 ≥ 2 条</strong> →「撞号二次确认」，候选列表展示字段为<strong>班级昵称 + 头像</strong>；<br>
+              　· <strong>命中 0 条</strong>：<br>
+              　　· 学员<strong>在机构内</strong>，但未匹配到上课名单时，无法登录，提示：「<strong>未匹配到上课名单，暂时无法登录，请联系老师确认排课信息</strong>」；<br>
+              　　· 学员<strong>不在机构内</strong>，提示：「<strong>请核对手机号尾号</strong>」。</li>
+              <li>同一账号下，同一时间、相同机构内有多个开课课节时，优先匹配开课早的课程。</li>
+              <li>多个设备同时登录同一账号时，后进入教室的一方会踢掉前者并使其返回登录界面；后进入方按线上版本提示「已有设备在教室」类文案。</li>
+              <li>公开课、双师课不参与本次 Demo 试点（检索与课节范围均排除）。</li>
+            </ol>
+            <p style="margin:0;font-size:13px;color:#64748b">上课衔接：老师点击上课后 Pad 可停留在登录成功页，<strong>待老师真正进入教室后</strong>才进入设备管控（锁屏）；下课后自动解锁并退出登录。</p>
+          </div>
         </div>
       </div>
 
@@ -1415,7 +1440,7 @@
           <div class="scheme-intro-card s1">
             <span class="scheme-intro-tag">方案 1 · 当前选定方案</span>
             <h4>手机号后四位登录</h4>
-            <p>设备默认处于解锁状态，始终显示登录页；学生输入手机号后四位主动登录；仅在<strong>Pad 绑定机构</strong>内检索（<strong>阶段 A → 阶段 B</strong>），候选为<strong>班级昵称 + 头像</strong>。匹配到账号后确认登录。上课后自动进入锁屏管控，下课后自动解锁并退出登录。<strong>强调学生身份主动认领。</strong></p>
+            <p>设备默认处于解锁状态，始终显示登录页；学生输入手机号后四位主动登录；仅在「Pad 绑定机构」内检索，优先「即将开课 / 正在开课」的<strong>上课名单</strong>（公开课、双师排除）；候选为<strong>班级昵称 + 头像</strong>。命中 0 条时区分「在机构内无上课名单」与「不在机构」两类提示（见上方产品说明）。匹配到账号后确认登录。上课后自动进入锁屏管控，下课后自动解锁并退出登录。</p>
           </div>
           <div class="scheme-intro-card s2">
             <span class="scheme-intro-tag">方案 2</span>
@@ -1493,7 +1518,7 @@
               <ol class="edge-list">
                 <li class="edge-item">
                   <div class="edge-q">登录验证范围是什么？</div>
-                  <div class="edge-a">学生输入<strong>手机号后四位</strong>后，仅在<strong>Pad 绑定机构</strong>学员库内检索；<strong>先阶段 A</strong>（即将开课 ∪ 正在开课，开课前 1 小时至上课中，且排除公开课/双师试点范围）<strong>后阶段 B</strong>（机构学员全集兜底）；不得跨机构。阶段 A 有任意命中时不再合并阶段 B 结果。</div>
+                  <div class="edge-a">学生输入<strong>手机号后四位</strong>后，仅在<strong>Pad 绑定机构</strong>内检索；优先在<strong>即将开课 ∪ 正在开课</strong>（开课前 1 小时至上课中）的<strong>上课名单</strong>范围内匹配，且排除公开课/双师试点范围；<strong>不得跨机构</strong>。命中 0 条时区分「在机构内无上课名单」与「不在机构」两类提示（见产品说明）。</div>
                 </li>
                 <li class="edge-item">
                   <div class="edge-q">同一手机号绑定多个学生账号怎么办？</div>
@@ -1501,7 +1526,7 @@
                 </li>
                 <li class="edge-item">
                   <div class="edge-q">手机号无匹配或格式错误怎么办？</div>
-                  <div class="edge-a">包含非数字、位数不足 4 位时提示「请输入手机号后四位」；当前检索范围内 0 条匹配时提示「请核对手机号尾号」。多设备同账号后进教室踢前者，提示与线上一致。</div>
+                  <div class="edge-a">包含非数字、位数不足 4 位时提示「请输入手机号后四位完成登录」。命中 0 条时：学员在机构内但未匹配到上课名单 →「未匹配到上课名单，暂时无法登录，请联系老师确认排课信息」；学员不在机构内 →「请核对手机号尾号」。多设备同账号后进教室踢前者，提示与线上一致。</div>
                 </li>
               </ol>
             </div>
@@ -1576,7 +1601,7 @@
                 学生提交后 4 位后，服务端在<strong>当前生效收窄域</strong>（机构 + 可选班级名单）内检索，并按命中数分流：<br>
                 　① <strong>唯一匹配</strong>（1 条）→ 直接进入<strong>登录成功态</strong>；<br>
                 　② <strong>命中 ≥ 2 条</strong> → Pad 弹出<strong>「确认您的身份」</strong>二次确认页，展示该 4 位下全部候选学生的 <strong>班级昵称 + 头像</strong>，由学生本人点选完成登录；<br>
-                　③ <strong>0 条匹配</strong> → 提示「未检测到账号，请核对报名手机号尾号」，不自动登录。<br>
+                　③ <strong>0 条匹配</strong> → 学员在机构内但未匹配到上课名单：「未匹配到上课名单，暂时无法登录，请联系老师确认排课信息」；学员不在机构：「请核对手机号尾号」。不自动登录。<br>
                 · 若收窄后仍有多条（极端情况）→ 支持<strong>升级为后 6 位校验</strong>或引导联系老师核验身份。
               </div>
             </li>
@@ -2700,10 +2725,10 @@
     function renderMatchPanel(matches){
       // matches: null = 输入未完成；[]  = 0 匹配；[一个或多个] = 命中
       if(matches===null){
-        return `<div class="stu-match-panel placeholder"></div>`;
+        return `<div class="stu-match-panel placeholder">输入手机号后四位后，在 Pad 绑定机构学员库内检索，右侧展示班级昵称 + 头像</div>`;
       }
       if(matches.length===0){
-        return `<div class="stu-match-panel placeholder"></div>`;
+        return `<div class="stu-match-panel placeholder">请核对手机号尾号</div>`;
       }
       const isMulti=matches.length>1;
       const items=matches.map(m=>{
@@ -2743,13 +2768,13 @@
       const matches=getCurrentMatches();
       const matchPanel=renderMatchPanel(matches);
       const showZeroHint=matches!==null&&matches.length===0&&!loginHintMsg;
-      const msg=loginHintMsg||(showZeroHint?"请核对手机号尾号":"");
+      const msg=loginHintMsg||(showZeroHint?"请核对手机号尾号。":"");
       return `<div class="pad-outer" style="height:100%"><div class="pad-inner">
         <div class="stu-login-v2">
           <div class="stu-loginv2-left">
             <div class="stu-loginv2-head">
               <h3>手机号登录</h3>
-              <div class="stu-loginv2-sub">输入手机号后四位</div>
+              <div class="stu-loginv2-sub">输入手机号后四位 · 仅 Pad 绑定机构内检索（即将开课/上课中优先）</div>
             </div>
             ${renderPhoneInput()}
             ${renderNumpad()}
@@ -2837,7 +2862,7 @@
           if(matches===null) return;
           if(matches.length===1) dLog.textContent="联动日志：手机号尾号在 Pad 绑定机构学员库内唯一匹配，右侧展示班级昵称 + 头像。";
           else if(matches.length>=2) dLog.textContent="联动日志：手机号尾号命中多个学生账号，右侧展示二次确认列表（班级昵称 + 头像），等待学生本人选择。";
-          else dLog.textContent="联动日志：手机号尾号在 Pad 绑定机构学员库中无匹配（演示未区分阶段 A/B）。";
+          else dLog.textContent="联动日志：阶段 A/B 检索后无匹配，提示「请核对手机号尾号」（演示未区分阶段 A/B）。";
         });
       });
       // 含非数字演示按钮
@@ -3081,22 +3106,23 @@
 <li>学生输入<strong>手机号后四位</strong>作为登录凭证。</li>
 <li>任意手机号后四位检索，只能在「<strong>Pad 绑定机构</strong>」对应学员库内进行；<strong>不得跨机构匹配</strong>，即使其它机构存在相同尾号。</li>
 <li>学生输入尾号后，展示给学生的候选账号（含二次确认列表）中的每一条，必须属于该机构；展示字段为<strong>班级昵称 + 头像</strong>。</li>
-<li><strong>检索优先级（阶段 A → 阶段 B）</strong>：在学生已输入合法 4 位数字的前提下，服务端按两阶段检索同一尾号。<br>
-　<strong>阶段 A（优先）</strong><br>
-　　· 优先检索属于<strong>即将开课</strong>和<strong>正在开课</strong>的课节学员（开课前 1 小时至正在上课的课节）；<br>
-　　· 且学员账号归属 Pad 绑定机构。<br>
-　　<strong>命中结果：</strong>0 条 → 进入阶段 B；1 条 → 按现有规则进入「唯一匹配」路径；≥2 条 → 「撞号二次确认」，候选列表<strong>仅含阶段 A 命中账号</strong>展示字段为班级昵称 + 头像。。<br>
-　<strong>阶段 B（兜底）</strong><br>
-　　· 在<strong>机构学员全集</strong>内检索同一尾号（仍仅限 Pad 绑定机构）。<br>
-　　· 如命中结果0条，则提示「请核对手机号尾号」。<br>
-
-　<strong>说明：</strong>先 A 后 B；阶段 A 只要有任意命中（1 条或多条），<strong>不再叠加</strong>阶段 B 结果合并进「唯一匹配」；仅在阶段 A <strong>未匹配到任何账号</strong>时再走阶段 B。</li>
-同一账号下，同一时间、相同机构内有多个开课课节时，<strong>优先匹配开课早</strong>的课程。</li>
+<li><strong>检索优先级</strong>：在学生已输入合法 4 位数字的前提下，服务端优先检索属于<strong>即将开课</strong>和<strong>正在开课</strong>的课节学员（开课前 1 小时至正在上课的课节）；<br>
+　· 且学员账号归属 Pad 绑定机构。<br>
+　<strong>命中结果：</strong><br>
+　· <strong>1 条</strong> → 按现有规则进入「唯一匹配」路径；<br>
+　· <strong>命中 ≥ 2 条</strong> →「撞号二次确认」，候选列表展示字段为<strong>班级昵称 + 头像</strong>；<br>
+　· <strong>命中 0 条</strong>：<br>
+　　· 学员<strong>在机构内</strong>，但未匹配到上课名单时，无法登录，提示：「<strong>未匹配到上课名单，暂时无法登录，请联系老师确认排课信息</strong>」；<br>
+　　· 学员<strong>不在机构内</strong>，提示：「<strong>请核对手机号尾号</strong>」。</li>
+<li>同一账号下，同一时间、相同机构内有多个开课课节时，<strong>优先匹配开课早</strong>的课程。</li>
 <li>多个设备同时登录<strong>同一账号</strong>时，<strong>后进入教室</strong>的一方会<strong>踢掉前者</strong>并使其返回登录界面；后进入方按<strong>线上版本</strong>提示「已有设备在教室」类文案。</li>
 <li><strong>公开课、双师课</strong>不参与本次 Demo 试点（检索与课节范围均排除）。</li>
 </ol>
 
-<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">▶ Pad 演示：输入 4 位后右侧展示<strong>班级昵称 + 头像</strong>，点击「确认登录」进入登录成功页。<strong>9841</strong> 唯一匹配；<strong>8888</strong> 模拟同号多账号；其它 4 位纯数字为无匹配。点「演示：含非数字」可注入非法字符以触发校验提示。（演示数据未区分阶段 A/B。）</p></div>`
+<strong>三、输入校验</strong>
+<p style="margin:6px 0 0;padding-left:4px;line-height:1.75">若输入包含<strong>非数字</strong>或不足 4 位 → 提示「<strong>请输入手机号后四位完成登录</strong>」。</p>
+
+<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">▶ Pad 演示：输入 4 位后右侧展示<strong>班级昵称 + 头像</strong>，点击「确认登录」进入登录成功页。<strong>9841</strong> 唯一匹配；<strong>8888</strong> 模拟同号多账号；其它 4 位纯数字为无匹配。点「演示：含非数字」可注入非法字符以触发校验提示。</p></div>`
       },
       {
         title:"② 检测到撞号 · 弹出身份二次确认",
