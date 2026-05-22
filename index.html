@@ -72,6 +72,29 @@
     .pri-tag.p1{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
     .pri-tag.p2{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0}
 
+    /* ===== 内部演示结论 ===== */
+    #demo522.tab-panel{border-top:4px solid #f59e0b}
+    .demo522-summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+    .demo522-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;border:1px solid}
+    .demo522-pill.fix{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+    .demo522-pill.wait{background:#fffbeb;color:#b45309;border-color:#fde68a}
+    .demo522-pill.block{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
+    .demo522-pill.tbd{background:#f1f5f9;color:#475569;border-color:#e2e8f0}
+    .conclusion-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.75;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+    .conclusion-table thead th{background:linear-gradient(180deg,#fffbeb,#fff);padding:12px 14px;text-align:left;font-size:13px;font-weight:700;color:#92400e;border-bottom:2px solid #fde68a}
+    .conclusion-table tbody td{padding:14px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+    .conclusion-table tbody tr:last-child td{border-bottom:none}
+    .conclusion-table tbody tr:hover{background:#fffbeb}
+    .conclusion-table td:first-child{width:52px;text-align:center;font-weight:700;color:#b45309;background:#fffbeb}
+    .conclusion-table td:nth-child(2){font-weight:600;color:#0f172a;min-width:220px}
+    .conclusion-table td:nth-child(3){color:#475569}
+    .conclusion-status{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap}
+    .conclusion-status.fix{background:#dcfce7;color:#166534}
+    .conclusion-status.wait{background:#fef3c7;color:#92400e}
+    .conclusion-status.block{background:#fee2e2;color:#991b1b}
+    .conclusion-status.tbd{background:#e2e8f0;color:#475569}
+    .conclusion-same{color:#64748b;font-size:13px}
+
     /* ===== 产品演示 ===== */
     .demo-shell{background:transparent;padding:0}
     .demo-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
@@ -1250,6 +1273,7 @@
       <button class="tab-btn" data-tab="demo">4. 产品演示</button>
       <button class="tab-btn" data-tab="report">5. 课堂报告</button>
       <button class="tab-btn" data-tab="devicemgmt">6. 大小屏设备管理</button>
+      <button class="tab-btn" data-tab="demo522">7. 内部演示结论</button>
     </nav>
 
     <section id="product" class="tab-panel active">
@@ -1835,6 +1859,98 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section id="demo522" class="tab-panel">
+      <h2 class="section-title">5.22日 内部演示结论</h2>
+      <p class="section-sub">2026-05-22 演示复盘：问题列表与对应解决方案（含暂无法解决项）。</p>
+
+      <div class="demo522-summary">
+        <span class="demo522-pill fix">可落地修复 3 项</span>
+        <span class="demo522-pill wait">管控时机调整 3 项</span>
+        <span class="demo522-pill block">暂无法解决 2 项</span>
+        <span class="demo522-pill tbd">待补充 2 项</span>
+      </div>
+
+      <table class="conclusion-table">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>问题</th>
+            <th>解决方案 / 结论</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>管控状态下，右上角出现「同步更新」icon</td>
+            <td>暂时无法解决，待<strong>第三方管控系统</strong>支持更换屏保后再处理。</td>
+            <td><span class="conclusion-status block">暂无法解决</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>管控状态下显示学生名字</td>
+            <td><span class="conclusion-same">同问题 1</span>：依赖第三方管控屏保能力，当前无法单独屏蔽。</td>
+            <td><span class="conclusion-status block">暂无法解决</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>联网后闪了一下黑板页面</td>
+            <td>演示现场已记录，<strong>根因与修复方案待排查补充</strong>。</td>
+            <td><span class="conclusion-status tbd">待补充</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>小黑板作答时笔迹太细</td>
+            <td>修改小黑板<strong>默认画板笔号为 3 号</strong>。</td>
+            <td><span class="conclusion-status fix">待修复</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>学生端小黑板可下滑，但学生不知道能下滑</td>
+            <td>需补充<strong>交互引导</strong>（如首次提示、滑动指示等），方案待设计。</td>
+            <td><span class="conclusion-status tbd">待补充</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>学生端小黑板左下角工具条太小</td>
+            <td><strong>放大工具条</strong>，提升触控与可视性。</td>
+            <td><span class="conclusion-status fix">待修复</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>小黑板底部区域无法作答</td>
+            <td><strong>Bug，需修复</strong>（作答热区 / 布局问题）。</td>
+            <td><span class="conclusion-status fix">待修复</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>收回小黑板后，学生无法看到小黑板内容</td>
+            <td>调整<strong>进入管控的时机</strong>：教师点击「<strong>关闭小黑板</strong>」后再进入管控。<br>
+              「收回」后：学生<strong>可查看、不可操作</strong>；「关闭」后：进入管控状态。</td>
+            <td><span class="conclusion-status wait">管控时机</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>发奖杯瞬间没有突出是哪位同学</td>
+            <td>暂时无法解决（大屏侧展示能力限制）。</td>
+            <td><span class="conclusion-status block">暂无法解决</span></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>答题器：学生作答结果需及时反馈；学生端应显示正误</td>
+            <td>调整<strong>进入管控的时机</strong>：教师<strong>关闭答题器</strong>后再进入管控；关闭前保持作答与正误反馈可见。</td>
+            <td><span class="conclusion-status wait">管控时机</span></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>发奖杯时要突出给到哪位学生；学生端需有获奖反馈</td>
+            <td>调整<strong>进入管控的时机</strong>：教师给学生发奖杯后，<strong>对应获得奖杯的学生端解除管控状态</strong>，以便展示获奖反馈；<strong>3 秒后自动重新进入管控状态</strong>。（与问题 9 大屏突出展示可并行推进。）</td>
+            <td><span class="conclusion-status wait">管控时机</span></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </div>
 
