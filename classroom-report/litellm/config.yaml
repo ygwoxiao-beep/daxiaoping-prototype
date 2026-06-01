@@ -1,0 +1,52 @@
+# LiteLLM Proxy · 课堂报告项目
+# 文档：https://docs.litellm.ai/docs/proxy/configs
+#
+# 启动：cd classroom-report/litellm && ./start.sh
+# 或：  litellm --config config.yaml --port 4000
+
+model_list:
+  # Anthropic Claude（默认主通道）
+  # 浏览器不能直接访问 Anthropic API（CORS），必须经过 LiteLLM 转发。
+  - model_name: claude-opus-4-5
+    litellm_params:
+      model: anthropic/claude-opus-4-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  - model_name: claude-sonnet-4-5
+    litellm_params:
+      model: anthropic/claude-sonnet-4-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  # OpenAI（备用通道）
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+
+  # === V2 深度诊断报告专用通道 · 通义千问 ===
+  # 客户端调用名固定为 qwen3.7-Max；上游真实模型 id 用 DashScope 公开命名 qwen-max-latest
+  # （阿里 DashScope 截至目前主流稳定版即 qwen-max-latest；如需指定其它版本可替换为 qwen-max-2025-01-25 等）
+  - model_name: qwen3.7-Max
+    litellm_params:
+      model: openai/qwen-max-latest
+      api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api_key: os.environ/DASHSCOPE_API_KEY
+
+  # 可选：豆包
+  # - model_name: doubao-vision
+  #   litellm_params:
+  #     model: openai/doubao-1-5-vision-pro-32k
+  #     api_base: https://ark.cn-beijing.volces.com/api/v3
+  #     api_key: os.environ/ARK_API_KEY
+
+general_settings:
+  # 代理鉴权 Key：前端 ai-config.js 的 litellm.key 填与此相同（非 OpenAI 官方 Key）
+  master_key: os.environ/LITELLM_MASTER_KEY
+
+litellm_settings:
+  drop_params: true

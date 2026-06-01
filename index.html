@@ -1058,8 +1058,9 @@
     }
 
     /* ===== MVP 新报告（课堂学习记录） ===== */
-    #report.tab-panel{padding:24px 0;background:transparent;border:none;box-shadow:none}
-    #report.tab-panel.active{display:flex;justify-content:center}
+    #report.tab-panel{padding:0;background:transparent;border:none;box-shadow:none}
+    #report.tab-panel.active{display:flex;flex-direction:column}
+    #reportFrame{flex:1 1 auto;width:100%;min-height:calc(100vh - 160px);border:0;background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(15,23,42,.06)}
     .mvp-report{width:100%;max-width:520px;background:#fff;border:2px solid #10b981;border-radius:24px;padding:0;overflow:hidden;box-shadow:0 8px 28px rgba(16,185,129,.12);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
     .mvp-banner{background:#10b981;color:#fff;text-align:center;padding:12px;font-weight:700;font-size:15px;letter-spacing:.5px}
     .mvp-banner span{display:inline-flex;align-items:center;gap:8px}
@@ -1728,44 +1729,14 @@
     </section>
 
     <section id="report" class="tab-panel">
-      <div class="mvp-report">
-        <div class="mvp-banner"><span>✅ MVP 新报告</span></div>
-        <div class="mvp-header">
-          <div class="mvp-title">📊 课堂学习记录</div>
-          <div class="mvp-sub">陈思琪 · 五年级数学 · 第 3 讲</div>
-          <div class="mvp-meta">2026/4/13 · 张老师 · 出勤 88 分钟</div>
-        </div>
-        <div class="mvp-divider"></div>
-        <div class="mvp-stats">
-          <div class="mvp-stat"><div class="mvp-stat-val">6/6</div><div class="mvp-stat-label">互动参与</div></div>
-          <div class="mvp-stat amber"><div class="mvp-stat-val">75%</div><div class="mvp-stat-label">选择正确率</div></div>
-          <div class="mvp-stat blue"><div class="mvp-stat-val">88<small>min</small></div><div class="mvp-stat-label">出勤时长</div></div>
-          <div class="mvp-stat rose"><div class="mvp-stat-val">3 🏆</div><div class="mvp-stat-label">获得奖杯</div></div>
-        </div>
-        <div class="mvp-body">
-          <div class="mvp-inter">
-            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 1 次 · 小黑板 · 19:35</div>
-            <div class="mvp-bb-img"><img src="images/bb-student-work.png" alt="学生手写 · 第1次小黑板"><div class="mvp-bb-cap"></div></div>
-          </div>
-          <div class="mvp-inter">
-            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 2 次 · 选择题 · 19:42</div>
-            <div class="mvp-choice">我的选择：<strong>B</strong> · 正确答案：<strong>B</strong> ✅</div>
-          </div>
-          <div class="mvp-inter">
-            <div class="mvp-inter-head"><span class="mvp-dot"></span>📝 第 3 次 · 小黑板 · 19:55</div>
-            <div class="mvp-bb-img"><img src="images/bb-student-work.png" alt="学生手写 · 第3次小黑板"><div class="mvp-bb-cap"）</div></div>
-          </div>
-          <div class="mvp-more">… 第 4-6 次互动 …</div>
-          <div class="mvp-comment">
-            <div class="mvp-comment-title">💬 老师点评</div>
-            <div class="mvp-comment-box">
-              <div class="row"><span class="lbl">🖥 系统：</span><span class="val">本节课参与全部 6 次互动，选择题正确率 75%，小黑板书写完整。</span></div>
-              <div class="row"><span class="lbl teacher">✏️ 老师：</span><span class="val muted">（可选补充）</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="mvp-footer">MVP 新报告 — 学习过程可视化</div>
-      </div>
+      <iframe
+        id="reportFrame"
+        src="classroom-report/index.html?student=%E9%99%88%E6%80%9D%E7%90%AA&skill=v2"
+        title="课堂报告"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        allow="clipboard-read; clipboard-write"
+      ></iframe>
     </section>
 
     <section id="devicemgmt" class="tab-panel">

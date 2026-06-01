@@ -1,6 +1,6 @@
 {
   "lesson": {
-    "subtitle": "五年级数学 · 第 3 讲",
+    "subtitle": "五年级数学 · 第 3 讲 · 分数的意义与简单计算",
     "date": "2026/4/13",
     "teacher": "张老师",
     "durationMinutes": 88
@@ -15,34 +15,21 @@
         "trophies": 3
       },
       "interactions": [
-        {
-          "type": "blackboard",
-          "index": 1,
-          "time": "19:35",
-          "image": "images/bb-student-work.png",
-          "caption": ""
-        },
-        {
-          "type": "choice",
-          "index": 2,
-          "time": "19:42",
-          "studentChoice": "B",
-          "correctAnswer": "B"
-        },
-        {
-          "type": "blackboard",
-          "index": 3,
-          "time": "19:55",
-          "image": "images/bb-student-work.png",
-          "caption": ""
-        },
-        {
-          "type": "more",
-          "text": "… 第 4-6 次互动 …"
-        }
+        { "type": "blackboard", "index": 1, "time": "19:35", "image": "images/bb-student-work.png", "qid": "Q1", "correct": true,  "caption": "分数加减步骤：通分准确，符号无误" },
+        { "type": "choice",     "index": 2, "time": "19:42", "studentChoice": "B", "correctAnswer": "B" },
+        { "type": "blackboard", "index": 3, "time": "19:55", "image": "images/bb-student-work.png", "qid": "Q2", "correct": true,  "caption": "分数大小比较：交叉相乘判断正确" },
+        { "type": "choice",     "index": 4, "time": "20:03", "studentChoice": "A", "correctAnswer": "C" },
+        { "type": "blackboard", "index": 5, "time": "20:14", "image": "images/bb-student-work.png", "qid": "Q3", "correct": false, "caption": "分数化小数：忘记将循环节标注完整" },
+        { "type": "choice",     "index": 6, "time": "20:22", "studentChoice": "D", "correctAnswer": "D" }
       ],
-      "systemComment": "本节课参与全部 6 次互动，选择题正确率 75%，小黑板书写完整。",
-      "teacherComment": "（可选补充）"
+      "teacherComment": "本节课参与积极，分数加减运算思路清晰；分数与小数互化基本掌握，复杂混合运算时反应速度仍可提升。",
+      "diagnosis": {
+        "knowledgeList": [
+          { "name": "分数加减", "status": "已掌握", "difficulty": 2, "diagnosis": "通分步骤规范，答案准确。" },
+          { "name": "分数大小比较", "status": "已掌握", "difficulty": 3, "diagnosis": "能用通分或交叉相乘比较。" },
+          { "name": "分数与小数互化", "status": "部分掌握", "difficulty": 3, "diagnosis": "基础互化无误，混合运算偏慢。" }
+        ]
+      }
     },
     {
       "name": "王浩然",
@@ -52,7 +39,14 @@
         "attendanceMinutes": 76,
         "trophies": 1
       },
-      "teacherComment": "运算步骤再细心一些会更稳。"
+      "interactions": [
+        { "type": "blackboard", "index": 1, "time": "19:36", "image": "images/bb-student-work.png", "qid": "Q1", "correct": true,  "caption": "分数加减：步骤规范，结果正确" },
+        { "type": "choice",     "index": 2, "time": "19:43", "studentChoice": "C", "correctAnswer": "B" },
+        { "type": "blackboard", "index": 3, "time": "19:56", "image": "images/bb-student-work.png", "qid": "Q2", "correct": false, "caption": "分数大小比较：通分时分母漏乘" },
+        { "type": "choice",     "index": 4, "time": "20:04", "studentChoice": "C", "correctAnswer": "C" },
+        { "type": "blackboard", "index": 5, "time": "20:15", "image": "images/bb-student-work.png", "qid": "Q3", "correct": true,  "caption": "分数化小数：除法规范，答案正确" }
+      ],
+      "teacherComment": "运算步骤再细心一些会更稳；第 4 次选择题因审题不清出错，下次注意先读两遍题。"
     }
   ]
 }

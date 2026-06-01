@@ -1,0 +1,27 @@
+# LiteLLM Proxy · 课堂报告
+# 用法见 README.md「Docker 启动」
+
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:main-stable
+    container_name: classroom-report-litellm
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    command:
+      - --config
+      - /app/config.yaml
+      - --port
+      - "4000"
+      - --host
+      - "0.0.0.0"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:4000/health/liveliness"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
