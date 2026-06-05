@@ -14,18 +14,18 @@ window.__BUILT_IN_AI_CONFIG__ = {
   v1: {
     base: "https://dashscope.aliyuncs.com/compatible-mode/v1",
     model: "qwen3-vl-plus",
-    key: "sk-2a26e622e54d41a68b9f99baa34988d1",
+    key: 
   },
 
   v2: {
     base: "https://dashscope.aliyuncs.com/compatible-mode/v1",
     model: "qwen3-vl-plus",
-    key: "sk-2a26e622e54d41a68b9f99baa34988d1",
+    key:
   },
 
   qwen: {
     base: "https://dashscope.aliyuncs.com/compatible-mode/v1",
     model: "qwen-vl-plus",
-    key: "sk-2a26e622e54d41a68b9f99baa34988d1",
+    key:
   },
 };
